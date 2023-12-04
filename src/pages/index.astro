@@ -1,102 +1,89 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
+import Header from '~/components/widgets/Header.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
 import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Steps from '~/components/widgets/Steps.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
 import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+
+import { headerData } from '~/navigation';
 import FAQs from '~/components/widgets/FAQs.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+// import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 const metadata = {
-  title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
-  ignoreTitleTemplate: true,
+  title: 'Bioenneagram Coach | Eneagrama y Biodescodificación',
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      isSticky
+    />
+  </Fragment>
 
-  <Hero
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Crecimiento Personal"
     actions={[
-      {
-        variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/onwidget/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
-      },
-      { text: 'Learn more', href: '#features' },
+      { variant: 'primary', target: '_blank', text: 'Agendar Ahora', href: 'https://meetings.hubspot.com/bioenneagramcoach' },
     ]}
-    image={{ src: '~/assets/images/hero.png', alt: 'AstroWind Hero Image' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      alt: 'Bioenneagram Hero Image',
+    }}  
   >
     <Fragment slot="title">
-      Free template for <span class="hidden xl:inline">creating websites with</span>
-      <span class="text-accent dark:text-white highlight"> Astro 3.0</span> + Tailwind CSS
+      Listo para descrubrir los secretos de <br /> tu personalidad : <span class="text-accent dark:text-white highlight"
+        >ENEAGRAMA - BIODESCODIFICACIÓN</span
+      ><br />
     </Fragment>
 
     <Fragment slot="subtitle">
       <span class="hidden sm:inline">
-        <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro 3.0
-        + Tailwind CSS.</span
+        Descubre tus fortalezas, debilidades y como mejorar tus relaciones personales con <span class="font-semibold">Bioenneagram</span>.</span
       >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
-       Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages
-      & Blogs.
     </Fragment>
-  </Hero>
-
-  <!-- Note Widget ******************* -->
-
-  <Note />
+  </Hero2>
 
   <!-- Features Widget *************** -->
 
   <Features
     id="features"
-    tagline="Features"
-    title="What you get with AstroWind"
-    subtitle="One of the most professional and comprehensive templates currently on the market. Most starred & forked Astro theme in 2022."
+    title="Por qué escoger Bioenneagram?"
+    subtitle="Cada una de las siguientes caracteristicas es la propuesta de valor de Bioenneagram."
+    columns={2}
     items={[
       {
-        title: 'Astro + Tailwind CSS Integration',
+        title: 'Experimenta un cambio real y duradero en tu vida con nuestros servicios',
         description:
-          'A seamless integration between two great frameworks that offer high productivity, performance and versatility.',
-        icon: 'tabler:brand-tailwind',
+          'Desde terapias individuales hasta retiros de desarrollo personal, cada intervención está diseñada para producir resultados tangibles. Alcanza tus metas de bienestar y crecimiento personal de manera eficiente y significativa.',
+        icon: 'tabler:report-analytics',
       },
       {
-        title: 'Ready-to-use Components',
-        description:
-          'Widgets made with Tailwind CSS ready to be used in Marketing Websites, SaaS, Blogs, Personal Profiles, Small Business...',
-        icon: 'tabler:components',
+        title: 'Confía en un profesional dedicado a tu bienestar',
+        description: `Altamente capacitado y comprometido con brindar un servicio de calidad. La profesionalidad se refleja en cada interacción, desde sesiones terapéuticas hasta talleres y conferencias, proporcionándote un ambiente de confianza y respeto.`,
+        icon: 'tabler:file-certificate',
       },
       {
-        title: 'Best Practices',
+        title: 'Tu paz mental es prioridad',
         description:
-          'Creating secure, efficient, and user-friendly websites that deliver exceptional experiences and lasting value.',
-        icon: 'tabler:list-check',
+          'Creamos entornos que fomenten la calma y la tranquilidad. Ya sea que estés participando en una terapia individual o en un relajante retiro, nuestro objetivo es que te sientas tranquilo y en armonía. Aquí, encontrarás un espacio seguro para explorar y crecer.',
+        icon: 'tabler:brain',
       },
       {
-        title: 'Excellent Page Speed',
-        description:
-          'Having a good page speed impacts organic search ranking, improves user experience (UI/UX) and increase conversion rates.',
+        title: 'Abraza tu camino hacia el desarrollo personal',
+        description: `Ofrecemos no solo terapias, sino también retiros, talleres y cursos diseñados para nutrir tu crecimiento. Cada experiencia está diseñada para desbloquear tu potencial y fomentar un desarrollo integral en todas las áreas de tu vida.`,
         icon: 'tabler:rocket',
       },
       {
-        title: 'Search Engine Optimization (SEO)',
-        description:
-          "SEO lies in its ability to enhance a website's visibility, driving organic traffic and enabling it to reach a wider audience.",
-        icon: 'tabler:arrows-right-left',
-      },
-      {
-        title: 'Open to new ideas and contributions',
-        description:
-          'Embracing a culture that is open to new ideas and contributions is integral fostering innovation, collaboration, and a dynamic user experience.',
-        icon: 'tabler:bulb',
+        title: 'El bienestar no debería ser un lujo inalcanzable',
+        description: `Nos esforzamos por hacer nuestros servicios accesibles para todos. Asequibilidad no significa comprometer la calidad; significa que todos merecen acceder a recursos que fomenten su bienestar. Descubre cómo el cuidado de tu salud mental puede ser una inversión asequible y valiosa en tu vida.`,
+        icon: 'tabler:receipt-2',
       },
     ]}
   />
@@ -104,34 +91,29 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
+    title="Casos de Éxito"
+    subtitle="Sumérjase en historias de éxito inspiradoras en las que el marco versátil del Bioenneagram emerge como el catalizador perfecto para el cambio. Explore cómo las soluciones a medida del Bioenneagram son fundamentales para impulsar el éxito en diversos contextos, desde impulsar cambios corporativos hasta reavivar chispas románticas e impulsar el crecimiento individual."
     isReversed
-    tagline="Inside template"
-    title="AstroWind's Blueprint: Fun Meets Functionality!"
     items={[
       {
-        title: 'Built on top of Astro 3.0',
+        title: 'Descripción:',
         description:
-          'Benefiting from the performance and developer-friendly features of this modern static site generator.',
+          '¿Es tu empresa la que aspira a una notable transformación? Sé testigo de la historia de una empresa líder que experimentó una transformación integral. Nuestras estrategias personalizadas no solo aumentaron la productividad, sino que también cultivaron un entorno de trabajo más saludable. Desde programas de bienestar emocional hasta cambios culturales, descubre cómo nuestro enfoque optimizó la eficiencia y elevó el bienestar general de los empleados.',
       },
       {
-        title: 'Styled using Tailwind CSS',
-        description:
-          'Facilitating rapid design and consistent styling with this highly popular utility-first CSS framework.',
-      },
-      {
-        title: 'Cross-browser compatibility',
-        description:
-          'Ensure your website looks and functions consistently across various web browsers, delivering a seamless experience to all users.',
+        title: 'Beneficios:',
+        description: `Aumento Sostenible de la Productividad. <br /> Reducción Significativa de la Rotación de Personal. <br /> Mejora Tangible en el Clima Laboral.`,
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Colorful Image',
+      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      alt: 'Empresa Imagen',
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Building on modern foundations</h3>
-       Gain a competitive advantage by incorporating industry leading practices
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Éxito Empresarial: <br /><span class="text-2xl">Impulsando la Productividad y el Bienestar Laboral</span>
+      </h3>
     </Fragment>
 
     <Fragment slot="bg">
@@ -142,34 +124,27 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
-    isAfterContent
+    isAfterContent={true}
     items={[
       {
-        title: 'High level of customization',
-        description: `Tailor the template effortlessly to match your brand's identity and requirements, making your website distinct and saving you time.`,
+        title: 'Descripción:',
+        description: `Embárcate en un conmovedor viaje con una pareja que superó desafíos significativos. Nuestra terapia de pareja especializada y el uso estratégico del eneagrama les permitieron reconstruir no solo la comunicación, sino también una conexión emocional más profunda. Descubre cómo la autoconciencia y la comprensión mutua revivieron su relación.`,
       },
       {
-        title: 'Multiple layout possibilities',
-        description:
-          'Explore various layout options to find the structure that best presents your content, enhancing user engagement and navigation.',
-      },
-      {
-        title: 'Fully responsive design',
-        description:
-          "Ensure your website's optimal performance on various devices and screen sizes, providing a consistent and enjoyable user experience.",
-      },
-      {
-        title: 'Integration of media',
-        description:
-          'Seamlessly incorporate images, videos, and multimedia elements that enhance your content and engage visitors effectively.',
+        title: 'Beneficios:',
+        description: `Fortalecimiento de la Comunicación y la Conexión. <br /> Herramientas para Comprender y Apreciar las Diferencias. <br /> Renovación de la Relación en Niveles Profundos.`,
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-      alt: 'Blueprint Image',
+      src: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      alt: 'Relacion Amorosa Imagen',
     }}
   >
-    <Fragment slot="content">Ensure your online presence truly represents you.</Fragment>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Relaciones Amorosas: <br /><span class="text-2xl">Reconstruyendo la Conexión en Parejas</span>
+      </h3>
+    </Fragment>
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
@@ -180,220 +155,168 @@ const metadata = {
 
   <Content
     isReversed
-    isAfterContent
+    isAfterContent={true}
     items={[
       {
-        title: 'Enhanced user engagement',
-        description:
-          'Captivate your audience with interactive elements, intuitive navigation, and visually appealing layouts, encouraging longer visits.',
+        title: 'Descripción:',
+        description: `Únete al viaje transformador de un individuo que experimentó un crecimiento personal significativo a través de la terapia individual. Desde la gestión del estrés hasta superar patrones de comportamiento limitantes, descubre cómo la combinación de biodescodificación y eneagrama desbloqueó su potencial oculto. La autenticidad y la autoconciencia fueron clave para una vida más plena y satisfactoria.`,
       },
       {
-        title: 'Continuous improvement',
-        description:
-          'Ensure your website stays aligned with the latest trends and technologies through regular updates and enhancements.',
-      },
-      {
-        title: 'Time and resource efficiency',
-        description:
-          'Skip the time-consuming process of building a website from scratch and launch your online presence sooner with AstroWind.',
-      },
-      {
-        title: 'Community support',
-        description: `Join the growing AstroWind community for insights, resources, and assistance, ensuring you're never alone on your web development journey.`,
+        title: 'Beneficios:',
+        description: `Gestión Efectiva del Estrés y las Tensiones Personales. <br /> Superación de Patrones de Comportamiento Limitantes. <br /> Logro de un Mayor Sentido de Satisfacción Personal.`,
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Astronauts Image',
+      src: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=1790&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      alt: 'Terapia Individual Imagen',
     }}
   >
-    <Fragment slot="content">Designed to foster growth and success.</Fragment>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Terapia Individual: <br /><span class="text-2xl">Desbloqueando el Potencial Personal</span>
+      </h3>
+    </Fragment>
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
-  <!-- Steps Widget ****************** -->
+  <!-- Pricing Widget ******************* -->
 
-  <Steps
-    title="Get your dream website up and running in no time with AstroWind."
-    items={[
+  <Pricing
+    title="Precios asequibles"
+    prices={[
       {
-        title: 'Step 1: <span class="font-medium">Download</span>',
-        description:
-          "Kickstart with GitHub! Either fork the AstroWind template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece. In just a few clicks, you've already set the foundation.",
-        icon: 'tabler:package',
+        title: 'Conferencias Inspiradoras',
+        subtitle: 'Ve y asiste a conferencias impactantes que desafían tu perspectiva y estimulan el crecimiento personal',
+        price: '0',
+        period: 'cop',
+        callToAction: {
+          target: '_blank',
+          text: 'Eleva tu Consciencia',
+          href: 'https://www.youtube.com/@bioenneagram',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'gratis',
       },
       {
-        title: 'Step 2: <span class="font-medium">Add content</em>',
-        description:
-          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story, so make it captivating.",
-        icon: 'tabler:letter-case',
+        title: 'Terapia Individual',
+        subtitle: 'Descubre una experiencia terapéutica personalizada que se adapta a tus necesidades y metas',
+        price: '70k',
+        period: 'cop',
+        callToAction: {
+          target: '_blank',
+          text: 'Gestiona tus Emociones',
+          href: '#',
+        },
       },
       {
-        title: 'Step 3: <span class="font-medium">Customize styles</span>',
-        description:
-          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by AstroWind! Precision in design ensures a seamless user experience.',
-        icon: 'tabler:paint',
+        title: 'Terapia para Parejas',
+        subtitle: 'Espacio seguro para abordar desafíos y mejorar la comunicación en pareja',
+        price: '120k',
+        period: 'cop',
+        callToAction: {
+          target: '_blank',
+          text: 'Crece en Pareja',
+          href: '#',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'popular',
       },
       {
-        title: 'Ready!',
-        icon: 'tabler:check',
+        title: 'Curso de introducción al eneagrama',
+        subtitle: 'Explora las complejidades de tu personalidad',
+        price: '242k',
+        period: 'cop',
+        callToAction: {
+          target: '_blank',
+          text: 'Desbloquea tu Poder',
+          href: '#',
+        },
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
-  />
-
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Most used widgets"
-    subtitle="Provides frequently used components for building websites using Tailwind CSS"
-    tagline="Components"
-    items={[
-      {
-        title: 'Headers',
-        description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
-        icon: 'flat-color-icons:template',
-      },
-      {
-        title: 'Heros',
-        description:
-          "Picture a superhero landing – epic, right? That's the job of a Hero section, making grand entrances!",
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Features',
-        description:
-          'Where websites strut their stuff and show off superpowers. No holding back on the bragging rights here!',
-        icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Content',
-        description:
-          "Dive into the meat and potatoes of a site; without it, you'd just be window shopping. Content is king.",
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Call-to-Action',
-        description:
-          'That enthusiastic friend who\'s always urging, "Do it! Do it!"? Yeah, that\'s this button nudging you towards adventure.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Pricing',
-        description: 'Behold the dessert menu of the website world. Tempting choices await, can you resist?',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Testimonial',
-        description: 'Step into the gossip corner! Here, other visitors spill the beans and share the juicy details.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Contact',
-        description:
-          'Like a digital mailbox, but faster! Drop a line, ask a question, or send a virtual high-five. Ding! Message in.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Footers',
-        description: "The footer's like the credits of a movie but sprinkled with easter eggs. Time to hunt!",
-        icon: 'flat-color-icons:database',
-      },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
-
-  <!-- HighlightedPosts Widget ******* -->
-
-  <BlogLatestPosts
-    title="Find out more content in our Blog"
-    information={`The blog is used to display AstroWind documentation.
-                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro + Tailwind CSS.
-                        Astro is a very interesting technology. Thanks.
-                `}
   />
 
   <!-- FAQs Widget ******************* -->
 
   <FAQs
-    title="Frequently Asked Questions"
-    subtitle="Dive into the following questions to gain insights into the powerful features that AstroWind offers and how it can elevate your web development journey."
-    tagline="FAQs"
-    classes={{ container: 'max-w-6xl' }}
+    title="Preguntas Frecuentes"
     items={[
       {
-        title: 'Why AstroWind?',
-        description:
-          "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
+        title: '¿Qué es Bioenenagram y cómo se diferencia de la biodescodificación y el eneagrama por separado?',
+        description: `Bioeneagram es una integración única de biodescodificación y eneagrama. Combina el poder de la biodescodificación para entender las conexiones emocionales con el eneagrama para explorar los patrones de personalidad. Esta sinergia proporciona una visión más completa de cómo nuestras experiencias pasadas impactan nuestra personalidad y comportamiento actual.`,
+        icon: 'tabler:chevrons-right',
       },
       {
-        title: 'What do I need to start?',
+        title: '¿En qué consiste la biodescodificación y cómo puede beneficiarme?',
         description:
-          'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds. Many say exploration is part of our destiny, but it’s actually our duty to future generations.',
+          'La biodescodificación es un enfoque terapéutico que busca comprender la conexión entre las emociones y la salud. Trabaja desentrañando el significado emocional de los síntomas físicos o emocionales. Experimentar la biodescodificación puede ayudarte a comprender y liberar patrones emocionales que pueden estar afectando tu bienestar.',
+        icon: 'tabler:chevrons-right',
       },
       {
-        title: 'How to install the Astro + Tailwind CSS template?',
-        description:
-          "Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.",
+        title: '¿Es necesario tener experiencia previa en biodescodificación o eneagrama para participar en sesiones de Bioenneagram?',
+        description: `No se requiere experiencia previa. Las sesiones de Bioenneagram están diseñadas para adaptarse a todos los niveles de familiaridad con la biodescodificación y el eneagrama. Nuestros profesionales te guiarán a través del proceso, asegurándose de que te sientas cómodo y comprendas cada etapa.`,
+        icon: 'tabler:chevrons-right',
       },
       {
-        title: "What's something that you don't understand?",
-        description:
-          "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
+        title: '¿Cómo se utiliza el eneagrama en sus servicios?',
+        description: `El eneagrama es una poderosa herramienta de autoconocimiento que utilizamos para entender los patrones de personalidad y motivaciones. Ofrecemos sesiones y talleres específicos de eneagrama para ayudarte a descubrir tu tipo y aplicar este conocimiento en tu vida cotidiana.`,
+        icon: 'tabler:chevrons-right',
       },
       {
-        title: 'What is something that you would like to try again?',
-        description:
-          "A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in.",
-      },
-      {
-        title: 'If you could only ask one question to each person you meet, what would that question be?',
-        description:
-          "This is not about revenge. This is about justice. A lot of things can change in twelve years, Admiral. Well, that's certainly good to know. About four years. I got tired of hearing how young I looked.",
-      },
-    ]}
-  />
-
-  <!-- Stats Widget ****************** -->
-
-  <Stats
-    stats={[
-      { title: 'Downloads', amount: '132K' },
-      { title: 'Stars', amount: '24.8K' },
-      { title: 'Forks', amount: '10.3K' },
-      { title: 'Users', amount: '48.4K' },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/onwidget/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
+        title: '¿Ofrecen servicios en línea?',
+        description: `Sí, algunos de nuestros servicios están disponibles en línea. Esto proporciona flexibilidad para aquellos que prefieren participar desde la comodidad de su hogar. Comunícate con nosotros para obtener más detalles sobre la disponibilidad en línea.`,
+        icon: 'tabler:chevrons-right',
       },
     ]}
   >
-    <Fragment slot="title">
-      Astro&nbsp;+&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Tailwind CSS</span>
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
+  </FAQs>
 
-    <Fragment slot="subtitle">
-      Be very surprised by these huge fake numbers you are seeing on this page. <br class="hidden md:inline" />Don't
-      waste more time! :P
+  <!-- Steps2 Widget ****************** -->
+
+  <Steps2
+    title="Póngase en contacto con nosotros"
+    subtitle="¿Tiene alguna pregunta? No dude en ponerse en contacto con nosotros a través del siguiente formulario. Estamos aquí para ayudarle!"
+    callToAction={{
+      text: 'Comentanos',
+      target: '_blank',
+      href: 'https://forms.gle/H1dRuGBHvAGP9hy3A',
+    }}
+    items={[
+      {
+        title: 'Escribenos',
+        description: 'bioenneagramcoach@gmail.com',
+        href: 'mailto:bioenneagramcoach@gmail.com?Subject=Interesado%20en%20los%20productos',
+        icon: 'tabler:mail',
+      },
+      {
+        title: 'Contactanos',
+        description: '+57 (300) 448-1819',
+        href: 'tel:+573004481819',
+        icon: 'tabler:headset',
+      },
+      {
+        title: 'Siguenos',
+        description: '@bioenneagramcoach',
+        href: 'https://www.instagram.com/bioenneagramcoach/',
+        icon: 'tabler:brand-instagram',
+      },
+    ]}
+  />
+
+  <!-- BlogLatestPost Widget **************** -->
+<!-- 
+  <BlogLatestPosts
+    id="blog"
+    title="Manténgase informado con el blog de Bioenneagram"
+    information={`Explore our collection of articles, guides, and tutorials on web development, design trends, and using bioenneagram effectively for your projects.`}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
-  </CallToAction>
+  </BlogLatestPosts> -->
 </Layout>
