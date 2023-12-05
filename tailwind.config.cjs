@@ -16,6 +16,10 @@ module.exports = {
         serif: ['var(--aw-font-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading)', ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        logo: "url('./src/assets/favicons/apple-touch-icon.png')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],
