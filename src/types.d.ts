@@ -1,5 +1,5 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import type { HTMLAttributes, ImageMetadata } from 'astro/types';
+import type { HTMLAttributes } from 'astro/types';
 
 export interface Post {
   /** A unique ID number that identifies a post. */
@@ -21,7 +21,7 @@ export interface Post {
   /** Optional summary of post content. */
   excerpt?: string;
   /**  */
-  image?: ImageMetadata | string;
+  image?: string;
 
   /**  */
   category?: string;
@@ -180,7 +180,6 @@ export interface CallToAction extends HTMLAttributes<a> {
   text?: string;
   icon?: string;
   classes?: Record<string, string>;
-  type?: 'button' | 'submit' | 'reset';
 }
 
 export interface ItemGrid {
@@ -262,6 +261,7 @@ export interface Steps extends Headline, Widget {
     title: string;
     description?: string;
     icon?: string;
+    href?: string;
     classes?: Record<string, string>;
   }>;
   callToAction?: string | CallToAction;
