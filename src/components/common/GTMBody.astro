@@ -1,0 +1,12 @@
+---
+import { ANALYTICS } from '~/utils/config';
+---
+
+<!-- Google Tag Manager (noscript) -->
+{
+  ANALYTICS?.vendors?.googleTagManager?.id ? (
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGBLNSF"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    ) : null
+}
+  <!-- End Google Tag Manager (noscript) -->
