@@ -2,14 +2,14 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Header from '~/components/widgets/Header.astro';
-import Hero2 from '~/components/widgets/Hero2.astro';
+import Hero from '~/components/widgets/Hero.astro';
 import Features from '~/components/widgets/Features.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
 import Content from '~/components/widgets/Content.astro';
 import Pricing from '~/components/widgets/Pricing.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
 
 import { headerData } from '~/navigation';
-import FAQs from '~/components/widgets/FAQs.astro';
 // import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 const metadata = {
@@ -19,36 +19,37 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <Fragment slot="header">
-    <Header
-      {...headerData}
-      isSticky
-    />
+    <Header {...headerData} isSticky />
   </Fragment>
+  <!-- Hero Widget ******************* -->
 
-  <!-- Hero2 Widget ******************* -->
-
-  <Hero2
+  <Hero
     tagline="Crecimiento Personal"
     actions={[
-      { variant: 'primary', target: '_blank', text: 'Agendar Ahora', href: 'https://meetings.hubspot.com/bioenneagramcoach' },
+      {
+        variant: 'primary',
+        target: '_blank',
+        text: 'Agendar Ahora',
+        href: 'https://meetings.hubspot.com/bioenneagramcoach',
+      },
     ]}
     image={{
       src: 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       alt: 'Bioenneagram Hero Image',
-    }}  
+    }}
   >
     <Fragment slot="title">
       Listo para descrubrir los secretos de <br /> tu personalidad : <span class="text-accent dark:text-white highlight"
         >ENEAGRAMA - BIODESCODIFICACIÓN</span
       ><br />
-    </Fragment>
-
-    <Fragment slot="subtitle">
+    </Fragment><Fragment slot="subtitle">
       <span class="hidden sm:inline">
-        Descubre tus fortalezas, debilidades y como mejorar tus relaciones personales con <span class="font-semibold">Bioenneagram</span>.</span
+        Descubre tus fortalezas, debilidades y como mejorar tus relaciones personales con <span class="font-semibold"
+          >Bioenneagram</span
+        >.</span
       >
     </Fragment>
-  </Hero2>
+  </Hero>
 
   <!-- Features Widget *************** -->
 
@@ -189,7 +190,8 @@ const metadata = {
     prices={[
       {
         title: 'Conferencias Inspiradoras',
-        subtitle: 'Ve y asiste a conferencias impactantes que desafían tu perspectiva y estimulan el crecimiento personal',
+        subtitle:
+          'Ve y asiste a conferencias impactantes que desafían tu perspectiva y estimulan el crecimiento personal',
         price: '0',
         period: 'cop',
         callToAction: {
@@ -214,7 +216,7 @@ const metadata = {
       {
         title: 'Terapia para Parejas',
         subtitle: 'Espacio seguro para abordar desafíos y mejorar la comunicación en pareja',
-        price: '120k',
+        price: '130k',
         period: 'cop',
         callToAction: {
           target: '_blank',
@@ -255,7 +257,8 @@ const metadata = {
         icon: 'tabler:chevrons-right',
       },
       {
-        title: '¿Es necesario tener experiencia previa en biodescodificación o eneagrama para participar en sesiones de Bioenneagram?',
+        title:
+          '¿Es necesario tener experiencia previa en biodescodificación o eneagrama para participar en sesiones de Bioenneagram?',
         description: `No se requiere experiencia previa. Las sesiones de Bioenneagram están diseñadas para adaptarse a todos los niveles de familiaridad con la biodescodificación y el eneagrama. Nuestros profesionales te guiarán a través del proceso, asegurándose de que te sientas cómodo y comprendas cada etapa.`,
         icon: 'tabler:chevrons-right',
       },
@@ -309,7 +312,7 @@ const metadata = {
   />
 
   <!-- BlogLatestPost Widget **************** -->
-<!-- 
+  <!-- 
   <BlogLatestPosts
     id="blog"
     title="Manténgase informado con el blog de Bioenneagram"

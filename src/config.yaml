@@ -1,17 +1,15 @@
 site:
   name: Bioenneagram
-  site: 'https://bioenneagram-astro.vercel.app'
+  site: 'https://bioenneagram.com'
   base: '/'
   trailingSlash: false
-
-  googleSiteVerificationId: orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M
 
 # Default SEO metadata
 metadata:
   title:
     default: Bioenneagram
     template: '%s - Bioenneagram'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+  description: "🧘‍♂️  Descubre cómo el poder del eneagrama y la biodescodificación pueden ayudar en el desarrollo del ser."
   robots:
     index: true
     follow: true
@@ -23,9 +21,11 @@ metadata:
         height: 628
     type: website
   twitter:
-    handle: '@onwidget'
-    site: '@onwidget'
+    handle: '@bioenneagram'
+    site: '@bioenneagram'
     cardType: summary_large_image
+
+
 
 i18n:
   language: es
