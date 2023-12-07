@@ -30,15 +30,6 @@
           "value": "1; mode=block"
         }
       ]
-    },
-    {
-      "source": "https://www.videoask.com/embed/embed.js",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        }
-      ]
     }
   ]
 }
