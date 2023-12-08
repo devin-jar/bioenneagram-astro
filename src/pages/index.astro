@@ -56,8 +56,7 @@ const metadata = {
 
   <!-- Note Widget *************** -->
 
- <Note/>
-
+  <Note />
 
   <!-- Features Widget *************** -->
 
@@ -289,11 +288,13 @@ const metadata = {
   <CallToAction
     title="Let's create together"
     subtitle="Ready to transform your vision into captivating designs?"
-    actions={[{
-      variant:"primary",
-      text: 'Hire me',
-      href: '/',
-    }]}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Hire me',
+        href: '/',
+      },
+    ]}
   />
 
   <!-- FAQs Widget ******************* -->
@@ -367,26 +368,24 @@ const metadata = {
     ]}
   />
 
-   <!-- Add the code below inside the <body> tags of your HTML page -->
-    <script is:inline >
-      window.VIDEOASK_EMBED_CONFIG = window.VIDEOASK_EMBED_CONFIG || {};
-      window.VIDEOASK_EMBED_CONFIG = {
-        "kind": "widget",
-        "url": "https://www.videoask.com/fqgsft4zc",
-        "options": {
-          "widgetType": "VideoThumbnailExtraLarge",
-          "text": "Hablemos",
-          "backgroundColor": "#379CFB",
-          "position": "bottom-right",
-          "dismissible": false,
-          "videoPosition": "center center"
-        }
-      }
-      </script>
-      <script is:inline src="https://www.videoask.com/embed/embed.js"></script>
-    
-      <!-- Important!!! In order to allow your videoask to open up on the same page when interacting with the widget, your website must use the secure https:// protocol (i.e have an SSL certificate). Otherwise, when clicking the widget, a new tab will be automatically opened in the browser.
-      -->
+  <!-- Add the code below inside the <body> tags of your HTML page -->
+  <script is:inline>
+    window.VIDEOASK_EMBED_CONFIG = {
+      kind: 'widget',
+      url: 'https://www.videoask.com/fqgsft4zc',
+      options: {
+        widgetType: 'VideoThumbnailExtraLarge',
+        text: 'Hablemos',
+        backgroundColor: '#379CFB',
+        position: 'bottom-left',
+        dismissible: true,
+        videoPosition: 'center center',
+      },
+    };
+  </script>
+  <script is:inline src="https://www.videoask.com/embed/embed.js"></script>
+  <!-- Important!!! In order to allow your videoask to open up on the same page when interacting with the widget, your website must use the secure https:// protocol (i.e have an SSL certificate). Otherwise, when clicking the widget, a new tab will be automatically opened in the browser.
+  -->
 
   <!-- BlogLatestPost Widget **************** -->
   <!-- 
