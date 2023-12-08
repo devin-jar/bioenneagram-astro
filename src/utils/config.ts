@@ -64,6 +64,10 @@ export interface AnalyticsConfig {
       id?: string;
       partytown?: boolean;
     };
+    googleTagManager: {
+      id?: string;
+      partytown?: boolean;
+    };
   };
 }
 
