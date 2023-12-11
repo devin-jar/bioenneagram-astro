@@ -135,7 +135,13 @@ export const headerData = {
     //   href: '#',
     // },
   ],
-  actions: [{ text: 'Reserva', href: 'https://meetings.hubspot.com/bioenneagramcoach', target: '_blank' }],
+  actions: [
+    {
+      text: 'Reserva',
+      href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
+      target: '_blank',
+    },
+  ],
 };
 
 export const footerData = {
