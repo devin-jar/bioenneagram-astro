@@ -11,8 +11,8 @@ metadata:
     template: '%s - Bioenneagram'
   description: "🧘‍♂️  Descubre cómo el poder del eneagrama y la biodescodificación pueden ayudar en el desarrollo del ser."
   robots:
-    index: true
-    follow: true
+    index: false
+    follow: false
   openGraph:
     site_name: Bioenneagram
     images:
