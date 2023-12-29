@@ -17,7 +17,7 @@ module.exports = {
         heading: ['var(--aw-font-heading)', ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
-        logo: "url('./src/assets/favicons/apple-touch-icon.png')",
+        logo: "url('./src/assets/images/logo.png')",
         'footer-texture': "url('/img/footer-texture.png')",
       },
     },
