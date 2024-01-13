@@ -156,7 +156,7 @@ export const footerData = {
         { text: 'Taller de emociones', href: getPermalink('/building') },
         { text: 'Curso de introducción al cerebro', href: getPermalink('/building') },
         { text: 'Curso de introducción al eneagrama', href: getPermalink('/building') },
-        { text: 'Curso de eneagrama game', href: getPermalink('/building') },
+        { text: 'Curso de eneagrama game', href: '/landing/course-enneagram-game' },
         { text: 'Curso de introducción a la biodescodificación', href: getPermalink('/building') },
       ],
     },
