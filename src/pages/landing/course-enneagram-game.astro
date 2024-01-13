@@ -1,0 +1,48 @@
+---
+import Layout from '~/layouts/LandingLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import ImgCourse from '~/assets/images/eneagrama-game.jpg';
+
+const metadata = {
+  title: 'Curso de Eneagrama Game',
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero
+    tagline="Cursos"
+    title="Curso de Eneagrama Game: Una herramienta de autodescubrimiento"
+    subtitle="Apúntate a mi curso en VIVO y aprende sobre la herramienta de gamificación para descubrir tu personalidad, la misma que utilizo con mis pacientes en consultas."
+    actions={[
+      { variant: 'primary', target: '_blank', text: 'Inscribete Ahora', href: 'https://api.whatsapp.com/send?phone=573004481819&text=Hola!%2C%20v%C3%AD%20tu%20curso%20de%20Eneagrama%20Game%20en%20internet%20y%20me%20gustar%C3%ADa%20agendar%20un%20espacio%20contigo%20para%20obtener%20m%C3%A1s%20informaci%C3%B3n.', icon: 'tabler:square-rounded-arrow-right' },
+      // { text: 'Learn more', href: '#' },
+    ]}
+    image={{
+      src: `${ImgCourse.src}`,
+      alt: 'Imagen Curso de Eneagrama Game Bioenneagram Coach',
+    }}
+  />
+
+  <CallToAction
+    title="Información"
+    subtitle="Abajo encontrarás un PDF con la información detallada del curso, leelo para saber si este curso es para tí."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Descargar PDF',
+        href: '/pdf/brochure-eneagrama-game.pdf',
+        icon: 'tabler:download',
+        target: '_blank',
+      },
+    ]}
+  />
+</Layout>
