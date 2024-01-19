@@ -7,7 +7,11 @@ import Steps2 from '~/components/widgets/Steps2.astro';
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'About us',
+  title: 'Nosotros',
+  // robots: {
+  //   index: true,
+  //   follow: true,
+  // }
 };
 ---
 
@@ -15,7 +19,7 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
-    tagline="About us"
+    tagline="Nosotros"
     image={{
       src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
       alt: 'Caos Image',
@@ -36,37 +40,37 @@ const metadata = {
   <!-- Stats Widget ****************** -->
 
   <Stats
-    title="Statistics about us"
+    title="Datos de nosotros"
     stats={[
-      { title: 'Offices', amount: '4' },
-      { title: 'Employees', amount: '248' },
-      { title: 'Templates', amount: '12' },
-      { title: 'Awards', amount: '24' },
+      { title: 'Pacientes', amount: '413' },
+      { title: 'Empresas', amount: '6' },
+      // { title: 'Templates', amount: '12' },
+      // { title: 'Awards', amount: '24' },
     ]}
   />
 
   <!-- Features3 Widget ************** -->
 
   <Features3
-    title="Our templates"
+    title="Nuestros enfoques"
     subtitle="Etiam scelerisque, enim eget vestibulum luctus, nibh mauris blandit nulla, nec vestibulum risus justo ut enim. Praesent lacinia diam et ante imperdiet euismod."
     columns={3}
     isBeforeContent={true}
     items={[
       {
-        title: 'Educational',
+        title: 'Individual',
         description:
           'Morbi faucibus luctus quam, sit amet aliquet felis tempor id. Cras augue massa, ornare quis dignissim a, molestie vel nulla.',
         icon: 'tabler:template',
       },
       {
-        title: 'Interior Design',
+        title: 'Relaciones de pareja',
         description:
           'Vivamus porttitor, tortor convallis aliquam pretium, turpis enim consectetur elit, vitae egestas purus erat ac nunc nulla.',
         icon: 'tabler:template',
       },
       {
-        title: 'Photography',
+        title: 'Empresas',
         description:
           'Duis sed lectus in nisl vehicula porttitor eget quis odio. Aliquam erat volutpat. Nulla eleifend nulla id sem fermentum.',
         icon: 'tabler:template',
@@ -81,19 +85,19 @@ const metadata = {
     isAfterContent={true}
     items={[
       {
-        title: 'E-commerce',
+        title: 'Educación',
         description:
           'Rutrum non odio at vehicula. Proin ipsum justo, dignissim in vehicula sit amet, dignissim id quam. Sed ac tincidunt sapien.',
         icon: 'tabler:template',
       },
       {
-        title: 'Blog',
+        title: 'Enfermedades mentales',
         description:
           'Nullam efficitur volutpat sem sed fringilla. Suspendisse et enim eu orci volutpat laoreet ac vitae libero.',
         icon: 'tabler:template',
       },
       {
-        title: 'Business',
+        title: 'Enfermedades físicas',
         description:
           'Morbi et elit finibus, facilisis justo ut, pharetra ipsum. Donec efficitur, ipsum quis congue luctus, mauris magna.',
         icon: 'tabler:template',
@@ -126,7 +130,7 @@ const metadata = {
   <!-- Steps2 Widget ****************** -->
 
   <Steps2
-    title="Our values"
+    title="Nuestros valores"
     subtitle="Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus. Nulla facilisi. Vestibulum malesuada lacus."
     items={[
       {
@@ -150,7 +154,7 @@ const metadata = {
   <!-- Steps2 Widget ****************** -->
 
   <Steps2
-    title="Achievements"
+    title="Logros"
     subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla, sed porttitor est nibh at nulla."
     isReversed={true}
     callToAction={{
@@ -181,8 +185,8 @@ const metadata = {
   <!-- Features2 Widget ************** -->
 
   <Features2
-    title="Our locations"
-    tagline="Find us"
+    title="Nuestras ubicaciones"
+    tagline="Encuentranos"
     columns={4}
     items={[
       {
@@ -208,17 +212,17 @@ const metadata = {
 
   <Features2
     title="Technical Support"
-    tagline="Contact us"
+    tagline="Contactanos"
     columns={2}
     items={[
       {
-        title: 'Chat with us',
+        title: 'Chatea con nosotros',
         description:
           'Integer luctus laoreet libero, auctor varius purus rutrum sit amet. Ut nec molestie nisi, quis eleifend mi.',
         icon: 'tabler:messages',
       },
       {
-        title: 'Call us',
+        title: 'Llamanos',
         description:
           'Mauris faucibus finibus orci, in posuere elit viverra non. In hac habitasse platea dictumst. Cras lobortis metus a hendrerit congue.',
         icon: 'tabler:headset',

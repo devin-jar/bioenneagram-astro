@@ -172,7 +172,7 @@ export const footerData = {
       title: 'Soporte',
       links: [
         // { text: 'Contactanos', href: '/contact' },
-        { text: 'Nosotros', href: getPermalink('/building') },
+        { text: 'Nosotros', href: '/about' },
         { text: 'Blog', href: getPermalink('/building') },
         { text: 'Servicios Profesionales', href: getPermalink('/building') },
         { text: 'Impacto Social', href: getPermalink('/building') },
