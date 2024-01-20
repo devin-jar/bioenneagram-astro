@@ -176,7 +176,7 @@ export const footerData = {
         { text: 'Blog', href: getPermalink('/building') },
         { text: 'Servicios Profesionales', href: getPermalink('/building') },
         { text: 'Impacto Social', href: getPermalink('/building') },
-        { text: 'Tienda', href: getPermalink('/building') },
+        { text: 'Tienda', href: 'https://shop.bioenneagram.com/' },
         { text: 'Ubicación', target: '_blank', href: 'https://goo.gl/maps/Zw139zUs4rSwnGUQ7' },
       ],
     },
