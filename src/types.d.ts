@@ -88,6 +88,18 @@ export interface Image {
   alt?: string;
 }
 
+export interface FormProps {
+  action?: string;
+  target?: string;
+  id?: string;
+  method?: string;
+}
+
+export interface InputOptions {
+  value?: string;
+  label?: string;
+}
+
 export interface Video {
   src: string;
   type?: string;
@@ -158,6 +170,7 @@ export interface Testimonial {
 
 export interface Input {
   type: HTMLInputTypeAttribute;
+  options: Array<InputOptions> ;
   name: string;
   label?: string;
   autocomplete?: string;
@@ -166,6 +179,7 @@ export interface Input {
 
 export interface Textarea {
   label?: string;
+  name?: string;
   placeholder?: string;
   rows?: number;
 }
@@ -198,6 +212,7 @@ export interface Collapse {
 }
 
 export interface Form {
+  formProps?: Array<FormProps>;
   inputs?: Array<Input>;
   textarea?: Textarea;
   disclaimer?: Disclaimer;
@@ -280,3 +295,5 @@ export interface Content extends Headline, Widget {
 }
 
 export interface Contact extends Headline, Form, Widget {}
+
+export interface GoogleForm extends Headline, Form, Widget {}

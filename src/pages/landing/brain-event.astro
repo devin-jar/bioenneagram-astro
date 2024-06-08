@@ -1,0 +1,78 @@
+---
+import Layout from '~/layouts/LandingLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import LeadForm from '~/components/widgets/GoogleForm.astro';
+
+import ImgCourse from '~/assets/images/eneagrama-game.jpg';
+
+const metadata = {
+  title: 'Evento Presencial: Cada Cerebro Es Un Mundo',
+  Description: '"Cada cerebro es un mundo" es una espacio único diseñado para explorar la diversidad y el potencial del cerebro humano. Únete a nosotros para una noche llena de conocimiento, interacción y descubrimientos fascinantes sobre tus patrones de comportamientos.',
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero
+    tagline="Eventos"
+    title="Evento Presencial: Cada Cerebro Es Un Mundo"
+    subtitle='"Cada cerebro es un mundo" es una espacio único diseñado para explorar la diversidad y el potencial del cerebro humano. Únete a nosotros para una noche llena de conocimiento, interacción y descubrimientos fascinantes sobre tus patrones de comportamientos.'
+    image={{
+      src: `${ImgCourse.src}`,
+      alt: 'Imagen Evento Presencial: Cada Cerebro Es Un Mundo',
+    }}
+  />
+
+  <LeadForm
+    title="¡Reserva tu lugar!"
+    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    formProps={{
+      action: 'https://docs.google.com/forms/d/e/1FAIpQLSd8V-moVimC7_vevFIBvveWtu4QbGXekEZpdazLtMao9Xe0vQ/formResponse',
+      target: "_self",
+      id: "bootstrapForm",
+      method: "POST",
+    }}
+    inputs={[
+      {
+        type: 'text',
+        name: 'entry.2092238618',
+        label: 'Nombre',
+      },
+      {
+        type: 'text',
+        name: 'entry.1556369182',
+        label: 'Correo electrónico',
+      },
+      {
+        type: 'text',
+        name: 'entry.36582446',
+        label: 'Número de celular (Ejemplo: (+57) 312 345 6789 )',
+      },
+      {
+        type: 'radio',
+        name: 'entry.2109138769',
+        label: 'Forma de pago',
+        options: [
+          { value: 'En efectivo', label: 'En efectivo' },
+          { value: 'Digital', label: 'Digital' },
+        ],
+      },
+    ]}
+    textarea={{
+      name: 'entry.354156381',
+      label: 'Dejanos aquí abajo un mensaje por si tienes comentarios',
+    }}
+    disclaimer={{
+      label:
+        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+    }}
+    description="Our support team typically responds within 24 business hours."
+  />
+  
+</Layout>
