@@ -8,6 +8,8 @@ import LeadForm from '~/components/widgets/GoogleForm.astro';
 import ImgCourse from '~/assets/images/eneagrama-game.jpg';
 import { isValidEmail } from '~/utils/isValidEmail';
 
+export const prerender = false;
+
 const metadata = {
   title: 'Evento Presencial: Cada Cerebro Es Un Mundo',
   Description: '"Cada cerebro es un mundo" es una espacio único diseñado para explorar la diversidad y el potencial del cerebro humano. Únete a nosotros para una noche llena de conocimiento, interacción y descubrimientos fascinantes sobre tus patrones de comportamientos.',
