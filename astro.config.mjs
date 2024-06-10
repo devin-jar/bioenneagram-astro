@@ -10,6 +10,7 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
+import react from "@astrojs/react";
 import tasks from './src/utils/tasks';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
@@ -70,8 +71,7 @@ export default defineConfig({
       })
     ),
 
-    tasks(),
-  ],
+    tasks(), react()],
 
   image: {
     service: squooshImageService(),

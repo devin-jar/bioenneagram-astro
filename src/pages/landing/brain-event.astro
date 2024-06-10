@@ -7,6 +7,7 @@ import LeadForm from '~/components/widgets/GoogleForm.astro';
 
 import ImgCourse from '~/assets/images/eneagrama-game.jpg';
 import { isValidEmail } from '~/utils/isValidEmail';
+import FeedbackForm from '~/components/widgets/FeedbackForm';
 
 export const prerender = false;
 
@@ -153,4 +154,5 @@ if (Astro.request.method === "POST") {
           description="Our support team typically responds within 24 business hours."
         />)
     }
+    <FeedbackForm client:load />
 </Layout>
