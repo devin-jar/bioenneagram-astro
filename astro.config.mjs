@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { defineConfig, squooshImageService } from 'astro/config';
-import amplify from 'astro-aws-amplify';
+// import amplify from 'astro-aws-amplify';
 
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
@@ -14,6 +14,7 @@ import tasks from './src/utils/tasks';
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
 
 import { ANALYTICS, SITE } from './src/utils/config.ts';
+import vercelServerless from '@astrojs/vercel/serverless';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,8 +30,10 @@ export default defineConfig({
   base: SITE.base,
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
 
-  output: 'server',
-  adapter: amplify(),
+  output: 'hybrid',
+  adapter: vercelServerless({
+    edgeMiddleware: true,
+  }),
 
   i18n: {
     defaultLocale: 'es',
