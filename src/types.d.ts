@@ -173,6 +173,7 @@ export interface Input {
   options: Array<InputOptions> ;
   name: string;
   label?: string;
+  error?: string;
   autocomplete?: string;
   placeholder?: string;
 }

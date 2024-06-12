@@ -7,7 +7,6 @@ import LeadForm from '~/components/widgets/GoogleForm.astro';
 
 import ImgCourse from '~/assets/images/eneagrama-game.jpg';
 import { isValidEmail } from '~/utils/isValidEmail';
-import FeedbackForm from '~/components/widgets/FeedbackForm';
 
 export const prerender = false;
 
@@ -21,7 +20,7 @@ const metadata = {
 };
 
 const form = {
-  action: 'https://docs.google.com/forms/d/e/1FAIpQLSd8V-moVimC7_vevFIBvveWtu4QbGXekEZpdazLtMao9Xe0vQ/formResponse'
+  action: 'https://docs.google.com/forms/d/e/1FAIpQLSdXCdh2iBaGPlOh0qh7aRbhuwfxZrefR4jRDh6HdkDByEQEuA/formResponse'
 }
 
 const errors = { name: "", email: "", phone: "", payment: "" };
@@ -34,7 +33,7 @@ if (Astro.request.method === "POST") {
     const email = data.get("entry.1556369182");
     const phone = data.get("entry.2109138769");
     const payment = data.get("entry.36582446");
-    console.log(name)
+    // console.log(name)
     if (typeof name !== "string" || name.length < 1) {
       errors.name += "Please enter a username. ";
     }
@@ -58,9 +57,13 @@ if (Astro.request.method === "POST") {
             body: data,
           });
 
+          
+          console.log(response);
+
           if (response.ok) {
             console.log('Form Submitted. Thanks.');
             formSubmitted = response;
+            console.log(response.json);
             // Puedes redirigir al usuario a una página de agradecimiento si lo deseas:
             // window.location.href = 'http://www.mydomain.com/thankyoupage.html';
           } else {
@@ -92,24 +95,7 @@ if (Astro.request.method === "POST") {
       alt: 'Imagen Evento Presencial: Cada Cerebro Es Un Mundo',
     }}
   />
-    {
-      formSubmitted ? (
-      <CallToAction
-        title="Muchas gracias 🎉"
-        subtitle="Abajo encontrarás un PDF con la información detallada del evento, leelo para saber si este curso es para tí."
-        actions={[
-          {
-            variant: 'primary',
-            text: 'Descargar PDF',
-            href: '/pdf/brochure-eneagrama-game.pdf',
-            icon: 'tabler:download',
-            target: '_blank',
-          },
-        ]}
-      />
-      
-      ) : (
-        <LeadForm
+  <LeadForm
           title="¡Reserva tu lugar!"
           subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
           formProps={{
@@ -122,21 +108,25 @@ if (Astro.request.method === "POST") {
               type: 'text',
               name: 'entry.2092238618',
               label: 'Nombre',
+              error: errors.name,
             },
             {
               type: 'text',
               name: 'entry.1556369182',
               label: 'Correo electrónico',
+              error: errors.email,
             },
             {
               type: 'text',
               name: 'entry.36582446',
               label: 'Número de celular (Ejemplo: (+57) 312 345 6789 )',
+              error: errors.phone,
             },
             {
               type: 'radio',
               name: 'entry.2109138769',
               label: 'Forma de pago',
+              error: errors.payment,
               options: [
                 { value: 'En efectivo', label: 'En efectivo' },
                 { value: 'Digital', label: 'Digital' },
@@ -152,7 +142,5 @@ if (Astro.request.method === "POST") {
               'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
           }}
           description="Our support team typically responds within 24 business hours."
-        />)
-    }
-    <FeedbackForm client:load />
+        />
 </Layout>

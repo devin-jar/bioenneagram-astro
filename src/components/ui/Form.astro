@@ -9,13 +9,14 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '', .
   {
     inputs &&
       inputs.map(
-        ({ type = 'text', name, label = '', autocomplete = 'on', placeholder = '', options = [] }) =>
+        ({ type = 'text', name, label = '', error, autocomplete = 'on', placeholder = '', options = [] }) =>
           name && (
             <div class="mb-6">
               {label && (
                 <label for={name} class="block text-sm font-medium">
                   {label}
                 </label>
+                <p>{error}</p>
               )}
               {
                 // Se añadió una condición para el tipo 'radio'

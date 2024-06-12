@@ -2,7 +2,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { defineConfig, squooshImageService } from 'astro/config';
-import amplify from 'astro-aws-amplify';
 import netlify from '@astrojs/netlify';
 
 import sitemap from '@astrojs/sitemap';
