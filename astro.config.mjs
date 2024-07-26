@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { defineConfig, squooshImageService } from 'astro/config';
-import netlify from '@astrojs/netlify';
+import node from '@astrojs/node';
 
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
@@ -31,7 +31,9 @@ export default defineConfig({
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
 
   output: 'hybrid',
-  adapter: netlify(),
+  adapter: node({
+    mode: 'standalone',
+  }),
 
   i18n: {
     defaultLocale: 'es',
