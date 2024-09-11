@@ -1,0 +1,146 @@
+---
+import Layout from '~/layouts/LandingLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import LeadForm from '~/components/widgets/GoogleForm.astro';
+
+import ImgCourse from '~/assets/images/eneagrama-game.jpg';
+import { isValidEmail } from '~/utils/isValidEmail';
+
+export const prerender = false;
+
+const metadata = {
+  title: 'Evento Presencial: Cada Cerebro Es Un Mundo',
+  Description: '"Cada cerebro es un mundo" es una espacio único diseñado para explorar la diversidad y el potencial del cerebro humano. Únete a nosotros para una noche llena de conocimiento, interacción y descubrimientos fascinantes sobre tus patrones de comportamientos.',
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
+
+const form = {
+  action: 'https://docs.google.com/forms/d/e/1FAIpQLSdXCdh2iBaGPlOh0qh7aRbhuwfxZrefR4jRDh6HdkDByEQEuA/formResponse'
+}
+
+const errors = { name: "", email: "", phone: "", payment: "" };
+let formSubmitted: any | undefined;
+// console.log(Astro.request.method);
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("entry.2092238618");
+    const email = data.get("entry.1556369182");
+    const phone = data.get("entry.2109138769");
+    const payment = data.get("entry.36582446");
+    // console.log(name)
+    if (typeof name !== "string" || name.length < 1) {
+      errors.name += "Please enter a username. ";
+    }
+    if (typeof email !== "string" || !isValidEmail(email)) {
+      errors.email += "Email is not valid. ";
+    }
+    if (typeof phone !== "string" || phone.length < 6) {
+      errors.phone += "Password must be at least 6 characters. ";
+    }
+    if (typeof payment !== "string" || payment.length < 6) {
+      errors.payment += "Password must be at least 6 characters. ";
+    }
+    const hasErrors = Object.values(errors).some(msg => msg)
+    // Do something with the data
+    console.log(hasErrors);
+    if (!hasErrors) {
+      console.log('into');
+      try {
+        const response = await fetch(form.action, {
+            method: Astro.request.method,
+            body: data,
+          });
+
+          
+          console.log(response);
+
+          if (response.ok) {
+            console.log('Form Submitted. Thanks.');
+            formSubmitted = response;
+            console.log(response.json);
+            // Puedes redirigir al usuario a una página de agradecimiento si lo deseas:
+            // window.location.href = 'http://www.mydomain.com/thankyoupage.html';
+          } else {
+            throw new Error('Network response was not ok.');
+          }
+        // return Astro.redirect("/");
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero
+    tagline="Eventos"
+    title="Evento Presencial: Cada Cerebro Es Un Mundo"
+    subtitle='"Cada cerebro es un mundo" es una espacio único diseñado para explorar la diversidad y el potencial del cerebro humano. Únete a nosotros para una noche llena de conocimiento, interacción y descubrimientos fascinantes sobre tus patrones de comportamientos.'
+    image={{
+      src: `${ImgCourse.src}`,
+      alt: 'Imagen Evento Presencial: Cada Cerebro Es Un Mundo',
+    }}
+  />
+  <LeadForm
+          title="¡Reserva tu lugar!"
+          subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+          formProps={{
+            target: "_self",
+            id: "bootstrapForm",
+            method: "POST",
+          }}
+          inputs={[
+            {
+              type: 'text',
+              name: 'entry.2092238618',
+              label: 'Nombre',
+              error: errors.name,
+            },
+            {
+              type: 'text',
+              name: 'entry.1556369182',
+              label: 'Correo electrónico',
+              error: errors.email,
+            },
+            {
+              type: 'text',
+              name: 'entry.36582446',
+              label: 'Número de celular (Ejemplo: (+57) 312 345 6789 )',
+              error: errors.phone,
+            },
+            {
+              type: 'radio',
+              name: 'entry.2109138769',
+              label: 'Forma de pago',
+              error: errors.payment,
+              options: [
+                { value: 'En efectivo', label: 'En efectivo' },
+                { value: 'Digital', label: 'Digital' },
+              ],
+            },
+          ]}
+          textarea={{
+            name: 'entry.354156381',
+            label: 'Dejanos aquí abajo un mensaje por si tienes comentarios',
+          }}
+          disclaimer={{
+            label:
+              'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
+          }}
+          description="Our support team typically responds within 24 business hours."
+        />
+</Layout>

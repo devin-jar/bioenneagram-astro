@@ -2,12 +2,14 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { defineConfig, squooshImageService } from 'astro/config';
+import node from '@astrojs/node';
 
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
+import react from "@astrojs/react";
 import tasks from './src/utils/tasks';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
@@ -28,7 +30,10 @@ export default defineConfig({
   base: SITE.base,
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
 
-  output: 'static',
+  output: 'hybrid',
+  adapter: node({
+    mode: 'standalone',
+  }),
 
   i18n: {
     defaultLocale: 'es',
@@ -67,8 +72,7 @@ export default defineConfig({
       })
     ),
 
-    tasks(),
-  ],
+    tasks(), react()],
 
   image: {
     service: squooshImageService(),
