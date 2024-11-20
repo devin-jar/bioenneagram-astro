@@ -138,7 +138,7 @@ export const headerData = {
   actions: [
     {
       text: 'Reserva',
-      href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
+      href: 'https://booking.bioenneagram.com/book',
       target: '_blank',
     },
   ],
