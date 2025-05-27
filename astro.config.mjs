@@ -32,9 +32,9 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'es',
-    locales: ['es', 'en'],
+    locales: ['en', 'es', 'nl', 'fr', 'de'],
     routing: {
-      prefixDefaultLocale: false,
+      prefixDefaultLocale: true,
     },
   },
 
@@ -42,7 +42,20 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      // ++ IMPORTANT FOR SITEMAP WITH i18n ++
+      // Tell the sitemap about your i18n setup
+      i18n: {
+        defaultLocale: 'en', // Must match
+        locales: {
+          en: 'en-US', // Or 'en-US' if you prefer more specific locale codes
+          es: 'es-ES', // Or 'es-ES'
+          de: 'de-DE', // Or 'de-DE'
+          nl: 'nl-NL', // Or 'nl-NL'
+          fr: 'fr-FR', // Or 'fr-FR'
+        },
+      },
+    }),
     mdx(),
     icon({
       include: {

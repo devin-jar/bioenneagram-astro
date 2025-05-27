@@ -1,0 +1,125 @@
+export const translations = {
+  es: {
+    // Header
+    home: 'Inicio',
+    services: 'Servicios',
+    blog: 'Blog',
+    blogList: 'Lista de Blog',
+    article: 'Artículo',
+    articleMDX: 'Artículo (con MDX)',
+    categoryPage: 'Página de Categoría',
+    tagPage: 'Página de Etiqueta',
+    aboutUs: 'Nosotros',
+    contactUs: 'Contáctanos',
+    homes: 'Home',
+    bioenneagramHome: 'Bioenneagram',
+    pages: 'Páginas',
+    featuresAnchor: 'Características (Ancla)',
+    pricing: 'Precios',
+    contact: 'Contacto',
+    terms: 'Términos',
+    privacyPolicy: 'Política de Privacidad',
+    landing: 'Landing',
+    leadGeneration: 'Generación de Leads',
+    longFormSales: 'Ventas Long-form',
+    clickThrough: 'Click-Through',
+    productDetails: 'Detalles de Producto',
+    comingSoon: 'Próximamente',
+    subscription: 'Suscripción',
+    widgets: 'Widgets',
+    reserve: 'Reserva',
+
+    // Footer
+    products: 'Productos',
+    retreat: 'Retiro',
+    individualTherapy: 'Terapia individual',
+    couplesTherapy: 'Terapia para parejas',
+    manifestationWorkshop: 'Taller de manifestaciones',
+    emotionsWorkshop: 'Taller de emociones',
+    brainIntroCourse: 'Curso de introducción al cerebro',
+    enneagramIntroCourse: 'Curso de introducción al eneagrama',
+    enneagramGameCourse: 'Curso de eneagrama game',
+    biodescodificacionIntroCourse: 'Curso de introducción a la biodescodificación',
+
+    companies: 'Empresas',
+    teamWorkshop: 'Taller de equipos',
+    conferences: 'Conferencias',
+    consultationPackage: 'Paquete de consultas',
+
+    support: 'Soporte',
+    // contactUs already defined
+    // aboutUs already defined
+    // blog already defined
+    professionalServices: 'Servicios Profesionales',
+    socialImpact: 'Impacto Social',
+    store: 'Tienda',
+    location: 'Ubicación',
+
+    termsAndConditions: 'Términos y Condiciones',
+    privacyPolicies: 'Políticas de Privacidad', // nota: en tu original dice "Politicas"
+
+    // FootNote
+    developedBy: 'Desarrollado por',
+    allRightsReserved: 'Todos los derechos reservados.',
+  },
+  en: {
+    // Header
+    home: 'Home',
+    services: 'Services',
+    blog: 'Blog',
+    blogList: 'Blog List',
+    article: 'Article',
+    articleMDX: 'Article (with MDX)',
+    categoryPage: 'Category Page',
+    tagPage: 'Tag Page',
+    aboutUs: 'About Us',
+    contactUs: 'Contact Us',
+    homes: 'Homes',
+    bioenneagramHome: 'Bioenneagram',
+    pages: 'Pages',
+    featuresAnchor: 'Features (Anchor Link)',
+    pricing: 'Pricing',
+    contact: 'Contact',
+    terms: 'Terms',
+    privacyPolicy: 'Privacy Policy',
+    landing: 'Landing',
+    leadGeneration: 'Lead Generation',
+    longFormSales: 'Long-form Sales',
+    clickThrough: 'Click-Through',
+    productDetails: 'Product Details',
+    comingSoon: 'Coming Soon',
+    subscription: 'Subscription',
+    widgets: 'Widgets',
+    reserve: 'Reserve',
+
+    // Footer
+    products: 'Products',
+    retreat: 'Retreat',
+    individualTherapy: 'Individual Therapy',
+    couplesTherapy: 'Couples Therapy',
+    manifestationWorkshop: 'Manifestation Workshop',
+    emotionsWorkshop: 'Emotions Workshop',
+    brainIntroCourse: 'Brain Introduction Course',
+    enneagramIntroCourse: 'Enneagram Introduction Course',
+    enneagramGameCourse: 'Enneagram Game Course',
+    biodescodificacionIntroCourse: 'Biodescodification Introduction Course',
+
+    companies: 'Companies',
+    teamWorkshop: 'Team Workshop',
+    conferences: 'Conferences',
+    consultationPackage: 'Consultation Package',
+
+    support: 'Support',
+    professionalServices: 'Professional Services',
+    socialImpact: 'Social Impact',
+    store: 'Store',
+    location: 'Location',
+
+    termsAndConditions: 'Terms & Conditions',
+    privacyPolicies: 'Privacy Policies',
+
+    // FootNote
+    developedBy: 'Developed by',
+    allRightsReserved: 'All rights reserved.',
+  },
+};
