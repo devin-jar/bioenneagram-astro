@@ -1,6 +1,7 @@
 ---
+// src/components/widgets/Footer.astro
 import { Icon } from 'astro-icon/components';
-import { SITE } from '~/utils/config';
+import { SITE } from '~/utils/config'; // Asegúrate que este archivo exporta SITE
 import { getHomePermalink } from '~/utils/permalinks';
 
 interface Link {
@@ -8,22 +9,34 @@ interface Link {
   href?: string;
   ariaLabel?: string;
   icon?: string;
+  target?: string; // Añadido para enlaces externos
 }
 
-interface Links {
+interface LinksGroup { // Renombrado de 'Links' a 'LinksGroup' para evitar confusión con la interfaz 'Link'
   title?: string;
   links: Array<Link>;
 }
 
 export interface Props {
-  links: Array<Links>;
+  links: Array<LinksGroup>; // Usar LinksGroup
   secondaryLinks: Array<Link>;
   socialLinks: Array<Link>;
   footNote?: string;
   theme?: string;
+  currentLocale?: string; // Prop para recibir el idioma actual
 }
 
-const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const {
+  links = [],
+  secondaryLinks = [],
+  socialLinks = [],
+  footNote = '',
+  theme = 'light',
+  currentLocale = 'en', // Fallback al idioma por defecto, aunque PageLayout debería pasarlo
+} = Astro.props;
+
+const homePermalinkForLang = getHomePermalink(currentLocale); // Usar currentLocale
+const siteName = SITE?.name || 'Bioenneagram'; // Fallback para el nombre del sitio
 ---
 
 <footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
@@ -32,14 +45,15 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
     <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
       <div class="col-span-12 lg:col-span-4">
         <div class="mb-2">
-          <a class="inline-block font-bold text-xl" href={getHomePermalink()}>{SITE?.name}</a>
+          <a class="inline-block font-bold text-xl" href={homePermalinkForLang}>{siteName}</a>
         </div>
         <div class="text-sm text-muted">
           {
-            secondaryLinks.map(({ text, href }) => (
+            secondaryLinks.map(({ text, href, target }) => (
               <a
                 class="text-muted hover:text-gray-700 dark:text-gray-400 hover:underline transition duration-150 ease-in-out mr-2 rtl:mr-0 rtl:ml-2"
                 href={href}
+                target={target}
                 set:html={text}
               />
             ))
@@ -47,19 +61,26 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
         </div>
       </div>
       {
-        links.map(({ title, links }) => (
+        links.map(({ title, links: subLinks }) => ( // Renombrado 'links' a 'subLinks' para evitar conflicto de nombres en el scope del map
           <div class="col-span-6 md:col-span-3 lg:col-span-2">
             <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
-            {links && Array.isArray(links) && links.length > 0 && (
+            {subLinks && Array.isArray(subLinks) && subLinks.length > 0 && (
               <ul class="text-sm">
-                {links.map(({ text, href, ariaLabel }) => (
+                {subLinks.map(({ text, href, ariaLabel, target }) => (
                   <li class="mb-2">
                     <a
                       class="text-muted hover:text-gray-700 hover:underline dark:text-gray-400 transition duration-150 ease-in-out"
                       href={href}
                       aria-label={ariaLabel}
+                      target={target}
                     >
+                      {/* Usar set:html solo si 'text' puede contener HTML. 
+                          Si es solo texto, es más seguro renderizarlo directamente. 
+                          Dado que viene de JSON de traducciones, es probable que sea solo texto.
+                          Si usas <0></0> para formateo, set:html es necesario.
+                      */}
                       <Fragment set:html={text} />
+                      {/* Alternativa si 'text' es siempre texto plano: {text} */}
                     </a>
                   </li>
                 ))}
@@ -73,15 +94,20 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
       {
         socialLinks?.length ? (
           <ul class="flex mb-4 md:order-1 -ml-2 md:ml-4 md:mb-0 rtl:ml-0 rtl:-mr-2 rtl:md:ml-0 rtl:md:mr-4">
-            {socialLinks.map(({ ariaLabel, href, text, icon }) => (
+            {socialLinks.map(({ ariaLabel, href, text, icon, target }) => ( // Añadido target
               <li>
                 <a
                   class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
                   aria-label={ariaLabel}
                   href={href}
+                  target={target}
                 >
                   {icon && <Icon name={icon} class="w-5 h-5" />}
-                  <Fragment set:html={text} />
+                  {/* Renderizar 'text' para socialLinks solo si es necesario.
+                      Generalmente, el ícono y el ariaLabel son suficientes.
+                      Si 'text' existe y debe mostrarse, puedes usar Fragment.
+                  */}
+                  {text && <Fragment set:html={text} />}
                 </a>
               </li>
             ))}

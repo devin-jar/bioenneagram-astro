@@ -1,0 +1,207 @@
+---
+// src/pages/en/index.astro
+import Layout from '~/layouts/PageLayout.astro';
+
+// Importar componentes
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+// import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+// Definición de la interfaz (o importarla)
+interface JsonModule {
+  default?: Record<string, any>;
+  [key: string]: any;
+}
+
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+
+// Indicar a import.meta.glob el tipo de los módulos que espera
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate; // Si 'default' no existe, toma el módulo entero
+} else {
+  console.warn(`[Page: ${Astro.url.pathname}] Translation file for locale "${currentLocaleFromAstro}" not found at ${expectedModulePath}. Falling back to default locale "${defaultLang}".`);
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Default translation file for locale "${defaultLang}" not found. Using empty object for page content.`);
+    pageTranslations = {};
+  }
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
+// --- FIN DE CARGA DINÁMICA DE TRADUCCIONES ---
+
+const metadata = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
+
+// URLs de imágenes (se mantienen estáticas o podrías moverlas al JSON si varían por idioma)
+const heroImageSrc = 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageEmpresarial = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageParejas = 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageIndividual = 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=1790&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
+const testimonialImages = [
+  'https://i.postimg.cc/V6fSq5R2/img-photo-profile-aleja.jpg',
+  'https://i.postimg.cc/zfSbHTnn/img-photo-profile-juanda.jpg',
+  'https://i.postimg.cc/XJsbTvbM/img-photo-profile-sara.jpg',
+];
+
+// HREFs de los botones
+const bookingLink = 'https://booking.bioenneagram.com/book';
+const youtubeLink = 'https://www.youtube.com/@bioenneagram';
+const whatsappMessageKey = 'footer.social.whatsappMessage'; // Clave para el mensaje de WhatsApp
+const whatsappLink = `https://api.whatsapp.com/send/?phone=573004481819&text=${encodeURIComponent(t(whatsappMessageKey, {defaultValue: 'Hello, I would like to book a session.'}))}&type=phone_number&app_absent=0`;
+const formsLink = 'https://forms.gle/H1dRuGBHvAGP9hy3A';
+const mailtoSubjectKey = 'homepage.mailtoSubject'; // Nueva clave sugerida
+const mailtoLink = `mailto:bioenneagramcoach@gmail.com?Subject=${encodeURIComponent(t(mailtoSubjectKey, {defaultValue: 'Interested in your products'}))}`;
+const telLink = 'tel:+573004481819';
+const instagramLink = 'https://www.instagram.com/bioenneagramcoach/';
+
+const contentSectionsData = t('homepage.contentSections') || []; // Fallback a array vacío
+const featuresItems = t('homepage.features.items') || [];
+const pricingItems = t('homepage.pricing.items') || [];
+const testimonialsItems = t('homepage.testimonials.items') || [];
+const faqsItems = t('homepage.faqs.items') || [];
+const steps2Items = t('homepage.steps2.items') || [];
+---
+
+<Layout metadata={metadata}>
+
+  <Hero
+    tagline={t('homepage.hero.tagline')}
+    actions={[{ variant: 'primary', target: '_blank', text: t('homepage.hero.actionText'), href: bookingLink }]}
+    image={{ src: heroImageSrc, alt: t('homepage.hero.imageAlt') }}
+  >
+    <Fragment slot="title" set:html={t('homepage.hero.title', {'0': '<span class="text-accent dark:text-white highlight">ENNEAGRAM - BIODECODING</span>'})} />
+    <Fragment slot="subtitle" set:html={t('homepage.hero.subtitle', {'1': '<span class="font-semibold">Bioenneagram</span>'})} />
+  </Hero>
+
+  <Note message={t('homepage.note.message', {defaultValue: ''})} /> {/* Asumiendo que Note puede tomar 'message' */}
+
+  <Features
+    id="features"
+    title={t('homepage.features.title')}
+    subtitle={t('homepage.features.subtitle')}
+    columns={2}
+    items={featuresItems}
+  />
+
+  {/* Content Sections - Mapeo */}
+  {Array.isArray(contentSectionsData) && contentSectionsData.map((section, index) => {
+    let dynamicBlockTitle = section.blockTitle;
+    const placeholderMatch = section.blockTitle?.match(/<0>(.*?)<\/0>/); // Añadido ? para seguridad
+    if (placeholderMatch && placeholderMatch[1]) {
+      // Usar la clave dinámica si existe, o la genérica.
+      // Esta parte puede necesitar refinamiento si las claves de blockTitle son muy específicas
+      const blockTitleKey = `homepage.contentSections.${index}.blockTitle`
+      dynamicBlockTitle = t(blockTitleKey, {'0': `<span class="text-2xl">${placeholderMatch[1]}</span>`}, {defaultValue: section.blockTitle});
+    } else {
+      dynamicBlockTitle = t(`homepage.contentSections.${index}.blockTitle`, {}, {defaultValue: section.blockTitle});
+    }
+
+    return (
+    <Content
+      title={index === 0 ? section.mainTitle : undefined}
+      subtitle={index === 0 ? section.mainSubtitle : undefined}
+      isReversed={index === 0 || index === 2}
+      isAfterContent={index > 0}
+      items={Array.isArray(section.items) ? section.items : []}
+      image={{
+        src: index === 0 ? contentImageEmpresarial : index === 1 ? contentImageParejas : contentImageIndividual,
+        alt: section.imageAlt
+      }}
+    >
+      <Fragment slot="content">
+        <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2" set:html={dynamicBlockTitle} />
+      </Fragment>
+      <Fragment slot="bg">
+        <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      </Fragment>
+    </Content>
+  );
+  })}
+
+  <Pricing
+    title={t('homepage.pricing.title')}
+    prices={Array.isArray(pricingItems) ? pricingItems.map((item, idx) => ({
+      title: item.title,
+      subtitle: item.subtitle,
+      price: item.price,
+      period: item.period,
+      callToAction: {
+        target: '_blank',
+        text: item.callToActionText,
+        href: idx === 0 ? youtubeLink : whatsappLink,
+      },
+      hasRibbon: !!item.ribbonTitle,
+      ribbonTitle: item.ribbonTitle || '',
+    })) : []}
+  />
+
+  <Testimonials
+    title={t('homepage.testimonials.title')}
+    subtitle={t('homepage.testimonials.subtitle')}
+    testimonials={Array.isArray(testimonialsItems) ? testimonialsItems.map((item, index) => ({
+      testimonial: item.testimonial,
+      name: item.name,
+      job: item.job,
+      image: {
+        src: testimonialImages[index],
+        alt: item.imageAlt || `${item.name} Image`
+      },
+    })) : []}
+  />
+
+  <CallToAction
+    title={t('homepage.callToActionWidget.title')}
+    subtitle={t('homepage.callToActionWidget.subtitle')}
+    actions={[{ variant: 'primary', text: t('homepage.callToActionWidget.actionText'), href: whatsappLink }]}
+  />
+
+  <FAQs
+    title={t('homepage.faqs.title')}
+    items={Array.isArray(faqsItems) ? faqsItems : []}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </FAQs>
+
+  <Steps2
+    title={t('homepage.steps2.title')}
+    subtitle={t('homepage.steps2.subtitle')}
+    callToAction={{ text: t('homepage.steps2.callToActionText'), target: '_blank', href: formsLink }}
+    items={Array.isArray(steps2Items) ? steps2Items.map((item, index) => ({
+      title: item.title,
+      description: item.description,
+      icon: item.icon,
+      href: index === 0 ? mailtoLink : index === 1 ? telLink : instagramLink,
+    })) : []}
+  />
+
+  {/* ... BlogLatestPosts ... */}
+</Layout>

@@ -31,7 +31,7 @@ export default defineConfig({
   output: 'static',
 
   i18n: {
-    defaultLocale: 'es',
+    defaultLocale: 'en',
     locales: ['en', 'es', 'nl', 'fr', 'de'],
     routing: {
       prefixDefaultLocale: true,
@@ -83,9 +83,7 @@ export default defineConfig({
     tasks(),
   ],
 
-  image: {
-    service: squooshImageService(),
-  },
+  image: {},
 
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],
