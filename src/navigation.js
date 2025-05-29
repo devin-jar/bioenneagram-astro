@@ -113,7 +113,7 @@ export const getFooterData = (t, lang) => {
         icon: 'tabler:brand-spotify',
         href: 'https://open.spotify.com/show/4eW2cf7WMf8OrV19Ouyojm',
       },
-      { ariaLabel: 'RSS', target: '_blank', icon: 'tabler:rss', href: getAsset('/rss.xml') },
+      // { ariaLabel: 'RSS', target: '_blank', icon: 'tabler:rss', href: getAsset('/rss.xml') },
     ],
     footNote: `
       <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 rtl:mr-0 rtl:ml-1.5 float-left rtl:float-right rounded-sm bg-logo"></span>
