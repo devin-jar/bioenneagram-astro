@@ -59,7 +59,7 @@ export const getFooterData = (t, lang) => {
           { text: t('footer.products.emotionsWorkshop'), href: getPermalink('/workshops/emotions', 'page', lang) },
           { text: t('footer.products.brainIntroCourse'), href: getPermalink('/courses/intro-brain', 'page', lang) },
           { text: t('footer.products.enneagramIntroCourse'), href: getPermalink('/courses/intro-enneagram', 'page', lang) },
-          { text: t('footer.products.enneagramGameCourse'), href: getPermalink('/courses/enneagram-game', 'page', lang) },
+          { text: t('footer.products.enneagramGameCourse'), href: getPermalink('/landing/course-enneagram-game', 'page', lang) },
           { text: t('footer.products.biodescodificacionIntroCourse'), href: getPermalink('/courses/intro-biodecoding', 'page', lang) },
         ],
       },

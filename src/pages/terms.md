@@ -1,142 +1,163 @@
 ---
-title: 'Terminos y Condiciones'
+title: 'Terms and Conditions'
+description: 'Read the Terms and Conditions for using Bioenneagram services.'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Última Actualización_: Enero 06, 2023
+_Last Updated_: January 06, 2023
 
-Por favor lee atentamente estas condiciones antes de utilizar nuestros servicios.
+Please read these terms and conditions carefully before using Our Service.
 
-## GENERALIDADES
+## GENERAL
 
-Bioenneagram gestiona este sitio web. En todo el sitio, los términos "nosotros", "nos" y "nuestro" se refieren en lo sucesivo a Bioenneagram. Bioenneagram ofrece esta página web, incluida toda la información, las herramientas y los servicios que se ponen en este sitio a disposición suya, el usuario, siempre y cuando acepte la totalidad de los términos, condiciones, políticas y avisos contemplados aquí.
+Bioenneagram operates this website. Throughout the site, the terms "we", "us" and "our" refer to Bioenneagram. Bioenneagram offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.
 
-Al visitar nuestro sitio y/o comprarnos algo, usted interactúa con nuestro "Servicio" y reconoce como vinculantes los siguientes términos y condiciones (denominados en lo sucesivo "Términos del servicio", "Términos"), incluidos aquellos términos y condiciones adicionales y las políticas que se mencionan aquí y/o disponibles por medio de hipervínculo. Estos Términos del servicio se aplican a todos los usuarios del sitio, incluyendo de manera enunciativa mas no limitativa los usuarios que son navegadores, proveedores, clientes, comerciantes y/o que aporten contenido.
-Lea estos Términos del servicio detenidamente antes de acceder o utilizar nuestra página web. Al acceder o utilizar cualquier parte del sitio, usted acepta estos Términos del servicio. Si no acepta la totalidad de los términos y condiciones de este acuerdo, no podrá acceder al sitio web ni utilizar ningún servicio. Si estos Términos del servicio se considerasen una oferta, la aceptación se limita expresamente a los presentes Términos del servicio.
+By visiting our site and/or purchasing something from us, you engage in our "Service" and agree to be bound by the following terms and conditions ("Terms of Service", "Terms"), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.
 
-Las nuevas funciones o herramientas que se agreguen a la tienda actual también estarán sujetas a los Términos del servicio. Puede revisar la versión más reciente de los Términos del servicio en cualquier momento en esta página. Nos reservamos el derecho de actualizar, cambiar o reemplazar cualquier parte de los presentes Términos del servicio mediante la publicación de actualizaciones o cambios en nuestra página web. Es su responsabilidad revisar esta página periódicamente para ver los cambios. Su uso de la página web o el acceso a ella de forma continuada después de la publicación de cualquier cambio constituye la aceptación de dichos cambios.
+Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service.
 
-### SECCIÓN 1: TÉRMINOS DE LA TIENDA ONLINE
+Any new features or tools which are added to the current store shall also be subject to the Terms of Service. You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes.
 
-Al aceptar los presentes Términos del servicio, usted declara que tiene la mayoría de edad en su estado o provincia de residencia, o que es mayor de edad en su estado o provincia de residencia y que nos ha dado su consentimiento para permitir que cualquiera de las personas menores que dependen de usted utilice este sitio.
+### SECTION 1: ONLINE STORE TERMS
 
-No puede utilizar nuestros productos para ningún fin ilegal o no autorizado ni puede, al hacer uso del Servicio, infringir las leyes de su jurisdicción (incluyendo de manera enunciativa más no limitativa, las leyes de derechos de autor).
+By agreeing to these Terms of Service, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site.
 
-No transmitirá ningún gusano o virus informáticos ni ningún código de naturaleza destructiva.
+You may not use our products for any illegal or unauthorized purpose nor may you, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws).
 
-El incumplimiento o violación de cualquiera de los Términos dará como resultado la rescisión inmediata de sus Servicios.
-### SECCIÓN 2: CONDICIONES GENERALES
+You must not transmit any worms or viruses or any code of a destructive nature.
 
-Nos reservamos el derecho de rechazar el servicio a cualquier persona, por cualquier motivo, en cualquier momento.
+A breach or violation of any of the Terms will result in an immediate termination of your Services.
 
-Usted comprende que su contenido (sin incluir la información de la tarjeta de crédito) puede transferirse sin cifrar e implicar (a) transmisiones en varias redes; y (b) cambios para adaptarse a los requisitos técnicos de conexión de redes o dispositivos y cumplir con ellos. La información de la tarjeta de crédito siempre se cifra durante la transferencia a través de las redes.
+### SECTION 2: GENERAL CONDITIONS
 
-Usted acepta no reproducir, duplicar, copiar, vender, revender ni aprovechar ninguna parte del Servicio, uso del Servicio o acceso al Servicio o cualquier contacto en el sitio web a través de la cual se presta el servicio, sin nuestro permiso expreso por escrito.
+We reserve the right to refuse service to anyone for any reason at any time.
 
-Los encabezados utilizados en este acuerdo se incluyen solo para facilitar la lectura y no limitarán ni afectarán los presentes Términos.
-### SECCIÓN 3: EXACTITUD, TOTALIDAD Y CRONOLOGÍA DE LA INFORMACIÓN
+You understand that your content (not including credit card information), may be transferred unencrypted and involve (a) transmissions over various networks; and (b) changes to conform and adapt to technical requirements of connecting networks or devices. Credit card information is always encrypted during transfer over networks.
 
-No nos responsabilizamos si la información disponible en este sitio no es precisa, completa o actualizada. El material presentado en este sitio se proporciona solo para información general y no se debe confiar en él ni utilizarlo como la única base para tomar decisiones sin consultar fuentes de información principales, más precisas, más completas o más recientes. Al confiar en cualquier material de este sitio lo hace por su cuenta y riesgo.
+You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service or any contact on the website through which the service is provided, without express written permission by us.
 
-Este sitio puede contener cierta información histórica. La información histórica, inevitablemente, no es actual y se proporciona únicamente como referencia. Nos reservamos el derecho de modificar el contenido de este sitio en cualquier momento, pero no tenemos la obligación de actualizar ninguna información en nuestro sitio. Usted acepta que es su responsabilidad controlar los cambios en nuestro sitio.
-### SECCIÓN 4: MODIFICACIONES AL SERVICIO Y PRECIOS
+The headings used in this agreement are included for convenience only and will not limit or otherwise affect these Terms.
 
-Los precios de nuestros productos están sujetos a cambios sin previo aviso.
+### SECTION 3: ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION
 
-Nos reservamos el derecho de modificar o discontinuar el Servicio (o cualquier parte o contenido del mismo) sin previo aviso en cualquier momento.
+We are not responsible if information made available on this site is not accurate, complete or current. The material on this site is provided for general information only and should not be relied upon or used as the sole basis for making decisions without consulting primary, more accurate, more complete or more timely sources of information. Any reliance on the material on this site is at your own risk.
 
-No seremos responsables ante usted ni ante ningún tercero por ninguna modificación, cambio de precio, suspensión o interrupción del Servicio.
-### SECCIÓN 5: PRODUCTOS O SERVICIOS (si corresponde)
+This site may contain certain historical information. Historical information, necessarily, is not current and is provided for your reference only. We reserve the right to modify the contents of this site at any time, but we have no obligation to update any information on our site. You agree that it is your responsibility to monitor changes to our site.
 
-Ciertos productos o servicios pueden estar disponibles exclusivamente online a través del sitio web. Estos productos o servicios pueden tener cantidades limitadas y están sujetos a devolución o cambio solo de acuerdo con nuestra Política de devolución.
+### SECTION 4: MODIFICATIONS TO THE SERVICE AND PRICES
 
-Hemos hecho todo lo viable para mostrar con la mayor precisión posible los colores y las imágenes de nuestros productos que aparecen en la tienda. No podemos garantizar que la visualización de cualquier color en el monitor de su computadora sea precisa.
-Nos reservamos el derecho, pero no estamos obligados, de limitar las ventas de nuestros productos o servicios a cualquier persona, región geográfica o jurisdicción. Podemos ejercer este derecho caso por caso. Nos reservamos el derecho de limitar las cantidades de cualquier producto o servicio que ofrecemos. Todas las descripciones de los productos o los precios de los productos están sujetos a cambios en cualquier momento y sin previo aviso, a nuestra entera discreción. Nos reservamos el derecho de discontinuar cualquier producto en cualquier momento. Cualquier oferta de cualquier producto o servicio que se realice en este sitio no tiene validez donde dicho producto o servicio esté prohibido.
+Prices for our products are subject to change without notice.
 
-No garantizamos que la calidad de cualquier producto, servicio, información u otro material que usted haya comprado u obtenido cumplirá con sus expectativas, o que cualquier error en el Servicio se corregirá.
-### SECCIÓN 6: EXACTITUD DE LA FACTURACIÓN Y DE LA INFORMACIÓN DE LA CUENTA
+We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time.
 
-Nos reservamos el derecho de rechazar cualquier pedido que realice en nuestra tienda. Podemos, a nuestro exclusivo criterio, limitar o cancelar las cantidades compradas por persona, por hogar o por pedido. Estas restricciones pueden incluir pedidos realizados con la misma cuenta de cliente, la misma tarjeta de crédito o pedidos que usen la misma dirección de facturación o de envío. En el caso de que realicemos un cambio o cancelemos un pedido, intentaremos notificarle vía correo electrónico o la dirección de facturación / número de teléfono proporcionados en el momento en que se realizó el pedido. Nos reservamos el derecho de limitar o prohibir los pedidos que, a nuestra entera discreción, parezcan haber sido realizados por comerciantes, revendedores o distribuidores.
-Usted acepta suministrar información completa y precisa de la compra y cuenta actual, para todas las compras realizadas en nuestra tienda. Usted acepta actualizar rápidamente su cuenta y demás informaciones, entre ellas, su dirección de correo electrónico, los números de tarjeta de crédito y las fechas de vencimiento, para que podamos completar sus transacciones y contactarlo según sea necesario.
+We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.
 
-Para obtener más información, consulte nuestra Política de devoluciones.
-### SECCIÓN 7: HERRAMIENTAS OPCIONALES
+### SECTION 5: PRODUCTS OR SERVICES (if applicable)
 
-Podemos proporcionarle acceso a herramientas de terceros que no supervisamos, ni tenemos ningún control sobre ellas, ni tampoco contribuimos.
+Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our Return Policy.
 
-Usted reconoce y acepta que brindamos acceso a dichas herramientas "tal como se encuentran" y "según disponibilidad" sin garantías, representaciones ni condiciones de ningún tipo y sin ningún tipo de respaldo. No tendremos ninguna responsabilidad como consecuencia del uso que haga de herramientas opcionales de terceros o en relación a ellas.
+We have made every effort to display as accurately as possible the colors and images of our products that appear at the store. We cannot guarantee that your computer monitor's display of any color will be accurate.
+We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.
 
-Cualquier uso que haga de las herramientas opcionales ofrecidas a través del sitio es por su cuenta y riesgo, y debe asegurarse de estar familiarizado con los términos según los cuales los proveedores externos relevantes suministran dichas herramientas y aprobarlos.
+We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected.
 
-También podemos, en el futuro, ofrecer nuevos servicios o funciones a través del sitio web (incluido el lanzamiento de nuevas herramientas y recursos). Estas nuevas funciones o servicios también estarán sujetos a los presentes Términos de servicio.
-### SECCIÓN 8: ENLACES DE TERCEROS
+### SECTION 6: ACCURACY OF BILLING AND ACCOUNT INFORMATION
 
-Algunos contenidos, productos y servicios disponibles a través de nuestro Servicio pueden incluir recursos de terceros.
+We reserve the right to refuse any order you place with us. We may, in our sole discretion, limit or cancel quantities purchased per person, per household or per order. These restrictions may include orders placed by or under the same customer account, the same credit card, and/or orders that use the same billing and/or shipping address. In the event that we make a change to or cancel an order, we may attempt to notify you by contacting the e-mail and/or billing address/phone number provided at the time the order was made. We reserve the right to limit or prohibit orders that, in our sole judgment, appear to be placed by dealers, resellers or distributors.
 
-Los enlaces de terceros en este sitio pueden dirigirlo a páginas web de terceros que no están afiliados a nosotros. No somos responsables de examinar o evaluar el contenido o la exactitud, ni garantizamos ni asumiremos ninguna obligación ni responsabilidad por los recursos o páginas web de terceros, ni por ningún otro material, producto o servicio de terceros.
+You agree to provide current, complete and accurate purchase and account information for all purchases made at our store. You agree to promptly update your account and other information, including your email address and credit card numbers and expiration dates, so that we can complete your transactions and contact you as needed.
 
-No somos responsables de ningún daño o perjuicio relacionado con la compra o el uso de bienes, servicios, recursos, contenido o cualquier otra transacción realizada en conexión con sitios web de terceros. Revise cuidadosamente las políticas y prácticas de terceros, y asegúrese de comprenderlas antes de participar en cualquier transacción. Las quejas, reclamos, inquietudes o preguntas referentes a productos de terceros deben dirigirse a estos.
-### SECCIÓN 9: COMENTARIOS DE LOS USUARIOS, OPINIONES Y OTRAS COMUNICACIONES
+For more details, please review our Returns Policy.
 
-Si, a petición nuestra, usted envía ciertas comunicaciones específicas (por ejemplo, participaciones en un concurso) o, sin una solicitud nuestra, envía ideas creativas, sugerencias, propuestas, planes u otros materiales, ya sea online, por correo electrónico, por correo postal, o de otro modo (denominado en lo sucesivo y de manera colectiva, 'comentarios'), usted acepta que podemos, en cualquier momento, sin restricción: editar, copiar, publicar, distribuir, traducir y usar en cualquier medio cualquier comentario que usted nos envíe. No tenemos ni tendremos ninguna obligación (1) de mantener ningún comentario de manera confidencial; (2) pagar alguna compensación por cualquier comentario; o (3) responder a cualquier comentario.
-Podemos, pero no tenemos la obligación de monitorear, editar o eliminar contenido que a nuestra entera discreción determinemos que es ilegal, ofensivo, amenazante, calumnioso, difamatorio, pornográfico, obsceno u objetable, o que infrinja la propiedad intelectual de cualquiera de las partes o de los presentes Términos del servicio.
-Usted acepta que sus comentarios no infringirán ningún derecho de terceros, incluidos los derechos de autor, marca registrada, privacidad, personalidad u otro derecho personal o de propiedad. Además, acepta que sus comentarios no contendrán material difamatorio, ilegítimo, abusivo u obsceno, ni contendrán ningún virus informático ni otro software dañino que pueda afectar de cualquier manera el funcionamiento del Servicio o de cualquier sitio web relacionado. No puede utilizar una dirección de correo electrónico falsa, simular ser otra persona o engañarnos o engañar a terceros sobre el origen de los comentarios. Usted es el único responsable de los comentarios que realice y de su exactitud. No asumimos ninguna responsabilidad ni ninguna obligación por los comentarios publicados por usted o por un tercero.
+### SECTION 7: OPTIONAL TOOLS
 
-### SECCIÓN 10: INFORMACIÓN PERSONAL
+We may provide you with access to third-party tools over which we neither monitor nor have any control nor input.
 
-El envío de la información personal que haga a través de la tienda se rige por nuestra Política de privacidad. Para ver nuestra Política de privacidad.
-### SECCIÓN 11: ERRORES, INEXACTITUDES Y OMISIONES
+You acknowledge and agree that we provide access to such tools ”as is” and “as available” without any warranties, representations or conditions of any kind and without any endorsement. We shall have no liability whatsoever arising from or relating to your use of optional third-party tools.
 
-Puede haber información en nuestro sitio o en el Servicio que, ocasionalmente, contenga errores tipográficos, inexactitudes u omisiones que puedan relacionarse con descripciones de productos, precios, promociones, ofertas, cargos por envío de productos, tiempos de tránsito y disponibilidad. Nos reservamos el derecho de corregir cualquier error, inexactitud u omisión, de cambiar o actualizar información, o cancelar pedidos si alguna información en el Servicio o en cualquier página web relacionada es inexacta en cualquier momento sin previo aviso (incluso después de haber enviado su pedido).
+Any use by you of optional tools offered through the site is entirely at your own risk and discretion and you should ensure that you are familiar with and approve of the terms on which tools are provided by the relevant third-party provider(s).
 
-No asumimos ninguna obligación de actualizar, modificar o aclarar la información en el Servicio o en cualquier sitio web relacionado, incluyendo de manera enunciativa pero no limitativa, la información de precios, excepto cuando lo exija la ley. Ninguna actualización especificada o fecha de actualización aplicada en el Servicio o en cualquier sitio web relacionado debe tomarse para indicar que toda la información en el Servicio o en cualquier sitio web relacionado se modificó o actualizó.
-### SECCIÓN 12: USOS PROHIBIDOS
+We may also, in the future, offer new services and/or features through the website (including, the release of new tools and resources). Such new features and/or services shall also be subject to these Terms of Service.
 
-Además de las prohibiciones establecidas en los Términos del servicio, se le prohíbe utilizar el sitio o su contenido (a) para cualquier propósito ilegal; (b) para solicitar a otros que realicen o participen en cualquier acto ilegal; (c) para infringir cualquier reglamento, norma, ley u ordenanza local internacional, federal, provincial o estatal; (d) para infringir o violar nuestros derechos de propiedad intelectual o los derechos de propiedad intelectual de otros; (e) acosar, abusar, insultar, dañar, difamar, calumniar, denigrar, intimidar o discriminar por motivos de género, orientación sexual, religión, etnia, raza, edad, nacionalidad o discapacidad; (f) enviar información falsa o engañosa;
-(g) cargar o transmitir virus o cualquier otro tipo de código dañino que afecte o pueda afectar a la funcionalidad o el funcionamiento del Servicio o de cualquier sitio web relacionado, de otros sitios web o de Internet; (h) recopilar o rastrear la información personal de otros; (i) enviar correo no deseado, phishing, pharm, pretexto, spider, rastrear o extraer; (j) para cualquier propósito obsceno o inmoral; o (k) para interferir o eludir las funciones de seguridad del Servicio o de cualquier sitio web relacionado, o de otros sitios web o de Internet. Nos reservamos el derecho de dar por terminado su uso del Servicio o de cualquier sitio web relacionado por infringir cualquiera de los usos prohibidos.
-### SECCIÓN 13: DESCARGO DE RESPONSABILIDAD DE GARANTÍAS; LIMITACIÓN DE RESPONSABILIDAD
+### SECTION 8: THIRD-PARTY LINKS
 
-No garantizamos, representamos ni aseguramos que el uso que haga de nuestro servicio será sin interrupciones, oportuno, seguro o sin errores.
+Certain content, products and services available via our Service may include materials from third-parties.
 
-No garantizamos que los resultados que se puedan obtener del uso del servicio sean exactos o confiables.
+Third-party links on this site may direct you to third-party websites that are not affiliated with us. We are not responsible for examining or evaluating the content or accuracy and we do not warrant and will not have any liability or responsibility for any third-party materials or websites, or for any other materials, products, or services of third-parties.
 
-Usted acepta que periódicamente, podamos eliminar el servicio por lapsos de tiempo indefinidos o cancelar el servicio en cualquier momento, sin notificarle.
-Usted acepta expresamente que su uso del servicio o la imposibilidad de utilizarlo corre por su riesgo. El servicio y todos los productos y servicios que se le entregan a través del servicio (salvo que así lo especifiquemos nosotros) se ofrecen "tal como están" y "según disponibilidad" para su uso, sin ninguna representación, garantía o condición de ningún tipo, ya sea expresa o implícita, entre las que se incluyen todas las garantías implícitas o condiciones de comerciabilidad, calidad comercial, idoneidad para un propósito particular, durabilidad, título y no violación.
-En ningún caso Bioenneagram, nuestros directores, funcionarios, empleados, afiliados, agentes, contratistas, pasantes, proveedores, proveedores de servicios o licenciantes serán responsables de cualquier lesión, pérdida, reclamo o cualquier daño directo, indirecto, incidental, punitivo, especial o consecuente de cualquier tipo, incluyendo de manera enunciativa más no limitativa; la pérdida de beneficios, pérdida de ingresos, pérdida de ahorros, pérdida de datos, costos de reemplazo o daños similares, ya sea por contrato, perjuicio (incluida la negligencia), responsabilidad estricta o de otro tipo, que surjan del uso que haga de cualquiera de los servicios o de cualquier producto adquirido por medio del servicio, o para cualquier otro reclamo relacionado de alguna manera con su uso del servicio o de cualquier producto, incluidos, entre otros, cualquier error u omisión en cualquier contenido, o cualquier pérdida o daño de cualquier tipo en el que se haya incurrido como resultado del uso del servicio o de cualquier contenido (o producto) publicado, transmitido o puesto a disposición a través del servicio, incluso si se informa de su posibilidad.
-Debido a que algunos estados o jurisdicciones no permiten la exclusión o la limitación de la responsabilidad por daños consecuentes o incidentales, en dichos estados o jurisdicciones, nuestra responsabilidad se limitará a la extensión máxima de lo permitido por la ley.
+We are not liable for any harm or damages related to the purchase or use of goods, services, resources, content, or any other transactions made in connection with any third-party websites. Please review carefully the third-party's policies and practices and make sure you understand them before you engage in any transaction. Complaints, claims, concerns, or questions regarding third-party products should be directed to the third-party.
 
-### SECCIÓN 14: INDEMNIZACIÓN
+### SECTION 9: USER COMMENTS, FEEDBACK AND OTHER SUBMISSIONS
 
-Usted acepta indemnizar, defender y mantener indemne a Bioenneagram y a nuestra empresa matriz, subsidiarias, afiliadas, asociados, funcionarios, directores, agentes, contratistas, licenciantes, proveedores de servicios, subcontratistas, proveedores, pasantes y empleados, de cualquier reclamo o demanda, incluidos los honorarios razonables de abogados, en los que un tercero haya incurrido debido a su incumplimiento de los presentes Términos del servicio o de los documentos que incorporan como referencia o que surjan por su incumplimiento de los mismos, o por la violación de cualquier ley o derechos de un tercero que haga.
-### SECCIÓN 15: DIVISIBILIDAD
+If, at our request, you send certain specific submissions (for example contest entries) or without a request from us you send creative ideas, suggestions, proposals, plans, or other materials, whether online, by email, by postal mail, or otherwise (collectively, 'comments'), you agree that we may, at any time, without restriction, edit, copy, publish, distribute, translate and otherwise use in any medium any comments that you forward to us. We are and shall be under no obligation (1) to maintain any comments in confidence; (2) to pay compensation for any comments; or (3) to respond to any comments.
 
-En caso de que se determine que alguna disposición de los presentes Términos del servicio sea ilegal, nula o inaplicable, dicha disposición será, no obstante, ejecutable en la medida en que lo permita la legislación aplicable, y la parte inaplicable se considerará separada de los presentes Términos del servicio, sin que dicha determinación afecte a la validez y aplicabilidad de las demás disposiciones.
+We may, but have no obligation to, monitor, edit or remove content that we determine in our sole discretion are unlawful, offensive, threatening, libelous, defamatory, pornographic, obscene or otherwise objectionable or violates any party’s intellectual property or these Terms of Service.
 
-### SECCIÓN 16: RESCISIÓN
+You agree that your comments will not violate any right of any third-party, including copyright, trademark, privacy, personality or other personal or proprietary right. You further agree that your comments will not contain libelous or otherwise unlawful, abusive or obscene material, or contain any computer virus or other malware that could in any way affect the operation of the Service or any related website. You may not use a false e-mail address, pretend to be someone other than yourself, or otherwise mislead us or third-parties as to the origin of any comments. You are solely responsible for any comments you make and their accuracy. We take no responsibility and assume no liability for any comments posted by you or any third-party.
 
-Las obligaciones y responsabilidades de las partes incurridas antes de la fecha de rescisión seguirán vigentes después de la rescisión de este contrato a todos los efectos.
-Estos Términos del servicio se encuentran vigentes a menos que usted o nosotros los rescindamos. Puede rescindir los presentes Términos del servicio en cualquier momento al notificarnos que ya no desea utilizar nuestros Servicios o cuando cese de utilizar nuestro sitio.
-Si a nuestro juicio usted incumple, o sospechamos que ha incumplido con cualquier término o disposición de los presentes Términos del servicio, podemos rescindir igualmente este acuerdo en cualquier momento sin previo aviso y usted seguirá siendo responsable de todos los importes adeudados, hasta la fecha de rescisión inclusive; y/o en consecuencia podemos denegarle el acceso a nuestros Servicios (o a parte de ellos).
+### SECTION 10: PERSONAL INFORMATION
 
-### SECCIÓN 17: ACUERDO COMPLETO
+Your submission of personal information through the store is governed by our Privacy Policy. To view our Privacy Policy.
 
-El hecho de que no ejerzamos o hagamos valer algún derecho o disposición de los presentes Términos del Servicio no constituirá una renuncia a dicho derecho o disposición.
+### SECTION 11: ERRORS, INACCURACIES AND OMISSIONS
 
-Estos Términos de servicio y cualquier política o regla de funcionamiento que hayamos publicado en este sitio o con respecto al Servicio constituye el acuerdo y el entendimiento completo entre usted y nosotros, y rigen su uso del Servicio, sustituyendo a cualquier acuerdo, comunicación o propuesta anterior o contemporánea, ya sea oral o escrita, entre usted y nosotros (incluyendo de manera enunciativa más no limitativa, las versiones anteriores de los Términos del servicio).
-Cualquier ambigüedad en la interpretación de los presentes Términos del servicio no se interpretará en contra de la parte redactora.
+Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice (including after you have submitted your order).
 
-### SECCIÓN 18: LEY APLICABLE
+We undertake no obligation to update, amend or clarify information in the Service or on any related website, including without limitation, pricing information, except as required by law. No specified update or refresh date applied in the Service or on any related website, should be taken to indicate that all information in the Service or on any related website has been modified or updated.
 
-Los presentes Términos del servicio y cualquier acuerdo por separado por el cual le proporcionemos Servicios se regirán e interpretarán de acuerdo con las leyes de Cl. 10 #2-53, Jardin, ANT, 056050, Colombia.
+### SECTION 12: PROHIBITED USES
 
-### SECCIÓN 19: CAMBIOS EN LOS TÉRMINOS DEL SERVICIO
+In addition to other prohibitions as set forth in the Terms of Service, you are prohibited from using the site or its content: (a) for any unlawful purpose; (b) to solicit others to perform or participate in any unlawful acts; (c) to violate any international, federal, provincial or state regulations, rules, laws, or local ordinances; (d) to infringe upon or violate our intellectual property rights or the intellectual property rights of others; (e) to harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate based on gender, sexual orientation, religion, ethnicity, race, age, national origin, or disability; (f) to submit false or misleading information;
+(g) to upload or transmit viruses or any other type of malicious code that will or may be used in any way that will affect the functionality or operation of the Service or of any related website, other websites, or the Internet; (h) to collect or track the personal information of others; (i) to spam, phish, pharm, pretext, spider, crawl, or scrape; (j) for any obscene or immoral purpose; or (k) to interfere with or circumvent the security features of the Service or any related website, other websites, or the Internet. We reserve the right to terminate your use of the Service or any related website for violating any of the prohibited uses.
 
-Puede revisar la versión más reciente de los Términos del servicio en cualquier momento en esta página.
+### SECTION 13: DISCLAIMER OF WARRANTIES; LIMITATION OF LIABILITY
 
-Nos reservamos el derecho, a nuestra entera discreción, de actualizar, cambiar o sustituir cualquier parte de los presentes Términos del servicio mediante la publicación de actualizaciones y cambios en nuestro sitio web. Es su responsabilidad consultar nuestro sitio web periódicamente para ver los cambios. El uso que haga de nuestra página web o del Servicio o su acceso a cualquiera de estos de forma continua después de la publicación de cualquier cambio en los presentes Términos del servicio, constituye la aceptación de dichos cambios.
+We do not guarantee, represent or warrant that your use of our service will be uninterrupted, timely, secure or error-free.
 
-### SECCIÓN 20: INFORMACIÓN DE CONTACTO
+We do not warrant that the results that may be obtained from the use of the service will be accurate or reliable.
 
-Las preguntas sobre los Términos del servicio se deben enviar a:
+You agree that from time to time we may remove the service for indefinite periods of time or cancel the service at any time, without notice to you.
 
-- Correo: bioenneagramcoach@gmail.com
+You expressly agree that your use of, or inability to use, the service is at your sole risk. The service and all products and services delivered to you through the service are (except as expressly stated by us) provided 'as is' and 'as available' for your use, without any representation, warranties or conditions of any kind, either express or implied, including all implied warranties or conditions of merchantability, merchantable quality, fitness for a particular purpose, durability, title, and non-infringement.
+
+In no case shall Bioenneagram, our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind, including, without limitation lost profits, lost revenue, lost savings, loss of data, replacement costs, or any similar damages, whether based in contract, tort (including negligence), strict liability or otherwise, arising from your use of any of the service or any products procured using the service, or for any other claim related in any way to your use of the service or any product, including, but not limited to, any errors or omissions in any content, or any loss or damage of any kind incurred as a result of the use of the service or any content (or product) posted, transmitted, or otherwise made available via the service, even if advised of their possibility.
+Because some states or jurisdictions do not allow the exclusion or the limitation of liability for consequential or incidental damages, in such states or jurisdictions, our liability shall be limited to the maximum extent permitted by law.
+
+### SECTION 14: INDEMNIFICATION
+
+You agree to indemnify, defend and hold harmless Bioenneagram and our parent, subsidiaries, affiliates, partners, officers, directors, agents, contractors, licensors, service providers, subcontractors, suppliers, interns and employees, harmless from any claim or demand, including reasonable attorneys’ fees, made by any third-party due to or arising out of your breach of these Terms of Service or the documents they incorporate by reference, or your violation of any law or the rights of a third-party.
+
+### SECTION 15: SEVERABILITY
+
+In the event that any provision of these Terms of Service is determined to be unlawful, void or unenforceable, such provision shall nonetheless be enforceable to the fullest extent permitted by applicable law, and the unenforceable portion shall be deemed to be severed from these Terms of Service, such determination shall not affect the validity and enforceability of any other remaining provisions.
+
+### SECTION 16: TERMINATION
+
+The obligations and liabilities of the parties incurred prior to the termination date shall survive the termination of this agreement for all purposes.
+
+These Terms of Service are effective unless and until terminated by either you or us. You may terminate these Terms of Service at any time by notifying us that you no longer wish to use our Services, or when you cease using our site.
+
+If in our sole judgment you fail, or we suspect that you have failed, to comply with any term or provision of these Terms of Service, we also may terminate this agreement at any time without notice and you will remain liable for all amounts due up to and including the date of termination; and/or accordingly may deny you access to our Services (or any part thereof).
+
+### SECTION 17: ENTIRE AGREEMENT
+
+The failure of us to exercise or enforce any right or provision of these Terms of Service shall not constitute a waiver of such right or provision.
+
+These Terms of Service and any policies or operating rules posted by us on this site or in respect to The Service constitutes the entire agreement and understanding between you and us and govern your use of the Service, superseding any prior or contemporaneous agreements, communications and proposals, whether oral or written, between you and us (including, but not limited to, any prior versions of the Terms of Service).
+Any ambiguities in the interpretation of these Terms of Service shall not be construed against the drafting party.
+
+### SECTION 18: GOVERNING LAW
+
+These Terms of Service and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of Cl. 10 #2-53, Jardin, ANT, 056050, Colombia.
+
+### SECTION 19: CHANGES TO TERMS OF SERVICE
+
+You can review the most current version of the Terms of Service at any time at this page.
+
+We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of Service by posting updates and changes to our website. It is your responsibility to check our website periodically for changes. Your continued use of or access to our website or the Service following the posting of any changes to these Terms of Service constitutes acceptance of those changes.
+
+### SECTION 20: CONTACT INFORMATION
+
+Questions about the Terms of Service should be sent to us at:
+
+- Email: bioenneagramcoach@gmail.com
