@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Bioenneagram Coach | Enneagram & Biodecodering",
-    "description": "Ontdek je essentie en transformeer je leven met Bioenneagram, een fusie van Enneagram en Biodecodering voor diepgaande persoonlijke groei."
+    "title": "Bioenneagram Coach | Enneagram en Biodescodificatie",
+    "description": "Ontdek je essentie en transformeer je leven met Bioenneagram, een combinatie van Enneagram en Biodescodificatie voor diepgaande persoonlijke groei."
   },
   "nav": {
     "home": "Home",
@@ -13,7 +13,7 @@
     "categoryPage": "Categoriepagina",
     "tagPage": "Tagpagina",
     "aboutUs": "Over Ons",
-    "contactUs": "Contacteer Ons",
+    "contactUs": "Contact",
     "homes": "Demo's",
     "bioenneagramHome": "Bioenneagram",
     "pages": "Pagina's",
@@ -24,14 +24,14 @@
     "privacyPolicy": "Privacybeleid",
     "landing": "Landingspagina's",
     "leadGeneration": "Leadgeneratie",
-    "longFormSales": "Lange-Vorm Verkoop",
+    "longFormSales": "Verkoop (Lange vorm)",
     "clickThrough": "Doorklikken",
-    "productDetails": "Productdetails (of Diensten)",
-    "comingSoon": "Binnenkort Beschikbaar of Pre-Lancering",
+    "productDetails": "Product/Dienst Details",
+    "comingSoon": "Binnenkort beschikbaar",
     "subscription": "Abonnement",
     "widgets": "Widgets",
     "actions": {
-      "book": "Boek Nu"
+      "book": "Boek"
     }
   },
   "footer": {
@@ -40,12 +40,12 @@
       "retreat": "Retraite",
       "individualTherapy": "Individuele Therapie",
       "couplesTherapy": "Relatietherapie",
-      "manifestationWorkshop": "Manifestatie Workshop",
-      "emotionsWorkshop": "Emotie Workshop",
-      "brainIntroCourse": "Introductiecursus Hersenen",
-      "enneagramIntroCourse": "Introductiecursus Enneagram",
-      "enneagramGameCourse": "Enneagram Spel Cursus",
-      "biodescodificacionIntroCourse": "Introductiecursus Biodecodering"
+      "manifestationWorkshop": "Manifestatieworkshop",
+      "emotionsWorkshop": "Emotieworkshop",
+      "brainIntroCourse": "Hersenintroductiecursus",
+      "enneagramIntroCourse": "Enneagram Introductiecursus",
+      "enneagramGameCourse": "Enneagram Spelcursus",
+      "biodescodificacionIntroCourse": "Biodescodificatie Introductiecursus"
     },
     "companies": {
       "title": "Bedrijven",
@@ -59,7 +59,7 @@
       "aboutUs": "Over Ons",
       "blog": "Blog",
       "professionalServices": "Professionele Diensten",
-      "socialImpact": "Sociale Impact",
+      "socialImpact": "Maatschappelijke Impact",
       "store": "Winkel",
       "location": "Locatie"
     },
@@ -68,13 +68,13 @@
       "privacy": "Privacybeleid"
     },
     "social": {
-      "ariaLabelX": "Bioenneagram's X (Twitter) Profiel",
-      "ariaLabelInstagram": "Bioenneagram's Instagram Profiel",
-      "ariaLabelFacebook": "Bioenneagram's Facebook Pagina",
+      "ariaLabelX": "Bioenneagram X (Twitter) Profiel",
+      "ariaLabelInstagram": "Bioenneagram Instagram Profiel",
+      "ariaLabelFacebook": "Bioenneagram Facebook Pagina",
       "ariaLabelWhatsapp": "Contacteer Bioenneagram via WhatsApp",
-      "whatsappMessage": "Hallo, ik wil graag een sessie met u plannen",
-      "ariaLabelSpotify": "Bioenneagram's Podcast op Spotify",
-      "ariaLabelRSS": "Bioenneagram's RSS Feed"
+      "whatsappMessage": "Hallo, ik wil graag een sessie met je plannen",
+      "ariaLabelSpotify": "Bioenneagram Spotify Podcast",
+      "ariaLabelRSS": "Bioenneagram RSS Feed"
     },
     "footNote": {
       "developedBy": "Ontwikkeld door",
@@ -82,50 +82,51 @@
     }
   },
   "videoask": {
-    "triggerText": "Laten we Praten"
+    "triggerText": "Laten we praten"
   },
   "homepage": {
     "meta": {
-      "title": "Bioenneagram Coach | Enneagram & Biodecodering",
-      "description": "Ontdek uw sterke punten en verbeter uw relaties met Bioenneagram. Experts in Enneagram en Biodecodering voor uw persoonlijke groei."
+      "title": "Bioenneagram Coach | Enneagram en Biodescodificatie",
+      "description": "Ontdek je sterke punten en verbeter je relaties met Bioenneagram. Experts in Enneagram en Biodescodificatie voor persoonlijke groei."
     },
     "hero": {
       "tagline": "Persoonlijke Groei",
-      "title": "Klaar om de geheimen van <br /> uw persoonlijkheid te ontdekken: <0>ENNEAGRAM - BIODECODERING</0><br />",
-      "subtitle": "Ontdek uw sterke punten, zwaktes en hoe u uw persoonlijke relaties kunt verbeteren met <1>Bioenneagram</1>.",
-      "actionText": "Boek Nu",
-      "imageAlt": "Bioenneagram hoofd afbeelding"
+      "title": "Klaar om de geheimen van <br /> je persoonlijkheid te ontdekken: <0>ENNEAGRAM - BIODESCODIFICATIE</0><br />",
+      "heroHighlight": "Enneagram - Biodecodering",
+      "subtitle": "Ontdek je sterktes, zwaktes en hoe je persoonlijke relaties kunt verbeteren met <1>Bioenneagram</1>.",
+      "actionText": "Plan Nu",
+      "imageAlt": "Hoofdafbeelding Bioenneagram"
     },
     "note": {
       "message": "Dit is een belangrijk bericht van Bioenneagram."
     },
     "features": {
       "title": "Waarom Bioenneagram kiezen?",
-      "subtitle": "Elk van de volgende kenmerken is de waardepropositie van Bioenneagram.",
+      "subtitle": "Elk van de volgende kenmerken vertegenwoordigt de waarde van Bioenneagram.",
       "items": [
         {
-          "title": "Ervaar echte en blijvende verandering in uw leven met onze diensten",
-          "description": "Van individuele therapieën tot retraites voor persoonlijke ontwikkeling, elke interventie is ontworpen om tastbare resultaten te produceren. Bereik uw welzijns- en persoonlijke groeidoelen efficiënt en betekenisvol.",
+          "title": "Ervaar echte en blijvende verandering met onze diensten",
+          "description": "Van individuele therapieën tot persoonlijke ontwikkelingsretraites: elke interventie is ontworpen voor tastbare resultaten. Bereik je welzijns- en persoonlijke groeidoelen efficiënt en betekenisvol.",
           "icon": "tabler:report-analytics"
         },
         {
-          "title": "Vertrouw op een professional die toegewijd is aan uw welzijn",
-          "description": "Hoog opgeleid en toegewijd aan het leveren van kwaliteitsdiensten. Professionaliteit komt tot uiting in elke interactie, van therapeutische sessies tot workshops en conferenties, en biedt u een omgeving van vertrouwen en respect.",
+          "title": "Vertrouw op een professional toegewijd aan jouw welzijn",
+          "description": "Hoog opgeleid en toegewijd aan kwaliteit. Professionaliteit weerspiegelt zich in elke interactie, van therapiesessies tot workshops, in een vertrouwde en respectvolle omgeving.",
           "icon": "tabler:file-certificate"
         },
         {
-          "title": "Uw gemoedsrust is een prioriteit",
-          "description": "Wij creëren omgevingen die rust en kalmte bevorderen. Of u nu deelneemt aan individuele therapie of een ontspannende retraite, ons doel is dat u zich kalm en in harmonie voelt. Hier vindt u een veilige ruimte om te verkennen en te groeien.",
+          "title": "Jouw innerlijke rust is onze prioriteit",
+          "description": "We creëren omgevingen die kalmte bevorderen. Of je nu deelneemt aan individuele therapie of een retraite, ons doel is dat je je vredig voelt. Hier vind je een veilige ruimte om te groeien.",
           "icon": "tabler:brain"
         },
         {
-          "title": "Omarm uw pad naar persoonlijke ontwikkeling",
-          "description": "Wij bieden niet alleen therapieën, maar ook retraites, workshops en cursussen die zijn ontworpen om uw groei te voeden. Elke ervaring is ontworpen om uw potentieel te ontsluiten en een integrale ontwikkeling op alle gebieden van uw leven te bevorderen.",
+          "title": "Omarm je pad naar persoonlijke ontwikkeling",
+          "description": "We bieden niet alleen therapieën, maar ook retraites, workshops en cursussen. Elke ervaring is ontworpen om je potentieel te ontsluiten en alomvattende groei te stimuleren.",
           "icon": "tabler:rocket"
         },
         {
-          "title": "Welzijn zou geen onbereikbare luxe moeten zijn",
-          "description": "Wij streven ernaar onze diensten voor iedereen toegankelijk te maken. Betaalbaarheid betekent niet dat de kwaliteit in het gedrang komt; het betekent dat iedereen toegang verdient tot middelen die hun welzijn bevorderen. Ontdek hoe zorg voor uw mentale gezondheid een betaalbare en waardevolle investering in uw leven kan zijn.",
+          "title": "Welzijn mag geen onbereikbare luxe zijn",
+          "description": "We streven ernaar onze diensten voor iedereen toegankelijk te maken. Betaalbaarheid betekent geen compromis op kwaliteit; het betekent dat iedereen toegang verdient tot middelen die welzijn bevorderen.",
           "icon": "tabler:receipt-2"
         }
       ]
@@ -133,158 +134,158 @@
     "contentSections": [
       {
         "id": "empresarial",
-        "mainTitle": "Bouw aan Uw Succes",
-        "mainSubtitle": "Dompel uzelf onder in een reis naar uw innerlijke wereld en ervaar verandering. Ontdek hoe de op maat gemaakte oplossingen van Bioenneagram fundamenteel zijn voor het stimuleren van succes in verschillende contexten, van het stimuleren van bedrijfsveranderingen tot het opnieuw aanwakkeren van romantische vonken en het bevorderen van individuele groei.",
-        "blockTitle": "Zakelijk Succes: <br /><0>Productiviteit en Welzijn op de Werkplek Stimuleren</0>",
+        "mainTitle": "Bouw aan Jouw Succes",
+        "mainSubtitle": "Duik in een reis naar je innerlijke wereld en ervaar transformatie. Ontdek hoe op maat gemaakte oplossingen van Bioenneagram de sleutel zijn tot succes in diverse contexten, van bedrijfsverandering tot het hernieuwen van romantiek en persoonlijke groei.",
+        "blockTitle": "Zakelijk Succes: <br /><0>Productiviteit en Welzijn op de Werkplek</0>",
         "items": [
           {
             "title": "Beschrijving:",
-            "description": "Streeft uw bedrijf naar een opmerkelijke transformatie? Wees getuige van wat er in uw organisatie kan gebeuren door een integrale transformatie te ervaren. Onze op maat gemaakte strategieën zullen niet alleen de productiviteit verhogen, maar ook een gezondere werkomgeving cultiveren. Van programma's voor emotioneel welzijn tot culturele veranderingen, ontdek hoe onze aanpak de efficiëntie optimaliseerde en het algehele welzijn van medewerkers verhoogde."
+            "description": "Streeft jouw bedrijf naar opmerkelijke transformatie? Ervaar wat er mogelijk is met onze holistische aanpak. Onze strategieën verhogen niet alleen productiviteit maar creëren ook een gezondere werkomgeving. Van emotioneel welzijn tot culturele veranderingen."
           },
           {
             "title": "Voordelen:",
-            "description": "Duurzame Productiviteitsstijging.<br />Aanzienlijke Vermindering van Personeelsverloop.<br />Tastbare Verbetering van het Werkklimaat."
+            "description": "Duurzame productiviteitsstijging <br /> Significante vermindering personeelsverloop <br /> Tangibele verbetering werksfeer"
           }
         ],
-        "imageAlt": "Afbeelding zakelijk succes"
+        "imageAlt": "Zakelijk Succes Afbeelding"
       },
       {
         "id": "parejas",
-        "blockTitle": "Romantische Relaties: <br /><0>Verbinding Herstellen in Koppels</0>",
+        "blockTitle": "Liefdesrelaties: <br /><0>Herstel de Verbinding</0>",
         "items": [
           {
             "title": "Beschrijving:",
-            "description": "Ga op een hartverwarmende reis met uw partner om belangrijke uitdagingen te overwinnen. Onze gespecialiseerde relatietherapie en strategisch gebruik van het Enneagram en Biodecodering stellen u in staat niet alleen de communicatie, maar ook een diepere emotionele verbinding te herstellen. Ontdek hoe zelfbewustzijn en wederzijds begrip uw relatie kunnen transformeren."
+            "description": "Ga met je partner op een emotionele reis om grote uitdagingen te overwinnen. Onze gespecialiseerde relatietherapie en strategisch gebruik van enneagram en biodescodificatie helpen communicatie te herstellen en diepere emotionele verbinding te creëren."
           },
           {
             "title": "Voordelen:",
-            "description": "Versterking van Communicatie en Verbinding.<br />Hulpmiddelen om Verschillen te Begrijpen en te Waarderen.<br />Vernieuwing van de Relatie op Diepere Niveaus."
+            "description": "Versterkte communicatie en verbinding <br /> Tools om verschillen te begrijpen <br /> Vernieuwde relatie op diep niveau"
           }
         ],
-        "imageAlt": "Afbeelding romantische relaties"
+        "imageAlt": "Liefdesrelaties Afbeelding"
       },
       {
         "id": "individual",
-        "blockTitle": "Individuele Therapie: <br /><0>Persoonlijk Potentieel Ontsluiten</0>",
+        "blockTitle": "Individuele Therapie: <br /><0>Ontsluit Persoonlijk Potentieel</0>",
         "items": [
           {
             "title": "Beschrijving:",
-            "description": "Neem deel aan een transformerende reis en ervaar significante persoonlijke groei door middel van individuele therapie. Van stressmanagement tot het overwinnen van beperkende gedragspatronen, ontdek hoe de combinatie van Biodecodering en Enneagram uw verborgen potentieel ontsluit. Eerlijkheid jegens uzelf en zelfbewustzijn zullen de sleutel zijn tot een voller en bevredigender leven."
+            "description": "Ervaar significante persoonlijke groei door individuele therapie. Van stressmanagement tot het doorbreken van beperkende patronen: ontdek hoe de combinatie van biodescodificatie en enneagram je verborgen potentieel ontsluit."
           },
           {
             "title": "Voordelen:",
-            "description": "Effectief Beheer van Stress en Persoonlijke Spanningen.<br />Overwinnen van Beperkende Gedragspatronen.<br />Bereiken van een Groter Gevoel van Persoonlijke Tevredenheid."
+            "description": "Effectief stressbeheer <br /> Overwinning van beperkende patronen <br /> Grotere persoonlijke voldoening"
           }
         ],
-        "imageAlt": "Afbeelding individuele therapie"
+        "imageAlt": "Individuele Therapie Afbeelding"
       }
     ],
     "pricing": {
       "title": "Betaalbare Prijzen",
       "items": [
         {
-          "title": "Inspirerende Conferenties",
-          "subtitle": "Woon impactvolle conferenties bij die uw perspectief uitdagen en persoonlijke groei stimuleren",
+          "title": "Inspirerende Lezingen",
+          "subtitle": "Woon impactvolle lezingen bij die je perspectief uitdagen en groei stimuleren",
           "price": "0",
-          "period": "cop",
-          "callToActionText": "Verhoog Uw Bewustzijn",
+          "period": "COP",
+          "callToActionText": "Verhoog je Bewustzijn",
           "ribbonTitle": "gratis"
         },
         {
           "title": "Individuele Therapie",
-          "subtitle": "Ontdek een gepersonaliseerde therapeutische ervaring afgestemd op uw behoeften en doelen",
+          "subtitle": "Ontdek een persoonlijke therapeutische ervaring op maat",
           "price": "80k",
-          "period": "cop",
-          "callToActionText": "Beheer Uw Emoties"
+          "period": "COP",
+          "callToActionText": "Beheer je Emoties"
         },
         {
           "title": "Relatietherapie",
-          "subtitle": "Een veilige ruimte om uitdagingen aan te gaan en de communicatie als koppel te verbeteren",
+          "subtitle": "Veilige ruimte om uitdagingen aan te gaan en communicatie te verbeteren",
           "price": "150k",
-          "period": "cop",
+          "period": "COP",
           "callToActionText": "Groei als Koppel",
           "ribbonTitle": "populair"
         },
         {
-          "title": "Introductiecursus Enneagram",
-          "subtitle": "Verken de complexiteit van uw persoonlijkheid",
+          "title": "Enneagram Introductiecursus",
+          "subtitle": "Verken de complexiteit van je persoonlijkheid",
           "price": "254k",
-          "period": "cop",
-          "callToActionText": "Ontsluit Uw Kracht"
+          "period": "COP",
+          "callToActionText": "Ontsluit je Kracht"
         }
       ]
     },
     "testimonials": {
-      "title": "Wie Ons Vertrouwden",
-      "subtitle": "Ontdek wat onze klanten te zeggen hebben over hun ervaringen met ons.",
+      "title": "Mensen Die Ons Vertrouwden",
+      "subtitle": "Ontdek wat onze cliënten zeggen over hun ervaringen.",
       "items": [
         {
-          "testimonial": "Mijn ervaring met BioEnneagram is werkelijk transformerend geweest. De coach heeft een uniek vermogen om het Enneagram en Biodecodering te combineren op een manier die je naar een diep begrip van jezelf leidt. In slechts een paar sessies heb ik een significante verschuiving in mijn perspectief ervaren en hoe ik met de uitdagingen van het leven omga. Ik raad deze therapie ten zeerste aan aan iedereen die op zoek is naar positieve en blijvende verandering.",
+          "testimonial": "Mijn ervaring met BioEnneagram was transformatief. De coach combineert enneagram en biodescodificatie op unieke wijze. In slechts enkele sessies ervaarde ik significante veranderingen in mijn levensaanpak. Een absolute aanrader!",
           "name": "Alejandra",
           "job": "Medewerker bij Huspost",
           "imageAlt": "Getuigenis van Alejandra"
         },
         {
-          "testimonial": "Ik heb geen woorden om uit te drukken hoe dankbaar ik ben dat ik BioEnneagram heb ontdekt. Het Enneagram en Biodecodering zijn belangrijke hulpmiddelen geweest om mijn gedragspatronen te begrijpen en emotionele obstakels te overwinnen. De coach heeft een manier om problemen met empathie en wijsheid aan te pakken. Mijn leven heeft een positieve wending genomen, en ik kan hen niet genoeg bedanken voor deze transformerende ervaring.",
+          "testimonial": "Ik ben dankbaar voor het ontdekken van BioEnneagram. Enneagram en biodescodificatie waren sleutels om gedragspatronen te begrijpen en emotionele blokkades te overwinnen. Mijn leven heeft een positieve wending genomen.",
           "name": "Juan David Cardona",
           "job": "Oprichter van Raices",
           "imageAlt": "Getuigenis van Juan David Cardona"
         },
         {
-          "testimonial": "Na deelname aan BioEnneagram-sessies heb ik het gevoel dat ik eindelijk contact maak met mijn ware zelf. Het Enneagram en Biodecodering hebben me diepgaand inzicht gegeven in mijn emotionele blokkades en hoe ik ze kan overwinnen. De coach is een uitzonderlijke gids geweest op deze reis van zelfontdekking. Mijn kijk op het leven is veranderd, en ik ervaar een innerlijke rust die ik nooit voor mogelijk had gehouden.",
+          "testimonial": "Na sessies bij BioEnneagram voel ik me eindelijk verbonden met mijn ware ik. De inzichten uit enneagram en biodescodificatie hielpen emotionele blokkades te overwinnen. Mijn perspectief is veranderd en ik ervaar innerlijke vrede.",
           "name": "Sara",
-          "job": "Professioneel Violiste",
+          "job": "Professioneel Violist",
           "imageAlt": "Getuigenis van Sara"
         }
       ]
     },
     "callToActionWidget": {
       "title": "Laten we Samen Creëren",
-      "subtitle": "Klaar om een significante verandering in uw leven aan te brengen?",
+      "subtitle": "Klaar voor betekenisvolle verandering in je leven?",
       "actionText": "Laten we Praten"
     },
     "faqs": {
       "title": "Veelgestelde Vragen",
       "items": [
         {
-          "title": "Wat is Bioenneagram en hoe verschilt het van Biodecodering en Enneagram afzonderlijk?",
-          "description": "Bioenneagram is een unieke integratie van Biodecodering en Enneagram. Het combineert de kracht van Biodecodering om emotionele verbanden te begrijpen met het Enneagram om persoonlijkheidspatronen te verkennen. Deze synergie biedt een completer beeld van hoe onze ervaringen uit het verleden onze huidige persoonlijkheid en gedrag beïnvloeden.",
+          "title": "Wat is Bioenneagram en hoe verschilt het van biodescodificatie en enneagram apart?",
+          "description": "Bioenneagram integreert biodescodificatie en enneagram. Het combineert het begrijpen van emotionele verbindingen met het verkennen van persoonlijkheidspatronen voor een completer beeld van hoe ervaringen ons huidige gedrag beïnvloeden.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Wat is Biodecodering en hoe kan het mij ten goede komen?",
-          "description": "Biodecodering is een therapeutische benadering die de verbinding tussen emoties en gezondheid probeert te begrijpen. Het werkt door de emotionele betekenis van fysieke of emotionele symptomen te ontrafelen. Het ervaren van Biodecodering kan u helpen emotionele patronen te begrijpen en los te laten die mogelijk uw welzijn beïnvloeden.",
+          "title": "Wat is biodescodificatie en wat zijn de voordelen?",
+          "description": "Biodescodificatie onderzoekt de link tussen emoties en gezondheid. Het helpt emotionele betekenis van fysieke/emotionele symptomen te ontrafelen. Dit kan helpen emotionele patronen los te laten die je welzijn beïnvloeden.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Is voorafgaande ervaring met Biodecodering of Enneagram nodig om deel te nemen aan Bioenneagram-sessies?",
-          "description": "Geen voorafgaande ervaring vereist. Bioenneagram-sessies zijn ontworpen om geschikt te zijn voor alle niveaus van bekendheid met Biodecodering en Enneagram. Onze professionals zullen u door het proces begeleiden, zodat u zich op uw gemak voelt en elke fase begrijpt.",
+          "title": "Moet ik ervaring hebben met biodescodificatie of enneagram?",
+          "description": "Nee, ervaring is niet nodig. Onze sessies zijn geschikt voor alle niveaus. Professionals begeleiden je door het hele proces.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Hoe wordt het Enneagram gebruikt in uw diensten?",
-          "description": "Het Enneagram is een krachtig instrument voor zelfkennis dat we gebruiken om persoonlijkheidspatronen en motivaties te begrijpen. We bieden specifieke Enneagram-sessies en workshops om u te helpen uw type te ontdekken en deze kennis in uw dagelijks leven toe te passen.",
+          "title": "Hoe wordt het enneagram gebruikt?",
+          "description": "We gebruiken het enneagram als krachtig zelfkennisinstrument om persoonlijkheidspatronen te begrijpen. We bieden specifieke sessies en workshops om je type te ontdekken en toe te passen in dagelijks leven.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Biedt u online diensten aan?",
-          "description": "Ja, sommige van onze diensten zijn online beschikbaar. Dit biedt flexibiliteit voor degenen die liever vanuit het comfort van hun eigen huis deelnemen. Neem contact met ons op voor meer details over online beschikbaarheid.",
+          "title": "Bieden jullie online diensten aan?",
+          "description": "Ja, sommige diensten zijn online beschikbaar voor flexibiliteit. Neem contact op voor details over online mogelijkheden.",
           "icon": "tabler:chevrons-right"
         }
       ]
     },
     "steps2": {
-      "title": "Neem Contact Met Ons Op",
-      "subtitle": "Heeft u vragen? Neem contact met ons op via onderstaand formulier. Wij zijn er om u te helpen!",
+      "title": "Contact Opnemen",
+      "subtitle": "Vragen? Contacteer ons via onderstaand formulier. We helpen graag!",
       "callToActionText": "Vertel Ons",
       "items": [
         {
-          "title": "Schrijf Ons",
+          "title": "E-mail Ons",
           "description": "bioenneagramcoach@gmail.com",
           "icon": "tabler:mail"
         },
         {
-          "title": "Contacteer Ons",
+          "title": "Bel Ons",
           "description": "+57 (300) 448-1819",
           "icon": "tabler:headset"
         },
@@ -296,9 +297,150 @@
       ]
     },
     "blogLatestPosts": {
-      "title": "Blijf Geïnformeerd met de Bioenneagram Blog",
-      "information": "Verken onze verzameling artikelen, gidsen en tutorials over persoonlijke ontwikkeling, Enneagram-inzichten, Biodecodering en het effectief gebruiken van Bioenneagram voor uw groei."
+      "title": "Blijf Geïnformeerd via de Bioenneagram Blog",
+      "information": "Verken onze artikelen, gidsen en tutorials over persoonlijke ontwikkeling, designtrends en effectief gebruik van bioenneagram voor jouw groei."
     },
     "mailtoSubject": "Alexander Zapata: Bioenneagram Coach"
+  },
+  "aboutpage": {
+    "meta": {
+      "title": "Over Ons - Bioenneagram",
+      "description": "Leer meer over Bioenneagram, onze aanpak, waarden en prestaties op het pad van zelfontdekking."
+    },
+    "hero": {
+      "tagline": "Over Ons",
+      "title": "Verhoog je online aanwezigheid met onze <br /><0>Prachtige Web Templates</0>",
+      "subtitle": "Bioenneagram combineert diepgaande expertise in persoonlijkheidssystemen en emotionele decodering. Onze methoden verbinden oude wijsheid met moderne wetenschap om menselijk potentieel te ontsluiten.",
+      "imageAlt": "Representatieve Afbeelding Bioenneagram"
+    },
+    "stats": {
+      "title": "Onze Statistieken",
+      "items": [
+        { "title": "Cliënten", "amount": "413" },
+        { "title": "Bedrijven", "amount": "6" }
+      ]
+    },
+    "features3_enfoques": {
+      "title": "Onze Aanpakken",
+      "subtitle": "We specialiseren ons in drie primaire transformatiegebieden, elk ontworpen voor specifieke behoeften.",
+      "items": [
+        {
+          "title": "Individueel",
+          "description": "Persoonlijke therapeutische trajecten voor zelfontdekking en uitdagingen.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Relaties",
+          "description": "Herstel van communicatie en emotionele intimiteit in partnerschappen.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Zakelijk",
+          "description": "Verbetering van teamdynamiek en welzijn op de werkplek.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "features3_otros": {
+      "imageAlt": "Kleurrijke representatieve afbeelding",
+      "items": [
+        {
+          "title": "Onderwijs",
+          "description": "Workshops en cursussen voor leren en persoonlijke groei.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Mentale Gezondheid",
+          "description": "Aanpak van emotionele patronen via geïntegreerde methoden.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Fysieke Gezondheid",
+          "description": "Verkenning van mind-body connecties voor holistisch welzijn.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Persoonlijk Branding",
+          "description": "Afstemming professionele presentatie op authentieke expressie.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Medische Integratie",
+          "description": "Complementaire benaderingen naast conventionele zorg.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Creatieve Expressie",
+          "description": "Ontsluiting artistiek potentieel door zelfbegrip.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "steps2_valores": {
+      "title": "Onze Waarden",
+      "subtitle": "Kernprincipes die onze praktijk leiden.",
+      "items": [
+        {
+          "title": "Cliëntgerichte benadering",
+          "description": "Elke interactie focust op unieke behoeften en transformatiedoelen."
+        },
+        {
+          "title": "Continue Verbetering",
+          "description": "Doorlopende verfijning van methoden gebaseerd op onderzoek en feedback."
+        },
+        {
+          "title": "Ethische Praktijk",
+          "description": "Hoogste standaarden van vertrouwelijkheid, respect en integriteit."
+        }
+      ]
+    },
+    "steps2_logros": {
+      "title": "Prestaties",
+      "subtitle": "Mijlpalen die onze impact demonstreren.",
+      "callToActionText": "Bekijk Meer",
+      "items": [
+        {
+          "title": "Wereldwijd Bereik",
+          "description": "Cliëntenbediening op meerdere continenten via digitale platformen.",
+          "icon": "tabler:globe"
+        },
+        {
+          "title": "Positieve Feedback",
+          "description": "Consistente hoge tevredenheid en transformatieve resultaten.",
+          "icon": "tabler:message-star"
+        },
+        {
+          "title": "Erkenning in de Sector",
+          "description": "Prijzen voor innovatieve benaderingen van persoonlijke ontwikkeling.",
+          "icon": "tabler:award"
+        }
+      ]
+    },
+    "features2_ubicaciones": {
+      "title": "Onze Locaties",
+      "tagline": "Vind Ons",
+      "items": [
+        { "title": "VS", "description": "1234 Lorem Ipsum St, 12345, Miami" },
+        { "title": "Spanje", "description": "5678 Lorem Ipsum St, 56789, Madrid" },
+        { "title": "Australië", "description": "9012 Lorem Ipsum St, 90123, Sydney" },
+        { "title": "Brazilië", "description": "3456 Lorem Ipsum St, 34567, São Paulo" }
+      ]
+    },
+    "features2_soporte": {
+      "title": "Klantenondersteuning",
+      "tagline": "Contacteer Ons",
+      "items": [
+        {
+          "title": "Chat met Ons",
+          "description": "Directe assistentie via ons berichtensysteem tijdens kantooruren.",
+          "icon": "tabler:messages"
+        },
+        {
+          "title": "Bel Ons",
+          "description": "Directe ondersteuning via onze klantenservicelijn.",
+          "icon": "tabler:headset"
+        }
+      ]
+    }
   }
 }

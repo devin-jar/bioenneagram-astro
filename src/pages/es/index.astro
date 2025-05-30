@@ -1,5 +1,5 @@
 ---
-// src/pages/en/index.astro
+// src/pages/es/index.astro
 import Layout from '~/layouts/PageLayout.astro';
 
 // Importar componentes
@@ -46,6 +46,8 @@ if (moduleCandidate) {
   }
 }
 
+console.log(`[${Astro.url.pathname}] Loaded pageTranslations for ${currentLocaleFromAstro}:`, JSON.stringify(pageTranslations, null, 2)); // Para ver el contenido
+
 const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 // --- FIN DE CARGA DINÁMICA DE TRADUCCIONES ---
 
@@ -57,6 +59,9 @@ const metadata = {
     follow: true,
   }
 };
+
+const highlight = t('homepage.hero.heroHighlight');
+const title = t('homepage.hero.title', {'0': `<span class="text-accent dark:text-white highlight">${highlight}</span>`});
 
 // URLs de imágenes (se mantienen estáticas o podrías moverlas al JSON si varían por idioma)
 const heroImageSrc = 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -96,7 +101,7 @@ const steps2Items = t('homepage.steps2.items') || [];
     actions={[{ variant: 'primary', target: '_blank', text: t('homepage.hero.actionText'), href: bookingLink }]}
     image={{ src: heroImageSrc, alt: t('homepage.hero.imageAlt') }}
   >
-    <Fragment slot="title" set:html={t('homepage.hero.title', {'0': '<span class="text-accent dark:text-white highlight">ENNEAGRAM - BIODECODING</span>'})} />
+    <Fragment slot="title" set:html={title} />
     <Fragment slot="subtitle" set:html={t('homepage.hero.subtitle', {'1': '<span class="font-semibold">Bioenneagram</span>'})} />
   </Hero>
 

@@ -35,43 +35,61 @@ interface TranslationOptions {
  * @returns {function(string, object=, TranslationOptions=): (string|object|array)} Función t(key, params, options).
  */
 export function getTranslator(translations, lang) {
-  // Usar la interfaz para el tipo de options
-  return function t(key: string, params: Record<string, any> = {}, options: TranslationOptions = {}) { // <--- CAMBIO AQUÍ
+  return function t(key: string, params: Record<string, any> = {}, options: TranslationOptions = {}) {
+    // --- LOGS IMPORTANTES AQUÍ ---
+    console.log(`[t() for ${lang}] Key: "${key}", Params: ${JSON.stringify(params)}, Options: ${JSON.stringify(options)}`);
+
     const keys = key.split('.');
-    let current: any = translations; // Usar 'any' o un tipo más específico para 'current'
+    let current: any = translations;
 
     for (const k of keys) {
       if (current && typeof current === 'object' && k in current) {
         current = current[k];
       } else {
-        console.warn(`[i18n] Key not found for lang "${lang}": ${key}`);
+        console.warn(`[t() for ${lang}] Key not found: "${key}" (failed at subkey: "${k}")`);
         if (options.defaultValue !== undefined) {
+          console.log(`[t() for ${lang}] Returning defaultValue for "${key}":`, options.defaultValue);
           return options.defaultValue;
         }
+        console.log(`[t() for ${lang}] Returning placeholder for "${key}": "[${key}]"`);
         return `[${key}]`;
       }
     }
 
+    console.log(`[t() for ${lang}] Key "${key}" resolved to (type ${typeof current}):`, current);
+
     if (typeof current === 'string') {
+      let originalString = current; // Guardar para el log
       let translatedString = current;
       if (Object.keys(params).length > 0) {
-        translatedString = translatedString.replace(/{(\w+)}/g, (match, placeholder) => {
-          return params[placeholder] !== undefined ? String(params[placeholder]) : match;
+        // Log para reemplazo de {placeholder} (si lo usas)
+        translatedString = translatedString.replace(/<(\d+)>.*?<\/\1>/g, (match, index) => {
+          //                                                ^^^^^^^^^^^  Cambio aquí:
+          //                                                .*?        Coincide con cualquier carácter (no codicioso)
+          //                                                <\/\1>     Coincide con la etiqueta de cierre (ej. </0>)
+          const replacement = params[index] !== undefined ? String(params[index]) : match;
+          console.log(`[t() for ${lang}] In "${originalString}", replacing <${index}>...</${index}> ("${match}") with "${replacement}" for key "${key}"`);
+          return replacement;
         });
+        // Log para reemplazo de <numero>
         translatedString = translatedString.replace(/<(\d+)>/g, (match, index) => {
-          return params[index] !== undefined ? String(params[index]) : match;
+          const replacement = params[index] !== undefined ? String(params[index]) : match;
+          console.log(`[t() for ${lang}] In "${originalString}", replacing <${index}> ("${match}") with "${replacement}" for key "${key}"`);
+          return replacement;
         });
       }
+      console.log(`[t() for ${lang}] Final string for "${key}": "${translatedString}"`);
       return translatedString;
     }
     else if (typeof current === 'object' || Array.isArray(current)) {
       if (Object.keys(params).length > 0 && options.defaultValue === undefined) {
-        console.warn(`[i18n] Params passed to key "${key}" which resolved to an object/array for lang "${lang}". Params are ignored for non-string results when not using defaultValue.`);
+        console.warn(`[t() for ${lang}] Params passed to key "${key}" which resolved to an object/array. Params are ignored for non-string results when not using defaultValue.`);
       }
+      console.log(`[t() for ${lang}] Returning object/array for "${key}"`);
       return current;
     }
 
-    console.warn(`[i18n] Key does not lead to a string, object, or array for lang "${lang}": ${key}. Type: ${typeof current}`);
+    console.warn(`[t() for ${lang}] Key "${key}" does not lead to a string, object, or array. Type: ${typeof current}. Returning placeholder.`);
     if (options.defaultValue !== undefined) {
       return options.defaultValue;
     }

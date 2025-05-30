@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Bioenneagram Coach | Enneagramm & Biodecoding",
-    "description": "Entdecken Sie Ihr Wesen und transformieren Sie Ihr Leben mit Bioenneagram, einer Fusion aus Enneagramm und Biodecoding für tiefgreifendes persönliches Wachstum."
+    "title": "Bioenneagram Coach | Enneagramm und Biodescodierung",
+    "description": "Entdecken Sie Ihr Wesen und transformieren Sie Ihr Leben mit Bioenneagramm – der Verbindung von Enneagramm und Biodescodierung für tiefgreifendes persönliches Wachstum."
   },
   "nav": {
     "home": "Startseite",
@@ -10,24 +10,24 @@
     "blogList": "Blog-Liste",
     "article": "Artikel",
     "articleMDX": "Artikel (mit MDX)",
-    "categoryPage": "Kategorieseite",
-    "tagPage": "Tag-Seite",
+    "categoryPage": "Kategorien-Seite",
+    "tagPage": "Schlagwort-Seite",
     "aboutUs": "Über Uns",
-    "contactUs": "Kontaktieren Sie Uns",
+    "contactUs": "Kontakt",
     "homes": "Demos",
     "bioenneagramHome": "Bioenneagramm",
     "pages": "Seiten",
     "featuresAnchor": "Merkmale (Anker)",
     "pricing": "Preise",
     "contact": "Kontakt",
-    "terms": "Bedingungen",
-    "privacyPolicy": "Datenschutzrichtlinie",
+    "terms": "AGB",
+    "privacyPolicy": "Datenschutz",
     "landing": "Landingpages",
     "leadGeneration": "Lead-Generierung",
-    "longFormSales": "Langform-Verkauf",
-    "clickThrough": "Click-Through",
-    "productDetails": "Produktdetails (oder Dienstleistungen)",
-    "comingSoon": "Demnächst Verfügbar oder Vorab-Launch",
+    "longFormSales": "Verkauf (Langform)",
+    "clickThrough": "Durchklicken",
+    "productDetails": "Produkt/Service-Details",
+    "comingSoon": "Demnächst/Vorab",
     "subscription": "Abonnement",
     "widgets": "Widgets",
     "actions": {
@@ -42,39 +42,39 @@
       "couplesTherapy": "Paartherapie",
       "manifestationWorkshop": "Manifestations-Workshop",
       "emotionsWorkshop": "Emotions-Workshop",
-      "brainIntroCourse": "Einführungskurs Gehirn",
-      "enneagramIntroCourse": "Einführungskurs Enneagramm",
-      "enneagramGameCourse": "Enneagramm-Spiel-Kurs",
-      "biodescodificacionIntroCourse": "Einführungskurs Biodecoding"
+      "brainIntroCourse": "Gehirn-Einführungskurs",
+      "enneagramIntroCourse": "Enneagramm-Einführungskurs",
+      "enneagramGameCourse": "Enneagramm-Spielkurs",
+      "biodescodificacionIntroCourse": "Biodescodierung-Einführungskurs"
     },
     "companies": {
-      "title": "Unternehmen",
+      "title": "Firmen",
       "teamWorkshop": "Team-Workshop",
-      "conferences": "Konferenzen",
+      "conferences": "Vorträge",
       "consultationPackage": "Beratungspaket"
     },
     "support": {
-      "title": "Unterstützung",
-      "contactUs": "Kontaktieren Sie Uns",
+      "title": "Support",
+      "contactUs": "Kontakt",
       "aboutUs": "Über Uns",
       "blog": "Blog",
-      "professionalServices": "Professionelle Dienstleistungen",
-      "socialImpact": "Soziale Auswirkungen",
+      "professionalServices": "Professionelle Dienste",
+      "socialImpact": "Soziale Wirkung",
       "store": "Shop",
       "location": "Standort"
     },
     "secondaryLinks": {
-      "terms": "Allgemeine Geschäftsbedingungen",
-      "privacy": "Datenschutzrichtlinie"
+      "terms": "AGB",
+      "privacy": "Datenschutz"
     },
     "social": {
-      "ariaLabelX": "Bioenneagrams X (Twitter) Profil",
-      "ariaLabelInstagram": "Bioenneagrams Instagram Profil",
-      "ariaLabelFacebook": "Bioenneagrams Facebook Seite",
-      "ariaLabelWhatsapp": "Bioenneagram über WhatsApp kontaktieren",
-      "whatsappMessage": "Hallo, ich möchte gerne einen Termin mit Ihnen vereinbaren",
-      "ariaLabelSpotify": "Bioenneagrams Podcast auf Spotify",
-      "ariaLabelRSS": "Bioenneagrams RSS-Feed"
+      "ariaLabelX": "Bioenneagramm X (Twitter) Profil",
+      "ariaLabelInstagram": "Bioenneagramm Instagram Profil",
+      "ariaLabelFacebook": "Bioenneagramm Facebook Seite",
+      "ariaLabelWhatsapp": "Bioenneagramm via WhatsApp kontaktieren",
+      "whatsappMessage": "Hallo, ich möchte gerne eine Sitzung bei Ihnen buchen",
+      "ariaLabelSpotify": "Bioenneagramm Spotify Podcast",
+      "ariaLabelRSS": "Bioenneagramm RSS-Feed"
     },
     "footNote": {
       "developedBy": "Entwickelt von",
@@ -82,50 +82,51 @@
     }
   },
   "videoask": {
-    "triggerText": "Lass uns Reden"
+    "triggerText": "Lass uns reden"
   },
   "homepage": {
     "meta": {
-      "title": "Bioenneagram Coach | Enneagramm & Biodecoding",
-      "description": "Entdecken Sie Ihre Stärken und verbessern Sie Ihre Beziehungen mit Bioenneagram. Experten für Enneagramm und Biodecoding für Ihr persönliches Wachstum."
+      "title": "Bioenneagram Coach | Enneagramm und Biodescodierung",
+      "description": "Entdecken Sie Ihre Stärken und verbessern Sie Beziehungen mit Bioenneagramm. Experten für Enneagramm und Biodescodierung für Ihr persönliches Wachstum."
     },
     "hero": {
       "tagline": "Persönliches Wachstum",
-      "title": "Bereit, die Geheimnisse Ihrer <br /> Persönlichkeit zu entdecken: <0>ENNEAGRAMM - BIODECODING</0><br />",
-      "subtitle": "Entdecken Sie Ihre Stärken, Schwächen und wie Sie Ihre persönlichen Beziehungen mit <1>Bioenneagramm</1> verbessern können.",
-      "actionText": "Jetzt Buchen",
+      "title": "Bereit, die Geheimnisse Ihrer <br /> Persönlichkeit zu entdecken: <0>ENNEAGRAMM - BIODESCODIERUNG</0><br />",
+      "heroHighlight": "Enneagram - Biodecodierung",
+      "subtitle": "Entdecken Sie Ihre Stärken, Schwächen und wie Sie persönliche Beziehungen mit <1>Bioenneagramm</1> verbessern können.",
+      "actionText": "Jetzt Termin vereinbaren",
       "imageAlt": "Bioenneagramm Hauptbild"
     },
     "note": {
-      "message": "Dies ist eine wichtige Nachricht von Bioenneagram."
+      "message": "Dies ist eine wichtige Nachricht von Bioenneagramm."
     },
     "features": {
       "title": "Warum Bioenneagramm wählen?",
-      "subtitle": "Jedes der folgenden Merkmale ist das Wertversprechen von Bioenneagramm.",
+      "subtitle": "Jedes der folgenden Merkmale repräsentiert den Mehrwert von Bioenneagramm.",
       "items": [
         {
-          "title": "Erleben Sie mit unseren Dienstleistungen echte und dauerhafte Veränderungen in Ihrem Leben",
-          "description": "Von Einzeltherapien bis hin zu Persönlichkeitsentwicklungs-Retreats ist jede Intervention darauf ausgelegt, greifbare Ergebnisse zu erzielen. Erreichen Sie Ihre Ziele für Wohlbefinden und persönliches Wachstum effizient und bedeutsam.",
+          "title": "Erleben Sie echte und nachhaltige Veränderungen in Ihrem Leben",
+          "description": "Von Einzeltherapien bis zu persönlichen Retreats – jede Intervention ist darauf ausgelegt, greifbare Ergebnisse zu liefern. Erreichen Sie Ihre Ziele für Wohlbefinden und persönliches Wachstum effizient und sinnvoll.",
           "icon": "tabler:report-analytics"
         },
         {
-          "title": "Vertrauen Sie einem Fachmann, der sich Ihrem Wohlbefinden widmet",
-          "description": "Hochqualifiziert und verpflichtet, qualitativ hochwertigen Service zu bieten. Professionalität spiegelt sich in jeder Interaktion wider, von Therapiesitzungen bis hin zu Workshops und Konferenzen, und bietet Ihnen eine Atmosphäre des Vertrauens und Respekts.",
+          "title": "Vertrauen Sie einem Profi, der sich Ihrem Wohlbefinden widmet",
+          "description": "Hochqualifiziert und verpflichtet, qualitativ hochwertige Dienstleistungen zu erbringen. Professionalität spiegelt sich in jeder Interaktion wider – von therapeutischen Sitzungen bis zu Workshops.",
           "icon": "tabler:file-certificate"
         },
         {
-          "title": "Ihr Seelenfrieden hat Priorität",
-          "description": "Wir schaffen Umgebungen, die Ruhe und Gelassenheit fördern. Ob Sie an einer Einzeltherapie oder einem entspannenden Retreat teilnehmen, unser Ziel ist es, dass Sie sich ruhig und im Einklang fühlen. Hier finden Sie einen sicheren Raum zum Erkunden und Wachsen.",
+          "title": "Ihre innere Ruhe ist unsere Priorität",
+          "description": "Wir schaffen Umgebungen, die Gelassenheit fördern. Ob in Einzeltherapie oder im Retreat – unser Ziel ist, dass Sie Frieden und Harmonie finden. Hier entdecken Sie einen sicheren Raum zum Wachsen.",
           "icon": "tabler:brain"
         },
         {
-          "title": "Gehen Sie Ihren Weg zur persönlichen Entwicklung",
-          "description": "Wir bieten nicht nur Therapien, sondern auch Retreats, Workshops und Kurse an, die Ihr Wachstum fördern sollen. Jede Erfahrung ist darauf ausgelegt, Ihr Potenzial freizusetzen und eine umfassende Entwicklung in allen Lebensbereichen zu fördern.",
+          "title": "Beginnen Sie Ihren Weg zur persönlichen Entwicklung",
+          "description": "Wir bieten nicht nur Therapien, sondern auch Retreats, Workshops und Kurse, die Ihr Wachstum fördern. Jede Erfahrung ist darauf ausgelegt, Ihr Potenzial zu entfalten.",
           "icon": "tabler:rocket"
         },
         {
           "title": "Wohlbefinden sollte kein unerreichbarer Luxus sein",
-          "description": "Wir bemühen uns, unsere Dienstleistungen für jeden zugänglich zu machen. Erschwinglichkeit bedeutet nicht, Kompromisse bei der Qualität einzugehen; es bedeutet, dass jeder Zugang zu Ressourcen verdient, die sein Wohlbefinden fördern. Entdecken Sie, wie die Pflege Ihrer psychischen Gesundheit eine erschwingliche und wertvolle Investition in Ihr Leben sein kann.",
+          "description": "Wir machen unsere Dienstleistungen für alle zugänglich. Erschwinglichkeit bedeutet nicht Kompromisse bei der Qualität – jeder verdient Zugang zu Ressourcen für Wohlbefinden.",
           "icon": "tabler:receipt-2"
         }
       ]
@@ -133,172 +134,312 @@
     "contentSections": [
       {
         "id": "empresarial",
-        "mainTitle": "Bauen Sie Ihren Erfolg auf",
-        "mainSubtitle": "Tauchen Sie ein in eine Reise in Ihre innere Welt und erleben Sie Veränderung. Entdecken Sie, wie die maßgeschneiderten Lösungen von Bioenneagram grundlegend sind, um den Erfolg in verschiedenen Kontexten voranzutreiben, von der Förderung unternehmerischer Veränderungen über das Wiederentzünden romantischer Funken bis hin zur Förderung individuellen Wachstums.",
-        "blockTitle": "Geschäftserfolg: <br /><0>Produktivität und Wohlbefinden am Arbeitsplatz steigern</0>",
+        "mainTitle": "Gestalten Sie Ihren Erfolg",
+        "mainSubtitle": "Tauchen Sie ein in Ihre innere Welt und erleben Sie Transformation. Entdecken Sie, wie maßgeschneiderte Lösungen von Bioenneagramm Erfolg in verschiedenen Bereichen fördern – von Unternehmen bis zu Beziehungen.",
+        "blockTitle": "Unternehmenserfolg: <br /><0>Steigerung von Produktivität und Wohlbefinden</0>",
         "items": [
           {
             "title": "Beschreibung:",
-            "description": "Strebt Ihr Unternehmen eine bemerkenswerte Transformation an? Werden Sie Zeuge dessen, was in Ihrer Organisation geschehen kann, indem Sie eine umfassende Transformation erleben. Unsere maßgeschneiderten Strategien werden nicht nur die Produktivität steigern, sondern auch ein gesünderes Arbeitsumfeld schaffen. Von Programmen zum emotionalen Wohlbefinden bis hin zu kulturellen Veränderungen – entdecken Sie, wie unser Ansatz die Effizienz optimiert und das allgemeine Wohlbefinden der Mitarbeiter gesteigert hat."
+            "description": "Strebt Ihr Unternehmen nach bemerkenswerter Transformation? Erleben Sie, was mit umfassender Veränderung möglich ist. Unsere Strategien steigern nicht nur die Produktivität, sondern schaffen ein gesünderes Arbeitsumfeld."
           },
           {
             "title": "Vorteile:",
-            "description": "Nachhaltige Produktivitätssteigerung.<br />Signifikante Reduzierung der Mitarbeiterfluktuation.<br />Spürbare Verbesserung des Arbeitsklimas."
+            "description": "Nachhaltige Produktivitätssteigerung <br /> Deutliche Reduzierung der Fluktuation <br /> Spürbare Verbesserung des Arbeitsklimas"
           }
         ],
-        "imageAlt": "Bild Geschäftserfolg"
+        "imageAlt": "Bild Unternehmenserfolg"
       },
       {
         "id": "parejas",
-        "blockTitle": "Romantische Beziehungen: <br /><0>Verbindung in Paaren wiederherstellen</0>",
+        "blockTitle": "Liebesbeziehungen: <br /><0>Wiederherstellung der Verbindung</0>",
         "items": [
           {
             "title": "Beschreibung:",
-            "description": "Begeben Sie sich mit Ihrem Partner auf eine herzerwärmende Reise, um bedeutende Herausforderungen zu meistern. Unsere spezialisierte Paartherapie und der strategische Einsatz von Enneagramm und Biodecoding ermöglichen es Ihnen, nicht nur die Kommunikation, sondern auch eine tiefere emotionale Verbindung wiederherzustellen. Entdecken Sie, wie Selbstwahrnehmung und gegenseitiges Verständnis Ihre Beziehung verändern können."
+            "description": "Beginnen Sie eine emotionale Reise mit Ihrem Partner, um Herausforderungen zu meistern. Unsere Paartherapie mit Enneagramm und Biodescodierung hilft, Kommunikation und emotionale Verbindung zu vertiefen."
           },
           {
             "title": "Vorteile:",
-            "description": "Stärkung von Kommunikation und Verbindung.<br />Werkzeuge zum Verstehen und Wertschätzen von Unterschieden.<br />Erneuerung der Beziehung auf tieferen Ebenen."
+            "description": "Gestärkte Kommunikation und Bindung <br /> Werkzeuge zum Verständnis von Unterschieden <br /> Erneuerte Beziehung auf tiefer Ebene"
           }
         ],
-        "imageAlt": "Bild romantische Beziehungen"
+        "imageAlt": "Bild Liebesbeziehungen"
       },
       {
         "id": "individual",
-        "blockTitle": "Einzeltherapie: <br /><0>Persönliches Potenzial freisetzen</0>",
+        "blockTitle": "Einzeltherapie: <br /><0>Entfaltung persönlichen Potenzials</0>",
         "items": [
           {
             "title": "Beschreibung:",
-            "description": "Nehmen Sie an einer transformativen Reise teil und erleben Sie signifikantes persönliches Wachstum durch Einzeltherapie. Vom Stressmanagement bis zur Überwindung einschränkender Verhaltensmuster – entdecken Sie, wie die Kombination aus Biodecoding und Enneagramm Ihr verborgenes Potenzial freisetzt. Ehrlichkeit sich selbst gegenüber und Selbstwahrnehmung sind der Schlüssel zu einem erfüllteren und zufriedeneren Leben."
+            "description": "Erleben Sie bedeutendes persönliches Wachstum durch Einzeltherapie. Von Stressbewältigung bis zur Überwindung limitierender Muster – entdecken Sie, wie Biodescodierung und Enneagramm Ihr verborgenes Potenzial freisetzen."
           },
           {
             "title": "Vorteile:",
-            "description": "Effektives Management von Stress und persönlichen Spannungen.<br />Überwindung einschränkender Verhaltensmuster.<br />Erreichen eines größeren Gefühls persönlicher Zufriedenheit."
+            "description": "Effektives Stressmanagement <br /> Überwindung limitierender Verhaltensmuster <br /> Mehr persönliche Zufriedenheit"
           }
         ],
         "imageAlt": "Bild Einzeltherapie"
       }
     ],
     "pricing": {
-      "title": "Erschwingliche Preise",
+      "title": "Preise",
       "items": [
         {
-          "title": "Inspirierende Konferenzen",
-          "subtitle": "Nehmen Sie an wirkungsvollen Konferenzen teil, die Ihre Perspektive herausfordern und persönliches Wachstum anregen",
+          "title": "Inspirierende Vorträge",
+          "subtitle": "Besuchen Sie bewegende Vorträge, die Ihre Perspektive herausfordern",
           "price": "0",
-          "period": "cop",
-          "callToActionText": "Erheben Sie Ihr Bewusstsein",
+          "period": "EUR",
+          "callToActionText": "Bewusstsein erweitern",
           "ribbonTitle": "kostenlos"
         },
         {
           "title": "Einzeltherapie",
-          "subtitle": "Entdecken Sie eine personalisierte therapeutische Erfahrung, die auf Ihre Bedürfnisse und Ziele zugeschnitten ist",
-          "price": "80k",
-          "period": "cop",
-          "callToActionText": "Managen Sie Ihre Emotionen"
+          "subtitle": "Persönlich zugeschnittene therapeutische Erfahrung",
+          "price": "80",
+          "period": "EUR",
+          "callToActionText": "Emotionen steuern"
         },
         {
           "title": "Paartherapie",
-          "subtitle": "Ein sicherer Raum, um Herausforderungen anzugehen und die Kommunikation als Paar zu verbessern",
-          "price": "150k",
-          "period": "cop",
-          "callToActionText": "Wachsen Sie als Paar",
+          "subtitle": "Sicherer Raum für Paar-Herausforderungen",
+          "price": "150",
+          "period": "EUR",
+          "callToActionText": "Gemeinsam wachsen",
           "ribbonTitle": "beliebt"
         },
         {
-          "title": "Einführungskurs Enneagramm",
+          "title": "Enneagramm-Einführungskurs",
           "subtitle": "Erkunden Sie die Komplexität Ihrer Persönlichkeit",
-          "price": "254k",
-          "period": "cop",
-          "callToActionText": "Entfesseln Sie Ihre Kraft"
+          "price": "254",
+          "period": "EUR",
+          "callToActionText": "Potenzial entfalten"
         }
       ]
     },
     "testimonials": {
-      "title": "Wer Uns Vertraute",
-      "subtitle": "Entdecken Sie, was unsere Kunden über ihre Erfahrungen mit uns zu sagen haben.",
+      "title": "Stimmen unserer Kunden",
+      "subtitle": "Erfahren Sie, was unsere Kunden über ihre Erfahrungen berichten.",
       "items": [
         {
-          "testimonial": "Meine Erfahrung mit BioEnneagram war wirklich transformierend. Der Coach hat eine einzigartige Fähigkeit, Enneagramm und Biodecoding so zu kombinieren, dass man zu einem tiefen Verständnis seiner selbst gelangt. In nur wenigen Sitzungen habe ich eine signifikante Veränderung meiner Perspektive und meines Umgangs mit den Herausforderungen des Lebens erfahren. Ich empfehle diese Therapie jedem wärmstens, der nach positiver und dauerhafter Veränderung sucht.",
+          "testimonial": "Meine Erfahrung mit Bioenneagramm war zutiefst transformativ. Der Coach verbindet Enneagramm und Biodescodierung einzigartig. Innerhalb weniger Sitzungen erlebte ich bedeutende Veränderungen in meiner Lebensperspektive.",
           "name": "Alejandra",
-          "job": "Angestellte bei Huspost",
+          "job": "Mitarbeiterin bei Huspost",
           "imageAlt": "Alejandras Testimonial"
         },
         {
-          "testimonial": "Mir fehlen die Worte, um auszudrücken, wie dankbar ich bin, BioEnneagram entdeckt zu haben. Enneagramm und Biodecoding waren Schlüsselwerkzeuge, um meine Verhaltensmuster zu verstehen und emotionale Hindernisse zu überwinden. Der Coach geht Probleme mit Empathie und Weisheit an. Mein Leben hat eine positive Wendung genommen, und ich kann für diese transformative Erfahrung nicht genug danken.",
+          "testimonial": "Ich bin dankbar, Bioenneagramm entdeckt zu haben. Enneagramm und Biodescodierung waren Schlüssel zum Verständnis meiner Verhaltensmuster. Mein Leben hat eine positive Wendung genommen.",
           "name": "Juan David Cardona",
           "job": "Gründer von Raices",
           "imageAlt": "Juan David Cardonas Testimonial"
         },
         {
-          "testimonial": "Nach der Teilnahme an BioEnneagram-Sitzungen habe ich das Gefühl, endlich mit meinem wahren Selbst in Verbindung zu treten. Enneagramm und Biodecoding haben mir tiefe Einblicke in meine emotionalen Blockaden und deren Überwindung gegeben. Der Coach war ein außergewöhnlicher Führer auf dieser Reise der Selbstfindung. Meine Lebenseinstellung hat sich geändert, und ich erlebe einen inneren Frieden, den ich nie für möglich gehalten hätte.",
+          "testimonial": "Nach den Sitzungen fühle ich mich endlich mit meinem wahren Ich verbunden. Die Methoden gaben tiefe Einsichten in emotionale Blockaden. Meine Lebensperspektive hat sich verändert.",
           "name": "Sara",
-          "job": "Professionelle Geigerin",
+          "job": "Berufliche Violinistin",
           "imageAlt": "Saras Testimonial"
         }
       ]
     },
     "callToActionWidget": {
-      "title": "Lassen Sie uns Gemeinsam Gestalten",
-      "subtitle": "Bereit, eine signifikante Veränderung in Ihrem Leben zu bewirken?",
-      "actionText": "Lassen Sie uns Sprechen"
+      "title": "Gemeinsam gestalten",
+      "subtitle": "Bereit für bedeutungsvolle Veränderungen?",
+      "actionText": "Jetzt sprechen"
     },
     "faqs": {
-      "title": "Häufig Gestellte Fragen",
+      "title": "Häufige Fragen",
       "items": [
         {
-          "title": "Was ist Bioenneagramm und wie unterscheidet es sich von Biodecoding und Enneagramm einzeln?",
-          "description": "Bioenneagramm ist eine einzigartige Integration von Biodecoding und Enneagramm. Es kombiniert die Kraft des Biodecodings, um emotionale Verbindungen zu verstehen, mit dem Enneagramm, um Persönlichkeitsmuster zu erforschen. Diese Synergie bietet einen umfassenderen Blick darauf, wie unsere vergangenen Erfahrungen unsere aktuelle Persönlichkeit und unser Verhalten beeinflussen.",
+          "title": "Was ist Bioenneagramm und wie unterscheidet es sich von Biodescodierung und Enneagramm?",
+          "description": "Bioenneagramm verbindet Biodescodierung und Enneagramm synergetisch. Diese Kombination bietet ein umfassenderes Verständnis, wie Erfahrungen unsere Persönlichkeit prägen.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Was ist Biodecoding und wie kann es mir nützen?",
-          "description": "Biodecoding ist ein therapeutischer Ansatz, der darauf abzielt, die Verbindung zwischen Emotionen und Gesundheit zu verstehen. Es funktioniert, indem die emotionale Bedeutung von körperlichen oder emotionalen Symptomen entschlüsselt wird. Die Erfahrung mit Biodecoding kann Ihnen helfen, emotionale Muster zu verstehen und loszulassen, die Ihr Wohlbefinden beeinträchtigen könnten.",
+          "title": "Wie profitiere ich von Biodescodierung?",
+          "description": "Biodescodierung entschlüsselt Verbindungen zwischen Emotionen und Gesundheit. Sie hilft, emotionale Muster zu verstehen und zu lösen, die Ihr Wohlbefinden beeinflussen.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Ist Vorerfahrung in Biodecoding oder Enneagramm notwendig, um an Bioenneagramm-Sitzungen teilzunehmen?",
-          "description": "Es ist keine Vorerfahrung erforderlich. Bioenneagramm-Sitzungen sind so konzipiert, dass sie für alle Vertrautheitsgrade mit Biodecoding und Enneagramm geeignet sind. Unsere Fachleute werden Sie durch den Prozess führen und sicherstellen, dass Sie sich wohlfühlen und jede Phase verstehen.",
+          "title": "Benötige ich Vorkenntnisse?",
+          "description": "Nein. Unsere Sitzungen sind für alle Kenntnisstände konzipiert. Unsere Fachleute führen Sie durch den Prozess.",
           "icon": "tabler:chevrons-right"
         },
         {
-          "title": "Wie wird das Enneagramm in Ihren Dienstleistungen verwendet?",
-          "description": "Das Enneagramm ist ein mächtiges Werkzeug zur Selbsterkenntnis, das wir verwenden, um Persönlichkeitsmuster und Motivationen zu verstehen. Wir bieten spezifische Enneagramm-Sitzungen und Workshops an, um Ihnen zu helfen, Ihren Typ zu entdecken und dieses Wissen in Ihrem täglichen Leben anzuwenden.",
+          "title": "Wie wird das Enneagramm eingesetzt?",
+          "description": "Wir nutzen das Enneagramm als Werkzeug zur Selbsterkenntnis. Es hilft, Persönlichkeitsmuster und Motivationen zu verstehen – in Sitzungen und Workshops.",
           "icon": "tabler:chevrons-right"
         },
         {
           "title": "Bieten Sie Online-Dienste an?",
-          "description": "Ja, einige unserer Dienste sind online verfügbar. Dies bietet Flexibilität für diejenigen, die lieber bequem von zu Hause aus teilnehmen möchten. Kontaktieren Sie uns für weitere Details zur Online-Verfügbarkeit.",
+          "description": "Ja, einige Leistungen sind online verfügbar. Kontaktieren Sie uns für Details.",
           "icon": "tabler:chevrons-right"
         }
       ]
     },
     "steps2": {
-      "title": "Nehmen Sie Kontakt Mit Uns Auf",
-      "subtitle": "Haben Sie Fragen? Kontaktieren Sie uns über das untenstehende Formular. Wir sind hier, um zu helfen!",
-      "callToActionText": "Erzählen Sie Uns",
+      "title": "Kontakt aufnehmen",
+      "subtitle": "Fragen? Kontaktieren Sie uns über das Formular. Wir helfen gerne!",
+      "callToActionText": "Jetzt schreiben",
       "items": [
         {
-          "title": "Schreiben Sie Uns",
+          "title": "E-Mail",
           "description": "bioenneagramcoach@gmail.com",
           "icon": "tabler:mail"
         },
         {
-          "title": "Kontaktieren Sie Uns",
-          "description": "+57 (300) 448-1819",
+          "title": "Telefon",
+          "description": "+49 (0) 123 456 789",
           "icon": "tabler:headset"
         },
         {
-          "title": "Folgen Sie Uns",
+          "title": "Folgen Sie uns",
           "description": "@bioenneagramcoach",
           "icon": "tabler:brand-instagram"
         }
       ]
     },
     "blogLatestPosts": {
-      "title": "Bleiben Sie Informiert mit dem Bioenneagramm Blog",
-      "information": "Entdecken Sie unsere Sammlung von Artikeln, Leitfäden und Tutorials zur persönlichen Entwicklung, Enneagramm-Einsichten, Biodecoding und der effektiven Nutzung von Bioenneagramm für Ihr Wachstum."
+      "title": "Bleiben Sie informiert mit unserem Blog",
+      "information": "Entdecken Sie Artikel, Anleitungen und Tutorials zu persönlicher Entwicklung, Enneagramm-Trends und effektiver Nutzung von Bioenneagramm."
     },
-    "mailtoSubject": "Alexander Zapata: Bioenneagram Coach"
+    "mailtoSubject": "Alexander Zapata: Bioenneagramm Coach"
+  },
+  "aboutpage": {
+    "meta": {
+      "title": "Über Uns - Bioenneagramm",
+      "description": "Erfahren Sie mehr über Bioenneagramm, unsere Ansätze, Werte und Erfolge auf dem Weg der Selbstentdeckung."
+    },
+    "hero": {
+      "tagline": "Über Uns",
+      "title": "Entdecken Sie transformative Methoden für <br /><0>persönliches Wachstum</0>",
+      "subtitle": "Bioenneagramm vereint tiefes Fachwissen in Persönlichkeitssystemen und emotionaler Entschlüsselung. Unsere Methoden verbinden alte Weisheit mit moderner Wissenschaft.",
+      "imageAlt": "Repräsentatives Bild Bioenneagramm"
+    },
+    "stats": {
+      "title": "Unsere Zahlen",
+      "items": [
+        { "title": "Klienten", "amount": "413" },
+        { "title": "Unternehmen", "amount": "6" }
+      ]
+    },
+    "features3_enfoques": {
+      "title": "Unsere Schwerpunkte",
+      "subtitle": "Drei primäre Transformationsbereiche für spezifische Bedürfnisse und Ziele.",
+      "items": [
+        {
+          "title": "Individuell",
+          "description": "Persönliche Therapiewege für Selbstentdeckung und persönliche Herausforderungen.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Paarbeziehungen",
+          "description": "Wiederaufbau von Kommunikation und emotionaler Intimität.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Unternehmen",
+          "description": "Verbesserung von Teamdynamik und Arbeitsklima.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "features3_otros": {
+      "imageAlt": "Farbenfrohes repräsentatives Bild",
+      "items": [
+        {
+          "title": "Bildung",
+          "description": "Workshops und Kurse für persönliches Wachstum.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Psychische Gesundheit",
+          "description": "Bearbeitung emotionaler Muster durch integrative Methoden.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Körperliche Gesundheit",
+          "description": "Erkundung von Geist-Körper-Verbindungen.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Persönliche Marke",
+          "description": "Ausrichtung des professionellen Auftritts an authentischem Selbstausdruck.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Medizinische Integration",
+          "description": "Komplementäre Ansätze neben konventioneller Medizin.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Kreativität",
+          "description": "Freisetzung künstlerischen Potenzials durch Selbsterkenntnis.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "steps2_valores": {
+      "title": "Unsere Werte",
+      "subtitle": "Leitprinzipien für unsere Praxis und Kundenbeziehungen.",
+      "items": [
+        {
+          "title": "Kundenzentrierter Ansatz",
+          "description": "Jede Interaktion fokussiert auf Ihre einzigartigen Bedürfnisse."
+        },
+        {
+          "title": "Kontinuierliche Verbesserung",
+          "description": "Ständige Verfeinerung basierend auf Forschung und Feedback."
+        },
+        {
+          "title": "Ethische Praxis",
+          "description": "Höchste Standards in Vertraulichkeit, Respekt und Integrität."
+        }
+      ]
+    },
+    "steps2_logros": {
+      "title": "Erfolge",
+      "subtitle": "Meilensteine, die unsere Wirkung belegen.",
+      "callToActionText": "Mehr sehen",
+      "items": [
+        {
+          "title": "Globale Reichweite",
+          "description": "Klientenbetreuung auf mehreren Kontinenten durch digitale Plattformen.",
+          "icon": "tabler:globe"
+        },
+        {
+          "title": "Positives Feedback",
+          "description": "Konsistent hohe Zufriedenheitswerte und transformative Ergebnisse.",
+          "icon": "tabler:message-star"
+        },
+        {
+          "title": "Branchenanerkennung",
+          "description": "Auszeichnungen für innovative Ansätze in persönlicher Entwicklung.",
+          "icon": "tabler:award"
+        }
+      ]
+    },
+    "features2_ubicaciones": {
+      "title": "Standorte",
+      "tagline": "Finden Sie uns",
+      "items": [
+        { "title": "Deutschland", "description": "Musterstraße 1, 10115 Berlin" },
+        { "title": "Österreich", "description": "Beispielgasse 5, 1010 Wien" },
+        { "title": "Schweiz", "description": "Testweg 10, 8001 Zürich" }
+      ]
+    },
+    "features2_soporte": {
+      "title": "Kundensupport",
+      "tagline": "Kontakt",
+      "items": [
+        {
+          "title": "Chat",
+          "description": "Soforthilfe über unsere Messaging-Plattform während der Geschäftszeiten.",
+          "icon": "tabler:messages"
+        },
+        {
+          "title": "Telefon",
+          "description": "Direkter Support über unsere Serviceline.",
+          "icon": "tabler:headset"
+        }
+      ]
+    }
   }
 }
