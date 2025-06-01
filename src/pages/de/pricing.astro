@@ -1,0 +1,94 @@
+---
+// src/pages/en/pricing.astro
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Prices from '~/components/widgets/Pricing.astro'; // Cambiado a 'Prices'
+import FAQs from '~/components/widgets/FAQs.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {};
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
+
+const metadata = {
+  title: t('pricingPage.meta.title'),
+};
+
+const pricingPlans = t('pricingPage.pricesWidget.plans', {}, {defaultValue: []});
+const pricingFeatures = t('pricingPage.featuresPricing.items', {}, {defaultValue: []});
+const pricingSteps = t('pricingPage.stepsWidget.items', {}, {defaultValue: []});
+const pricingFaqs = t('pricingPage.faqsPricing.items', {}, {defaultValue: []});
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline={t('pricingPage.heroText.tagline')}
+    title={t('pricingPage.heroText.title')}
+    subtitle={t('pricingPage.heroText.subtitle')}
+  />
+
+  <Prices
+    title={t('pricingPage.pricesWidget.title')}
+    subtitle={t('pricingPage.pricesWidget.subtitle')}
+    prices={pricingPlans.map(plan => ({
+      ...plan, // Pasa todas las props del plan desde JSON
+      callToAction: { // Construye callToAction aquí
+        target: '_blank', // Asume blank, o ponlo en JSON
+        text: plan.callToActionText,
+        href: plan.href || '#', // Añade href al JSON de cada plan
+      }
+    }))}
+  />
+
+  <Features3
+    title={t('pricingPage.featuresPricing.title')}
+    subtitle={t('pricingPage.featuresPricing.subtitle')}
+    columns={2}
+    items={pricingFeatures}
+    classes={{ container: 'max-w-5xl' }}
+  />
+
+  <Steps
+    title={t('pricingPage.stepsWidget.title')}
+    tagline={t('pricingPage.stepsWidget.tagline')}
+    isReversed={true}
+    items={pricingSteps}
+    image={{
+      src: 'https://images.unsplash.com/photo-1536816579748-4ecb3f03d72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      alt: t('pricingPage.stepsWidget.imageAlt', {}, {defaultValue: 'Steps image'}) // Añadir imageAlt al JSON
+    }}
+  />
+
+  <FAQs
+    title={t('pricingPage.faqsPricing.title')}
+    subtitle={t('pricingPage.faqsPricing.subtitle')}
+    columns={1}
+    items={pricingFaqs}
+  />
+
+  <CallToAction
+    title={t('pricingPage.callToActionPricing.title')}
+    subtitle={t('pricingPage.callToActionPricing.subtitle')}
+    actions={[{ variant: 'primary', text: t('pricingPage.callToActionPricing.actionText'), href: '/' }]}
+  />
+</Layout>

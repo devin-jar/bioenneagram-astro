@@ -1,0 +1,118 @@
+---
+// src/pages/en/services.astro
+import Layout from '~/layouts/PageLayout.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {};
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
+
+const metadata = {
+  title: t('servicesPage.meta.title'),
+};
+
+// URLs de imágenes, etc.
+const heroImageServices = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80';
+const contentMainFeaturesImage = 'https://images.unsplash.com/photo-1525909002-1b05e0c869d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
+const contentBenefitsImage = 'https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';
+const testimonialImagesServices = [ // Necesitarás URLs para estos o una lógica para obtenerlos
+    'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
+    'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+    'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=824&q=80',
+];
+
+
+const featuresTemplatesItems = t('servicesPage.featuresTemplates.items', {}, {defaultValue: []});
+const contentMainFeaturesItems = t('servicesPage.contentMainFeatures.items', {}, {defaultValue: []});
+const contentBenefitsItems = t('servicesPage.contentBenefits.items', {}, {defaultValue: []});
+const testimonialsServicesItems = t('servicesPage.testimonialsServices.items', {}, {defaultValue: []});
+
+// HREF para el call to action de testimonios
+const testimonialsCallToActionHref = t('servicesPage.testimonialsServices.callToActionHref', {}, {defaultValue: 'https://github.com/onwidget/astrowind'});
+
+---
+<Layout metadata={metadata}>
+  <Hero
+    tagline={t('servicesPage.hero.tagline')}
+    title={t('servicesPage.hero.title')}
+    subtitle={t('servicesPage.hero.subtitle')}
+    actions={[{ variant:"primary", target: '_blank', text: t('servicesPage.hero.actionText'), href: '/' }]}
+    image={{ src: heroImageServices, alt: t('servicesPage.hero.imageAlt') }}
+  />
+
+  <Features2
+    title={t('servicesPage.featuresTemplates.title')}
+    subtitle={t('servicesPage.featuresTemplates.subtitle')}
+    columns={3}
+    items={featuresTemplatesItems}
+  />
+
+  <Content
+    isReversed
+    items={contentMainFeaturesItems}
+    image={{ src: contentMainFeaturesImage, alt: t('servicesPage.contentMainFeatures.imageAlt', {}, {defaultValue: 'Features Image'}) }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        {t('servicesPage.contentMainFeatures.blockTitle')}
+      </h3>
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    items={contentBenefitsItems}
+    image={{ src: contentBenefitsImage, alt: t('servicesPage.contentBenefits.imageAlt', {}, {defaultValue: 'Benefits Image'}) }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        {t('servicesPage.contentBenefits.blockTitle')}
+      </h3>
+    </Fragment>
+  </Content>
+
+  <Testimonials
+    title={t('servicesPage.testimonialsServices.title')}
+    testimonials={testimonialsServicesItems.map((item, index) => ({
+        ...item, // Pasa name, job, testimonial, imageAlt
+        image: {
+            src: testimonialImagesServices[index] || 'URL_POR_DEFECTO_SI_FALTA', // Asegura tener suficientes imágenes
+            alt: item.imageAlt || `${item.name} Image`
+        }
+    }))}
+    callToAction={{
+      target: '_blank',
+      text: t('servicesPage.testimonialsServices.callToActionText'),
+      href: testimonialsCallToActionHref,
+      icon: 'tabler:chevron-right',
+    }}
+  />
+
+  <CallToAction
+    actions={[{ variant: "primary", text: t('servicesPage.callToActionServices.actionText'), href: '/' }]}
+    title={t('servicesPage.callToActionServices.title')}
+    subtitle={t('servicesPage.callToActionServices.subtitle')}
+  />
+</Layout>

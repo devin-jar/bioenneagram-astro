@@ -1,0 +1,53 @@
+---
+// src/pages/en/building.astro
+import Layout from '~/layouts/Layout.astro'; // Layout base
+import { getHomePermalink } from '~/utils/permalinks';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+// Similar a 404, el currentLocale puede ser ambiguo si se accede directamente a /building
+const currentLocaleForBuilding = Astro.currentLocale || defaultLang;
+
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleForBuilding}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {};
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocaleForBuilding);
+
+const metadata = {
+  title: t('buildingPage.meta.title', {}, { defaultValue: 'Page Under Construction' })
+};
+const homeLink = getHomePermalink(currentLocaleForBuilding);
+---
+
+<Layout metadata={metadata}>
+  <section class="flex items-center h-full p-16">
+    <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+      <div class="max-w-md text-center">
+        <h2 class="mb-8 font-bold text-4xl sm:text-5xl md:text-6xl">
+          <span class="sr-only">{t('buildingPage.statusText')}</span>
+          <span class="text-primary">{t('buildingPage.mainText')}</span>
+          <span>👨‍💻</span>
+        </h2>
+        <p class="text-3xl font-semibold md:text-3xl">{t('buildingPage.sorryText')}</p>
+        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
+          {t('buildingPage.infoText')}
+        </p>
+        <a rel="noopener noreferrer" href={homeLink} class="btn ml-4">{t('buildingPage.buttonText')}</a>
+      </div>
+    </div>
+  </section>
+</Layout>

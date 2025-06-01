@@ -1,0 +1,56 @@
+---
+// src/pages/en/landing/course-enneagram-game.astro
+import Layout from '../../../layouts/LandingLayout.astro'; // Usa LandingLayout
+
+import Hero from '../../../components/widgets/Hero.astro';
+import CallToAction from '../../../components/widgets/CallToAction.astro';
+import ImgCourse from '../../../assets/images/eneagrama-game.jpg'; // La imagen se mantiene
+
+import { getTranslator, defaultLang } from '../../../i18n';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.warn(`[Page: ${Astro.url.pathname}] Translation file for locale "${currentLocaleFromAstro}" not found. Falling back to default locale "${defaultLang}".`);
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {};
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
+
+const metadata = {
+  title: t('courseEnneagramGamePage.meta.title'),
+  description: t('courseEnneagramGamePage.meta.description', {}, {defaultValue: 'Learn about the Enneagram Game course.'}),
+  robots: { index: true, follow: true }
+};
+
+const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf'; // Se mantiene si el PDF no está localizado
+const courseBookingLink = 'https://events.bioenneagram.com/cursos/curso-eneagrama-game'; // Se mantiene
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline={t('courseEnneagramGamePage.hero.tagline')}
+    title={t('courseEnneagramGamePage.hero.title')}
+    subtitle={t('courseEnneagramGamePage.hero.subtitle')}
+    actions={[{ variant: 'primary', target: '_blank', text: t('courseEnneagramGamePage.hero.actionText'), href: courseBookingLink, icon: 'tabler:square-rounded-arrow-right' }]}
+    image={{ src: ImgCourse.src, alt: t('courseEnneagramGamePage.hero.imageAlt') }}
+  />
+
+  <CallToAction
+    title={t('courseEnneagramGamePage.callToAction.title')}
+    subtitle={t('courseEnneagramGamePage.callToAction.subtitle')}
+    actions={[{ variant: 'primary', text: t('courseEnneagramGamePage.callToAction.actionText'), href: coursePdfLink, icon: 'tabler:download', target: '_blank'}]}
+  />
+</Layout>
