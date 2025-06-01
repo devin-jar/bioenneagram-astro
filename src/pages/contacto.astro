@@ -1,0 +1,57 @@
+---
+// src/pages/contact.astro (o en/contact.astro si 'en' no es defaultLocale sin prefijo)
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import ContactUs from '~/components/widgets/Contact.astro'; // Asegúrate que este componente es solo estructura
+import Features2 from '~/components/widgets/Features2.astro';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {};
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
+
+const metadata = {
+  title: t('contactPage.meta.title'),
+};
+
+const contactFormInputs = t('contactPage.contactForm.inputs', {}, {defaultValue: []});
+const featuresSupportItems = t('contactPage.featuresSupport.items', {}, {defaultValue: []});
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline={t('contactPage.heroText.tagline')}
+    title={t('contactPage.heroText.title')}
+  />
+
+  <ContactUs
+    title={t('contactPage.contactForm.title')}
+    subtitle={t('contactPage.contactForm.subtitle')}
+    inputs={contactFormInputs}
+    textarea={{ label: t('contactPage.contactForm.textareaLabel') }}
+    disclaimer={{ label: t('contactPage.contactForm.disclaimerLabel') }}
+    description={t('contactPage.contactForm.description')}
+  />
+
+  <Features2
+    title={t('contactPage.featuresSupport.title')}
+    items={featuresSupportItems} // Los iconos vienen del JSON ahora
+  />
+</Layout>

@@ -1,7 +1,7 @@
 // src/i18n/index.js
 
 // Configuración de i18n
-export const defaultLang = 'en'; // Idioma principal
+export const defaultLang = 'es'; // Idioma principal
 export const supportedLangs = ['en', 'es', 'nl', 'fr', 'de'];
 // 'en' es el idioma por defecto y NO quieres que tenga prefijo (ej. /about)
 export const prefixDefaultLocale = false;

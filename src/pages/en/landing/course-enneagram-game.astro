@@ -1,12 +1,12 @@
 ---
-// src/pages/landing/course-enneagram-game.astro
-import Layout from '~/layouts/LandingLayout.astro'; // Usa LandingLayout
+// src/pages/en/landing/course-enneagram-game.astro
+import Layout from '../../../layouts/LandingLayout.astro'; // Usa LandingLayout
 
-import Hero from '~/components/widgets/Hero.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import ImgCourse from '~/assets/images/eneagrama-game.jpg'; // La imagen se mantiene
+import Hero from '../../../components/widgets/Hero.astro';
+import CallToAction from '../../../components/widgets/CallToAction.astro';
+import ImgCourse from '../../../assets/images/eneagrama-game.jpg'; // La imagen se mantiene
 
-import { getTranslator, defaultLang } from '~/i18n';
+import { getTranslator, defaultLang } from '../../../i18n';
 
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
 const currentLocaleFromAstro = Astro.currentLocale || defaultLang;

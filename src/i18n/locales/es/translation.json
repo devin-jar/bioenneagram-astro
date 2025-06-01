@@ -444,5 +444,180 @@
         }
       ]
     }
+  },
+  "courseEnneagramGamePage": {
+    "meta": {
+      "title": "Curso de Eneagrama Game",
+      "description": "Aprende a usar la herramienta de gamificación Eneagrama Game para el autodescubrimiento."
+    },
+    "hero": {
+      "tagline": "Cursos",
+      "title": "Curso de Eneagrama Game: Una herramienta de autodescubrimiento",
+      "subtitle": "Apúntate a mi curso en VIVO y aprende sobre la herramienta de gamificación para descubrir tu personalidad, la misma que utilizo con mis pacientes en consultas.",
+      "actionText": "Inscríbete Ahora",
+      "imageAlt": "Imagen del Curso de Eneagrama Game por Bioenneagram Coach"
+    },
+    "callToAction": {
+      "title": "Información",
+      "subtitle": "Abajo encontrarás un PDF con la información detallada del curso, léelo para saber si este curso es para ti. (Los precios pueden variar)",
+      "actionText": "Descargar PDF"
+    }
+  },
+
+  "error404Page": {
+    "meta": {
+      "title": "Error 404 - Página no encontrada"
+    },
+    "title": "Error 404",
+    "mainText": "404",
+    "sorryText": "Lo sentimos, no hemos podido encontrar esta página.",
+    "infoText": "Pero no te preocupes, puedes encontrar muchas otras cosas en nuestra página principal.",
+    "buttonText": "Regresar al Inicio"
+  },
+
+  "buildingPage": {
+    "meta": {
+      "title": "Página en Construcción"
+    },
+    "title": "Construyendo",
+    "statusText": "En Desarrollo",
+    "mainText": "Construyendo",
+    "sorryText": "Lo sentimos, esta página está en construcción.",
+    "infoText": "Pero no te preocupes, puedes encontrar muchas otras cosas en nuestra página principal.",
+    "buttonText": "Regresar al Inicio"
+  },
+
+  "contactPage": {
+    "meta": {
+      "title": "Contacto - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Contacto",
+      "title": "¡Conectemos!"
+    },
+    "contactForm": {
+      "title": "¡Envíanos un mensaje hoy mismo!",
+      "subtitle": "Para respuestas más rápidas, explora nuestra sección de Preguntas Frecuentes. ¡Quizás encuentres la solución que buscas allí mismo! Si no, nuestro equipo de soporte estará encantado de ayudarte.",
+      "inputs": [
+        { "name": "name", "label": "Nombre" },
+        { "name": "email", "label": "Correo Electrónico" }
+      ],
+      "textareaLabel": "Mensaje",
+      "disclaimerLabel": "Al enviar este formulario de contacto, reconoces y aceptas la recopilación de tu información personal.",
+      "description": "Nuestro equipo de soporte suele responder en 24 horas hábiles."
+    },
+    "featuresSupport": {
+      "title": "¡Estamos aquí para ayudar!",
+      "items": [
+        {
+          "title": "Soporte general",
+          "description": "Chatea con nosotros para consultas relacionadas con la gestión de cuentas, navegación del sitio web, problemas de pago, acceso a plantillas compradas o preguntas generales sobre la funcionalidad del sitio web."
+        },
+        {
+          "title": "Contactar a ventas",
+          "description": "Chatea con nosotros para preguntas sobre compras, opciones de personalización, licencias para uso comercial, consultas sobre plantillas específicas, etc."
+        },
+        {
+          "title": "Soporte técnico",
+          "description": "Chatea con nosotros si enfrentas problemas como la instalación de plantillas, dificultades de edición, problemas de compatibilidad con software o errores de descarga, u otros desafíos técnicos relacionados con el uso de las plantillas."
+        },
+        { "title": "Teléfono", "description": "+1 (234) 567-890", "icon": "tabler:headset" },
+        { "title": "Correo Electrónico", "description": "contact@support.com", "icon": "tabler:mail" },
+        { "title": "Ubicación", "description": "1234 Lorem Ipsum St, 12345, Miami, EEUU", "icon": "tabler:map-pin" }
+      ]
+    }
+  },
+
+  "pricingPage": {
+    "meta": {
+      "title": "Precios - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Precios",
+      "title": "Precios Estelares para Cada Viaje",
+      "subtitle": "Elige el plan perfecto que se alinee con tus metas cósmicas."
+    },
+    "pricesWidget": {
+      "title": "Nuestros precios",
+      "subtitle": "Paga solo por lo que necesitas",
+      "plans": [
+        {
+          "title": "básico",
+          "subtitle": "Opción óptima para uso personal",
+          "price": 29,
+          "period": "por mes",
+          "items": [
+            { "description": "Etiam in libero, et volutpat" },
+            { "description": "Aenean ac nunc dolor tristique" },
+            { "description": "Cras scelerisque accumsan lib" },
+            { "description": "In hac habitasse" }
+          ],
+          "callToActionText": "Comenzar"
+        }
+      ]
+    },
+    "featuresPricing": {
+      "title": "Características relacionadas con el precio",
+      "subtitle": "Descubre las ventajas de elegir nuestros planes",
+      "items": [
+      ]
+    },
+    "stepsWidget": {
+      "title": "Un viaje guiado de los planes a la creatividad",
+      "tagline": "proceso simplificado",
+      "items": [
+      ]
+    },
+    "faqsPricing": {
+      "title": "Preguntas Frecuentes sobre Precios",
+      "subtitle": "Elegir el plan correcto es importante, y estamos aquí para responder tus preguntas. Si tienes consultas sobre nuestras opciones de precios, estás en el lugar correcto.",
+      "items": [
+      ]
+    },
+    "callToActionPricing": {
+      "title": "¿Listo para impulsar tus proyectos?",
+      "subtitle": "Únete a nuestra comunidad de clientes satisfechos que han transformado su trabajo con nuestras plantillas.",
+      "actionText": "Comienza ahora"
+    }
+  },
+
+  "servicesPage": {
+    "meta": {
+      "title": "Servicios - Bioenneagram"
+    },
+    "hero": {
+      "tagline": "Servicios",
+      "title": "Eleva tus proyectos con nuestras impresionantes plantillas",
+      "subtitle": "Explora nuestras plantillas meticulosamente elaboradas y adaptadas a diversas industrias y propósitos. Desde presentaciones cautivadoras hasta diseños funcionales de sitios web, ofrecemos las herramientas que necesitas para tener éxito.",
+      "actionText": "Comienza a explorar",
+      "imageAlt": "Imagen de Servicios de Bioenneagram"
+    },
+    "featuresTemplates": {
+      "title": "Explora nuestras diversas plantillas",
+      "subtitle": "Descubre nuestra selección a continuación para optimizar y elevar tus proyectos.",
+      "items": [
+      ]
+    },
+    "contentMainFeatures": {
+      "blockTitle": "Características Principales",
+      "items": [
+      ]
+    },
+    "contentBenefits": {
+      "blockTitle": "Beneficios",
+      "items": [
+      ]
+    },
+    "testimonialsServices": {
+      "title": "Palabras de clientes reales",
+      "items": [
+      ],
+      "callToActionText": "Más testimonios..."
+    },
+    "callToActionServices": {
+      "title": "Sumérgete en nuestra colección de plantillas",
+      "subtitle": "Ya sea que estés en negocios, diseño o educación, nuestras plantillas están aquí para elevar tus proyectos.",
+      "actionText": "Comienza a explorar"
+    }
   }
 }

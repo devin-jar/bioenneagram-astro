@@ -1,19 +1,17 @@
 ---
-// src/pages/404.astro
+// src/pages/en/building.astro
 import Layout from '~/layouts/Layout.astro'; // Layout base
 import { getHomePermalink } from '~/utils/permalinks';
 
 import { getTranslator, defaultLang } from '~/i18n';
 
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
-// Para 404, Astro.currentLocale podría no estar definido como se espera si la ruta no coincide con ningún idioma.
-// Es más seguro usar defaultLang aquí o una lógica más robusta si quieres 404 localizado.
-// Por simplicidad, usaremos el idioma detectado o el por defecto.
-const currentLocaleFor404 = Astro.currentLocale || defaultLang;
+// Similar a 404, el currentLocale puede ser ambiguo si se accede directamente a /building
+const currentLocaleForBuilding = Astro.currentLocale || defaultLang;
 
 const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
 let pageTranslations: Record<string, any> | undefined;
-const expectedModulePath = `/src/i18n/locales/${currentLocaleFor404}/translation.json`;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleForBuilding}/translation.json`;
 const moduleCandidate = translationModules[expectedModulePath];
 
 if (moduleCandidate) {
@@ -27,27 +25,28 @@ if (moduleCandidate) {
     pageTranslations = {};
   }
 }
-const t = getTranslator(pageTranslations || {}, currentLocaleFor404);
+const t = getTranslator(pageTranslations || {}, currentLocaleForBuilding);
 
 const metadata = {
-  title: t('error404Page.meta.title', {}, { defaultValue: '404 Not Found' })
+  title: t('buildingPage.meta.title', {}, { defaultValue: 'Page Under Construction' })
 };
-const homeLink = getHomePermalink(currentLocaleFor404);
+const homeLink = getHomePermalink(currentLocaleForBuilding);
 ---
 
 <Layout metadata={metadata}>
   <section class="flex items-center h-full p-16">
     <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div class="max-w-md text-center">
-        <h2 class="mb-8 font-bold text-9xl">
-          <span class="sr-only">{t('error404Page.title')}</span>
-          <span class="text-primary">{t('error404Page.mainText')}</span>
+        <h2 class="mb-8 font-bold text-4xl sm:text-5xl md:text-6xl">
+          <span class="sr-only">{t('buildingPage.statusText')}</span>
+          <span class="text-primary">{t('buildingPage.mainText')}</span>
+          <span>👨‍💻</span>
         </h2>
-        <p class="text-3xl font-semibold md:text-3xl">{t('error404Page.sorryText')}</p>
+        <p class="text-3xl font-semibold md:text-3xl">{t('buildingPage.sorryText')}</p>
         <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
-          {t('error404Page.infoText')}
+          {t('buildingPage.infoText')}
         </p>
-        <a rel="noopener noreferrer" href={homeLink} class="btn ml-4">{t('error404Page.buttonText')}</a>
+        <a rel="noopener noreferrer" href={homeLink} class="btn ml-4">{t('buildingPage.buttonText')}</a>
       </div>
     </div>
   </section>
