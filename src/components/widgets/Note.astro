@@ -1,11 +1,32 @@
 ---
+// src/components/widgets/Note.astro
 import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  title?: string;      // Ejemplo: "Filosofía:"
+  values?: string;     // Ejemplo: "Alegría, Tranquilidad y Esperanza"
+  iconName?: string;   // Nombre del ícono, por defecto 'tabler:clover-2'
+  // Podrías añadir más props si el mensaje se vuelve más complejo
+}
+
+const {
+  title = 'Filosofía:', // Valor por defecto en el idioma base (o una clave genérica si no se pasa)
+  values = 'Alegría, Tranquilidad y Esperanza', // Valor por defecto
+  iconName = 'tabler:clover-2'
+} = Astro.props;
 ---
 
 <section class="bg-blue-50 dark:bg-slate-800 not-prose">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 text-md text-center font-medium">
-    <span class="font-bold">
-      <Icon name="tabler:clover-2" class="w-5 h-5 inline-block align-text-bottom" /> Filosofia:</span
-    > Alegria, Tranquilidad y Esperanza
+    {title && ( // Solo renderizar si hay un título
+      <span class="font-bold">
+        <Icon name={iconName} class="w-5 h-5 inline-block align-text-bottom" /> {title}
+      </span>
+    )}
+    {values && ( // Solo renderizar si hay valores
+      <span class={title ? ' ml-1' : ''}> {/* Añade un espacio si hay título */}
+        {values}
+      </span>
+    )}
   </div>
 </section>

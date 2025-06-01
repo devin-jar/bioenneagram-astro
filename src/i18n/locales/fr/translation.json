@@ -98,8 +98,9 @@
       "imageAlt": "Image principale de Bioennéagramme"
     },
     "note": {
-      "message": "Message important de Bioennéagramme."
-    },
+  "philosophyTitle": "Philosophie :",
+  "philosophyValues": "Joie, Tranquillité et Espoir"
+},
     "features": {
       "title": "Pourquoi choisir Bioennéagramme ?",
       "subtitle": "Chacune des fonctionnalités suivantes représente la proposition de valeur de Bioennéagramme.",
