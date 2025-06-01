@@ -31,7 +31,7 @@ export default defineConfig({
   output: 'static',
 
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'es',
     locales: ['en', 'es', 'nl', 'fr', 'de'],
     routing: {
       prefixDefaultLocale: false,
@@ -46,7 +46,7 @@ export default defineConfig({
       // ++ IMPORTANT FOR SITEMAP WITH i18n ++
       // Tell the sitemap about your i18n setup
       i18n: {
-        defaultLocale: 'en', // Must match
+        defaultLocale: 'es', // Must match
         locales: {
           en: 'en-US', // Or 'en-US' if you prefer more specific locale codes
           es: 'es-ES', // Or 'es-ES'

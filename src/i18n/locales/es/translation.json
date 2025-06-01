@@ -99,7 +99,8 @@
       "imageAlt": "Imagen principal de Bioenneagram" 
     },
     "note": {
-      "message": "Este es un mensaje importante de Bioenneagram."
+      "philosophyTitle": "Filosofía:", 
+      "philosophyValues": "Alegría, Tranquilidad y Esperanza" 
     },
     "features": {
       "title": "¿Por qué escoger Bioenneagram?",

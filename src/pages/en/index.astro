@@ -1,5 +1,5 @@
 ---
-// src/pages/es/index.astro
+// src/pages/en/index.astro
 import Layout from '~/layouts/PageLayout.astro';
 
 // Importar componentes
@@ -105,7 +105,11 @@ const steps2Items = t('homepage.steps2.items') || [];
     <Fragment slot="subtitle" set:html={t('homepage.hero.subtitle', {'1': '<span class="font-semibold">Bioenneagram</span>'})} />
   </Hero>
 
-  <Note message={t('homepage.note.message', {defaultValue: ''})} /> {/* Asumiendo que Note puede tomar 'message' */}
+   <Note
+    title={t('homepage.note.philosophyTitle')}
+    values={t('homepage.note.philosophyValues')}
+    iconName="tabler:clover-2"
+  />
 
   <Features
     id="features"

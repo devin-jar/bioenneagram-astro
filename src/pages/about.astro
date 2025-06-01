@@ -1,236 +1,136 @@
 ---
-console.log(">>>> RENDERING /pages/about.astro <<<<");
-console.log("Astro.url.pathname for /pages/about.astro:", Astro.url.pathname);
-console.log("Astro.currentLocale for /pages/about.astro:", Astro.currentLocale);
+// src/pages/en/about.astro (o el archivo para tu idioma por defecto, ej. src/pages/about.astro)
+import Layout from '~/layouts/PageLayout.astro';
 
+// Importar componentes
 import Features2 from '~/components/widgets/Features2.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
-import Layout from '~/layouts/PageLayout.astro';
+
+import { getTranslator, defaultLang } from '~/i18n';
+
+interface JsonModule {
+  default?: Record<string, any>;
+  [key: string]: any;
+}
+
+const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
+
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocaleFromAstro}/translation.json`;
+
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.warn(`[Page: ${Astro.url.pathname}] Translation file for locale "${currentLocaleFromAstro}" not found at ${expectedModulePath}. Falling back to default locale "${defaultLang}".`);
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Default translation file for locale "${defaultLang}" not found. Using empty object for page content.`);
+    pageTranslations = {};
+  }
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 
 const metadata = {
-  title: 'Nosotros',
-  // robots: {
-  //   index: true,
-  //   follow: true,
-  // }
+  title: t('aboutpage.meta.title'),
+  description: t('aboutpage.meta.description', {}, { defaultValue: 'Learn more about Bioenneagram.' }) // Ejemplo con defaultValue
+  // robots: { index: true, follow: true } // Descomenta si es necesario
 };
+
+// URLs de imágenes (pueden ir al JSON si varían por idioma)
+const heroImageAbout = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';
+const features3ImageOtros = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80';
+
+// Obtener datos de los arrays del JSON con fallback
+const statsItems = t('aboutpage.stats.items', {}, { defaultValue: [] });
+const features3EnfoquesItems = t('aboutpage.features3_enfoques.items', {}, { defaultValue: [] });
+const features3OtrosItems = t('aboutpage.features3_otros.items', {}, { defaultValue: [] });
+const steps2ValoresItems = t('aboutpage.steps2_valores.items', {}, { defaultValue: [] });
+const steps2LogrosItems = t('aboutpage.steps2_logros.items', {}, { defaultValue: [] });
+const features2UbicacionesItems = t('aboutpage.features2_ubicaciones.items', {}, { defaultValue: [] });
+const features2SoporteItems = t('aboutpage.features2_soporte.items', {}, { defaultValue: [] });
+
+// Para el título del Hero con placeholder
+const heroTitleAboutHtml = t('aboutpage.hero.title', {
+    '0': '<span class="text-accent dark:text-white highlight">Beautiful Website Templates</span>' // Ajusta este texto si es específico de "Nosotros"
+});
 ---
 
 <Layout metadata={metadata}>
-  <!-- Hero Widget ******************* -->
-
   <Hero
-    tagline="Nosotros"
+    tagline={t('aboutpage.hero.tagline')}
     image={{
-      src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Caos Image',
+      src: heroImageAbout,
+      alt: t('aboutpage.hero.imageAlt')
     }}
   >
-    <Fragment slot="title">
-      Elevate your online presence with our <br />
-      <span class="text-accent dark:text-white highlight"> Beautiful Website Templates</span>
-    </Fragment>
-
+    <Fragment slot="title" set:html={heroTitleAboutHtml} />
     <Fragment slot="subtitle">
-      Donec efficitur, ipsum quis congue luctus, mauris magna convallis mauris, eu auctor nisi lectus non augue. Donec
-      quis lorem non massa vulputate efficitur ac at turpis. Sed tincidunt ex a nunc convallis, et lobortis nisi tempus.
-      Suspendisse vitae nisi eget tortor luctus maximus sed non lectus.
+      {t('aboutpage.hero.subtitle')}
     </Fragment>
   </Hero>
 
-  <!-- Stats Widget ****************** -->
-
   <Stats
-    title="Datos de nosotros"
-    stats={[
-      { title: 'Pacientes', amount: '413' },
-      { title: 'Empresas', amount: '6' },
-      // { title: 'Templates', amount: '12' },
-      // { title: 'Awards', amount: '24' },
-    ]}
+    title={t('aboutpage.stats.title')}
+    stats={statsItems}
   />
-
-  <!-- Features3 Widget ************** -->
 
   <Features3
-    title="Nuestros enfoques"
-    subtitle="Etiam scelerisque, enim eget vestibulum luctus, nibh mauris blandit nulla, nec vestibulum risus justo ut enim. Praesent lacinia diam et ante imperdiet euismod."
+    title={t('aboutpage.features3_enfoques.title')}
+    subtitle={t('aboutpage.features3_enfoques.subtitle')}
     columns={3}
     isBeforeContent={true}
-    items={[
-      {
-        title: 'Individual',
-        description:
-          'Morbi faucibus luctus quam, sit amet aliquet felis tempor id. Cras augue massa, ornare quis dignissim a, molestie vel nulla.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Relaciones de pareja',
-        description:
-          'Vivamus porttitor, tortor convallis aliquam pretium, turpis enim consectetur elit, vitae egestas purus erat ac nunc nulla.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Empresas',
-        description:
-          'Duis sed lectus in nisl vehicula porttitor eget quis odio. Aliquam erat volutpat. Nulla eleifend nulla id sem fermentum.',
-        icon: 'tabler:template',
-      },
-    ]}
+    items={features3EnfoquesItems}
   />
-
-  <!-- Features3 Widget ************** -->
 
   <Features3
     columns={3}
     isAfterContent={true}
-    items={[
-      {
-        title: 'Educación',
-        description:
-          'Rutrum non odio at vehicula. Proin ipsum justo, dignissim in vehicula sit amet, dignissim id quam. Sed ac tincidunt sapien.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Enfermedades mentales',
-        description:
-          'Nullam efficitur volutpat sem sed fringilla. Suspendisse et enim eu orci volutpat laoreet ac vitae libero.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Enfermedades físicas',
-        description:
-          'Morbi et elit finibus, facilisis justo ut, pharetra ipsum. Donec efficitur, ipsum quis congue luctus, mauris magna.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Branding',
-        description:
-          'Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Medical',
-        description:
-          'Vestibulum malesuada lacus id nibh posuere feugiat. Nam volutpat nulla a felis ultrices, id suscipit mauris congue. In hac habitasse platea dictumst.',
-        icon: 'tabler:template',
-      },
-      {
-        title: 'Fashion Design',
-        description:
-          'Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus.',
-        icon: 'tabler:template',
-      },
-    ]}
+    items={features3OtrosItems}
     image={{
-      src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80',
-      alt: 'Colorful Image',
+      src: features3ImageOtros,
+      alt: t('aboutpage.features3_otros.imageAlt')
     }}
   />
 
-  <!-- Steps2 Widget ****************** -->
-
   <Steps2
-    title="Nuestros valores"
-    subtitle="Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus. Nulla facilisi. Vestibulum malesuada lacus."
-    items={[
-      {
-        title: 'Customer-centric approach',
-        description:
-          'Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum.',
-      },
-      {
-        title: 'Constant Improvement',
-        description:
-          'Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo.',
-      },
-      {
-        title: 'Ethical Practices',
-        description:
-          'Vestibulum imperdiet libero et lectus molestie, et maximus augue porta. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-      },
-    ]}
+    title={t('aboutpage.steps2_valores.title')}
+    subtitle={t('aboutpage.steps2_valores.subtitle')}
+    items={steps2ValoresItems}
   />
 
-  <!-- Steps2 Widget ****************** -->
-
   <Steps2
-    title="Logros"
-    subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla, sed porttitor est nibh at nulla."
+    title={t('aboutpage.steps2_logros.title')}
+    subtitle={t('aboutpage.steps2_logros.subtitle')}
     isReversed={true}
     callToAction={{
-      text: 'See more',
-      href: '/',
+      text: t('aboutpage.steps2_logros.callToActionText'),
+      href: '/', // Este href podría ser dinámico o del JSON
     }}
-    items={[
-      {
-        title: 'Global reach',
-        description: 'Nam malesuada urna in enim imperdiet tincidunt. Phasellus non tincidunt nisi, at elementum mi.',
-        icon: 'tabler:globe',
-      },
-      {
-        title: 'Positive customer feedback and reviews',
-        description:
-          'Cras semper nulla leo, eget laoreet erat cursus sed. Praesent faucibus massa in purus iaculis dictum.',
-        icon: 'tabler:message-star',
-      },
-      {
-        title: 'Awards and recognition as industry experts',
-        description:
-          'Phasellus lacinia cursus velit, eu malesuada magna pretium eu. Etiam aliquet tellus purus, blandit lobortis ex rhoncus vitae.',
-        icon: 'tabler:award',
-      },
-    ]}
+    items={steps2LogrosItems}
   />
 
-  <!-- Features2 Widget ************** -->
-
   <Features2
-    title="Nuestras ubicaciones"
-    tagline="Encuentranos"
+    title={t('aboutpage.features2_ubicaciones.title')}
+    tagline={t('aboutpage.features2_ubicaciones.tagline')}
     columns={4}
-    items={[
-      {
-        title: 'EE.UU',
-        description: '1234 Lorem Ipsum St, 12345, Miami',
-      },
-      {
-        title: 'Spain',
-        description: '5678 Lorem Ipsum St, 56789, Madrid',
-      },
-      {
-        title: 'Australia',
-        description: '9012 Lorem Ipsum St, 90123, Sydney',
-      },
-      {
-        title: 'Brazil',
-        description: '3456 Lorem Ipsum St, 34567, São Paulo',
-      },
-    ]}
+    items={features2UbicacionesItems}
   />
 
-  <!-- Features2 Widget ************** -->
-
   <Features2
-    title="Technical Support"
-    tagline="Contactanos"
+    title={t('aboutpage.features2_soporte.title')}
+    tagline={t('aboutpage.features2_soporte.tagline')}
     columns={2}
-    items={[
-      {
-        title: 'Chatea con nosotros',
-        description:
-          'Integer luctus laoreet libero, auctor varius purus rutrum sit amet. Ut nec molestie nisi, quis eleifend mi.',
-        icon: 'tabler:messages',
-      },
-      {
-        title: 'Llamanos',
-        description:
-          'Mauris faucibus finibus orci, in posuere elit viverra non. In hac habitasse platea dictumst. Cras lobortis metus a hendrerit congue.',
-        icon: 'tabler:headset',
-      },
-    ]}
+    items={features2SoporteItems}
   />
 </Layout>
