@@ -1,34 +1,33 @@
 // src/utils/permalinks.ts
-import slugify from 'limax';
+import slugify from 'limax'; // Asumo que la sigues usando para cleanSlug
 
-import { SITE, APP_BLOG } from '~/utils/config';
-import { trim } from '~/utils/utils';
+import { SITE, APP_BLOG } from '~/utils/config'; // Tus configuraciones
+import { trim } from '~/utils/utils'; // Tu utilidad trim
 
 import {
   defaultLang as i18nDefaultLang,
   prefixDefaultLocale as i18nPrefixDefaultLocale,
-} from '~/i18n';
+} from '~/i18n'; // Configuración i18n
 
-// === INICIO DE FUNCIONES AUXILIARES ===
-// Estas funciones ahora SÍ se exportan
-export const trimSlash = (s: string) => trim(trim(s, '/'));
+// --- FUNCIONES AUXILIARES (exportadas si las necesitas en otros sitios) ---
+export const trimSlash = (s: string): string => trim(trim(s, '/'));
 
 export const ensureLeadingSlash = (s: string): string => {
-  const trimmed = trimSlash(s); // Asegura que no haya slashes al inicio/final antes de añadir
-  return trimmed === '' ? '/' : '/' + trimmed; // Si es la raíz, devuelve solo '/', sino añade slash
+  const trimmed = trimSlash(s);
+  return trimmed === '' ? '/' : '/' + trimmed;
 };
 
 export const ensureTrailingSlash = (s: string): string => {
   if (s.endsWith('/')) {
     return s;
   }
-  return s + '/';
+  // Evitar doble slash si la ruta es solo '/'
+  return s === '/' ? s : s + '/';
 };
-// === FIN DE FUNCIONES AUXILIARES ===
 
+// --- LÓGICA DE PERMALINKS ---
 
 const getLanguagePrefix = (lang: string): string => {
-  // ... (sin cambios)
   if (lang && lang !== i18nDefaultLang) {
     return `/${lang}`;
   }
@@ -38,125 +37,137 @@ const getLanguagePrefix = (lang: string): string => {
   return '';
 };
 
-const createPathWithLang = (lang: string, ...params: string[]): string => {
+/**
+ * Construye la ruta final incluyendo SITE.base, prefijo de idioma y trailingSlash.
+ */
+const createPathWithLang = (lang: string, relativePath: string): string => {
   const langPrefix = getLanguagePrefix(lang);
-  const pathSegments = params
-    .map((el) => trimSlash(el)) // Usa trimSlash
-    .filter((el) => !!el);
+  const siteBase = trimSlash(SITE.base || '/');
 
-  let path = [langPrefix, ...pathSegments].filter(Boolean).join('/');
+  // Normalizar relativePath para evitar problemas con slashes
+  let cleanRelativePath = trimSlash(relativePath);
+  if (cleanRelativePath === '') cleanRelativePath = '/'; // Raíz
 
-  if (pathSegments.length === 0 && langPrefix) {
-    path = langPrefix;
-  } else if (pathSegments.length === 0 && !langPrefix) {
-    path = '';
+  // Construir la ruta con prefijo de idioma
+  let pathWithLang = langPrefix;
+  if (cleanRelativePath !== '/') {
+    pathWithLang = `${langPrefix}/${cleanRelativePath}`;
+  } else if (langPrefix === '') { // Raíz del idioma por defecto
+    pathWithLang = '/';
   }
+  // Si langPrefix no es vacío y cleanRelativePath es '/', pathWithLang ya es correcto (ej. /es)
 
-  const basePath = trimSlash(SITE.base || '/'); // Usa trimSlash
-  let finalPath = [basePath, path]
-    .map((el) => trimSlash(el)) // Usa trimSlash
-    .filter((el) => !!el)
-    .join('/');
-
-  if (finalPath === '') {
+  // Combinar con SITE.base
+  let finalPath = siteBase;
+  if (pathWithLang !== '/') { // Evitar /base//slug si base es /
+    finalPath = `${siteBase}${ensureLeadingSlash(pathWithLang)}`;
+  } else if (siteBase === '') { // Si no hay base y es la raíz
     finalPath = '/';
-  } else {
-    finalPath = '/' + finalPath; // Asegura un leading slash aquí
   }
-
-  if (SITE.trailingSlash && path) {
-    if (!finalPath.endsWith('/')) {
-      finalPath += '/'; // Aquí no usamos ensureTrailingSlash porque ya controlamos la lógica
+  // Limpiar slashes dobles que puedan surgir de la concatenación
+  finalPath = finalPath.replace(/\/\//g, '/');
+  if (finalPath !== '/' && finalPath.endsWith('/')) { // Quitar trailing slash si no es la raíz y no se quiere
+    if (!SITE.trailingSlash) {
+      finalPath = finalPath.slice(0, -1);
     }
-  } else if (!SITE.trailingSlash && finalPath.length > 1 && finalPath.endsWith('/')) {
-    finalPath = finalPath.slice(0, -1);
+  } else if (SITE.trailingSlash && finalPath !== '/') { // Añadir trailing slash si se quiere y no es la raíz
+    finalPath += '/';
   }
 
-  return finalPath;
+
+  return finalPath === '' ? '/' : finalPath; // Asegurar que la raíz siempre sea al menos '/'
 };
 
 
-const BASE_PATHNAME_FOR_ASSETS = trimSlash(SITE.base || '/'); // Usa trimSlash
-
 export const cleanSlug = (text = ''): string =>
-  trimSlash(text) // Usa trimSlash
+  trimSlash(text)
     .split('/')
     .map((slug) => slugify(slug))
     .join('/');
 
-export const BLOG_BASE_SLUG = cleanSlug(APP_BLOG?.list?.pathname || 'blog');
-export const CATEGORY_BASE_SLUG = cleanSlug(APP_BLOG?.category?.pathname || 'category');
-export const TAG_BASE_SLUG = cleanSlug(APP_BLOG?.tag?.pathname || 'tag');
-
-export const POST_PERMALINK_PATTERN = trimSlash(APP_BLOG?.post?.permalink || `${BLOG_BASE_SLUG}/%slug%`); // Usa trimSlash
-
-export const getCanonical = (path = '', lang: string = i18nDefaultLang): string => {
-  const fullPath = getPermalink(path, 'page', lang);
-
-  let relativePathForCanonical = fullPath;
-  const siteBase = trimSlash(SITE.base || '/'); // Usa trimSlash
-
-  if (siteBase && fullPath.startsWith(ensureLeadingSlash(siteBase))) { // Usa ensureLeadingSlash
-    relativePathForCanonical = fullPath.substring(siteBase.length + 1);
-  } else if (fullPath.startsWith('/')) {
-    relativePathForCanonical = fullPath.substring(1);
-  }
-  if (relativePathForCanonical === '') relativePathForCanonical = '/';
-  else relativePathForCanonical = ensureLeadingSlash(relativePathForCanonical); // Usa ensureLeadingSlash
+// Estos slugs base podrían ser del idioma por defecto o podrías pasarlos traducidos
+// si la estructura del blog/categorías cambia radicalmente por idioma.
+// Por ahora, los dejamos como slugs base del idioma por defecto.
+export const BLOG_BASE_DEFAULT_SLUG = cleanSlug(APP_BLOG?.list?.pathname || 'blog');
+export const CATEGORY_BASE_DEFAULT_SLUG = cleanSlug(APP_BLOG?.category?.pathname || 'category');
+export const TAG_BASE_DEFAULT_SLUG = cleanSlug(APP_BLOG?.tag?.pathname || 'tag');
 
 
-  const url = new URL(relativePathForCanonical, SITE.site).toString();
-
-  return url;
-};
-
+/**
+ * Genera un permalink.
+ * @param slug EL SLUG BASE YA TRADUCIDO (ej. 'nosotros', 'landing/curso-juego', 'blog/mi-articulo').
+ *             Para la página de inicio, pasar '/' o una cadena vacía.
+ * @param type NO SE USA MUCHO AHORA si el slug es la ruta completa. Principalmente para 'page' o 'post' si hay lógica especial.
+ * @param lang El código del idioma actual.
+ * @returns El permalink completo.
+ */
 export const getPermalink = (slug = '', type = 'page', lang: string = i18nDefaultLang): string => {
-  let pathWithoutLang: string;
-  const cleanInputSlug = trimSlash(slug); // Usa trimSlash
+  // El 'slug' que llega aquí ya debería ser el slug localizado deseado,
+  // obtenido de t('routes.myKey') en navigation.js.
+  // Ej: 'nosotros', 'landing/curso-eneagrama-game', 'blog/mi-post-traducido'
 
-  switch (type) {
-    case 'category':
-      pathWithoutLang = [CATEGORY_BASE_SLUG, cleanInputSlug].filter(Boolean).join('/');
-      break;
+  // El tipo 'post', 'category', 'tag' podría usarse si necesitas anteponer
+  // un slug base de blog/categoría/tag que también se traduce, pero es más simple
+  // si la clave 'routes.myPost' ya incluye 'blog-traducido/mi-post-traducido'.
 
-    case 'tag':
-      pathWithoutLang = [TAG_BASE_SLUG, cleanInputSlug].filter(Boolean).join('/');
-      break;
-
-    case 'post':
-      if (POST_PERMALINK_PATTERN.includes('%slug%')) {
-        pathWithoutLang = POST_PERMALINK_PATTERN.replace('%slug%', cleanInputSlug);
-      } else {
-        pathWithoutLang = [BLOG_BASE_SLUG, cleanInputSlug].filter(Boolean).join('/');
-      }
-      break;
-
-    case 'page':
-    default:
-      pathWithoutLang = (cleanInputSlug === '' || cleanInputSlug === '/') ? '/' : cleanInputSlug;
-      break;
-  }
-
-  if (pathWithoutLang === '/') {
-    return createPathWithLang(lang, '');
-  }
-  return createPathWithLang(lang, trimSlash(pathWithoutLang)); // Usa trimSlash
+  const finalSlug = (slug === '' || slug === '/') ? '/' : trimSlash(slug);
+  return createPathWithLang(lang, finalSlug);
 };
 
-export const getHomePermalink = (lang: string = i18nDefaultLang): string => getPermalink('', 'page', lang);
+export const getHomePermalink = (lang: string = i18nDefaultLang): string => {
+  // La clave 'routes.home' en el JSON debería ser "/"
+  // No es necesario llamar a t() aquí, se hace en navigation.js
+  return getPermalink('/', 'page', lang);
+};
 
-export const getBlogPermalink = (lang: string = i18nDefaultLang): string => {
-  return getPermalink(BLOG_BASE_SLUG, 'page', lang);
+/**
+ * Obtiene el permalink de la página de listado del blog para un idioma dado.
+ * Necesita la función 't' para obtener el slug base del blog traducido.
+ */
+export const getBlogPermalink = (t: Function, lang: string = i18nDefaultLang): string => {
+  // Obtiene el slug base del blog (ej. 'blog', 'nieuws') del archivo de traducción
+  const blogRouteSlug = t('routes.blog', {}, { defaultValue: BLOG_BASE_DEFAULT_SLUG });
+  return getPermalink(blogRouteSlug, 'page', lang);
 };
 
 export const getAsset = (path: string): string => {
-  const segments = [BASE_PATHNAME_FOR_ASSETS, trimSlash(path)] // Usa trimSlash
-    .map((el) => trimSlash(el)) // Usa trimSlash
-    .filter((el) => !!el);
-
-  let assetPath = '/' + segments.join('/');
-
-  assetPath = assetPath.replace(/\/\//g, '/');
-
+  const basePathForAssets = trimSlash(SITE.base || '/');
+  const cleanPath = trimSlash(path);
+  // Asegurar que no haya doble slash si basePath es '/' y path también empieza con '/'
+  let assetPath = `${basePathForAssets}/${cleanPath}`.replace(/\/\//g, '/');
+  if (!assetPath.startsWith('/')) {
+    assetPath = '/' + assetPath;
+  }
   return assetPath;
-}
+};
+
+
+export const getCanonical = (path = '', lang: string = i18nDefaultLang): string => {
+  // El 'path' aquí debería ser la ruta CANÓNICA sin prefijo de idioma ni SITE.base,
+  // usualmente la del idioma por defecto.
+  // O, si se llama desde una página ya localizada, 'path' podría ser el slug localizado
+  // y 'lang' el idioma actual. `getPermalink` se encargará.
+
+  const permalink = getPermalink(path, 'page', lang); // Genera la URL completa con prefijo y base
+
+  // Construir la URL canónica absoluta
+  // SITE.site debe ser la URL base del dominio, ej https://www.example.com
+  // permalink ya incluye el SITE.base y el prefijo de idioma si aplica.
+  // Necesitamos asegurar que no duplicamos SITE.base si ya está en permalink.
+
+  let urlPath = permalink;
+  const siteBase = trimSlash(SITE.base || '/');
+
+  // Si permalink ya incluye el siteBase (ej. permalink es /sub/es/pagina y siteBase es /sub)
+  // necesitamos quitarlo para que URL constructor no lo duplique.
+  // Pero createPathWithLang ya maneja SITE.base, así que permalink es la ruta completa después del dominio.
+  // Ej: si SITE.site = "https://dominio.com" y permalink = "/es/pagina" -> "https://dominio.com/es/pagina"
+  // Ej: si SITE.site = "https://dominio.com/sub" y permalink = "/sub/es/pagina" (createPathWithLang ya añadió /sub)
+  //     entonces debemos pasar a new URL solo "/es/pagina" si SITE.site ya tiene /sub
+  // La implementación actual de createPathWithLang ya incluye SITE.base,
+  // por lo que permalink es la ruta completa después del nombre de host.
+
+  // La forma más simple es si SITE.url es solo el dominio (https://example.com)
+  // y permalink es la ruta completa (/es/about)
+  return new URL(permalink, SITE.site).toString();
+};

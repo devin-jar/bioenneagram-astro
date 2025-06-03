@@ -80,6 +80,29 @@
       "developedBy": "Développé par",
       "rightsReserved": "Tous droits réservés."
     }
+  },"routes": {
+    "home": "/", 
+    "about": "a-propos", 
+    "contact": "contact", 
+    "terms": "conditions-generales", 
+    "privacy": "confidentialite", 
+    "services": "services", 
+    "blog": "blog",
+    "pricing": "tarifs", 
+    "building": "construction",     
+    "courseEnneagramGame": "page-daccueil/cours-jeu-enneagramme",     
+    "productRetreat": "produits/retraite",
+    "productIndividualTherapy": "produits/therapie-individuelle",
+    "productCouplesTherapy": "produits/therapie-de-couple",
+    "workshopManifestation": "ateliers/manifestation",
+    "workshopEmotions": "ateliers/emotions",
+    "courseIntroBrain": "cours/introduction-cerveau",
+    "courseIntroEnneagram": "cours/introduction-enneagramme",
+    "courseIntroBiodecoding": "cours/introduction-biodecodage",
+    "servicesTeamWorkshop": "services/atelier-equipe",
+    "servicesConferences": "services/conferences",
+    "servicesConsultationPackage": "services/forfait-consultation",
+    "socialImpact": "impact-social"
   },
   "videoask": {
     "triggerText": "Échangeons"
@@ -195,23 +218,23 @@
         {
           "title": "Thérapie individuelle",
           "subtitle": "Découvrez une expérience thérapeutique personnalisée",
-          "price": "80k",
-          "period": "COP",
+          "price": "100",
+          "period": "EUR",
           "callToActionText": "Gérez vos émotions"
         },
         {
           "title": "Thérapie de couple",
           "subtitle": "Espace sécurisé pour améliorer la communication",
-          "price": "150k",
-          "period": "COP",
+          "price": "180",
+          "period": "EUR",
           "callToActionText": "Grandissez en couple",
           "ribbonTitle": "populaire"
         },
         {
           "title": "Cours d'initiation à l'ennéagramme",
           "subtitle": "Explorez les complexités de votre personnalité",
-          "price": "254k",
-          "period": "COP",
+          "price": "350",
+          "period": "EUR",
           "callToActionText": "Libérez votre puissance"
         }
       ]
@@ -442,6 +465,151 @@
           "icon": "tabler:headset"
         }
       ]
+    }
+  },
+  "error404Page": {
+    "meta": {
+      "title": "Erreur 404 - Page non trouvée"
+    },
+    "title": "Erreur 404",
+    "mainText": "404",
+    "sorryText": "Désolé, nous n'avons pas trouvé cette page.",
+    "infoText": "Mais ne vous inquiétez pas, vous trouverez plein d'autres choses sur notre page d'accueil.",
+    "buttonText": "Retour à l'accueil"
+  },
+  "buildingPage": {
+    "meta": {
+      "title": "Page en construction"
+    },
+    "title": "Construction",
+    "statusText": "En développement",
+    "mainText": "En travaux",
+    "sorryText": "Désolé, cette page est en cours de construction.",
+    "infoText": "Mais ne vous inquiétez pas, vous trouverez plein d'autres choses sur notre page d'accueil.",
+    "buttonText": "Retour à l'accueil"
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contact - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Contact",
+      "title": "Connectons-nous !"
+    },
+    "contactForm": {
+      "title": "Envoyez-nous un message aujourd'hui !",
+      "subtitle": "Pour des réponses plus rapides, consultez notre FAQ. Vous y trouverez peut-être la solution ! Sinon, notre équipe d'assistance vous aidera avec plaisir.",
+      "inputs": [
+        { "name": "name", "label": "Nom" },
+        { "name": "email", "label": "Email" }
+      ],
+      "textareaLabel": "Message",
+      "disclaimerLabel": "En soumettant ce formulaire, vous acceptez la collecte de vos informations personnelles.",
+      "description": "Notre équipe d'assistance répond généralement dans les 24 heures ouvrables."
+    },
+    "featuresSupport": {
+      "title": "Nous sommes là pour vous aider !",
+      "items": [
+        {
+          "title": "Support général",
+          "description": "Discutez avec nous pour la gestion de compte, la navigation sur le site, les problèmes de paiement, l'accès aux modèles achetés ou des questions générales sur les fonctionnalités du site."
+        },
+        {
+          "title": "Contact commercial",
+          "description": "Discutez avec nous pour les questions d'achat, les options de personnalisation, les licences d'utilisation commerciale, les demandes spécifiques de modèles, etc."
+        },
+        {
+          "title": "Support technique",
+          "description": "Discutez avec nous si vous rencontrez des problèmes comme l'installation de modèles, des difficultés d'édition, des problèmes de compatibilité logicielle, des erreurs de téléchargement ou d'autres défis techniques liés à l'utilisation des modèles."
+        },
+        { "title": "Téléphone", "description": "+1 (234) 567-890", "icon": "tabler:headset" },
+        { "title": "Email", "description": "contact@support.com", "icon": "tabler:mail" },
+        { "title": "Localisation", "description": "1234 Lorem Ipsum St, 12345, Miami, USA", "icon": "tabler:map-pin" }
+      ]
+    }
+  },
+  "pricingPage": {
+    "meta": {
+      "title": "Tarifs - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Tarifs",
+      "title": "Tarifs exceptionnels pour chaque projet",
+      "subtitle": "Choisissez le plan parfait qui correspond à vos objectifs."
+    },
+    "pricesWidget": {
+      "title": "Nos tarifs",
+      "subtitle": "Payez seulement ce dont vous avez besoin",
+      "plans": [
+        {
+          "title": "basic",
+          "subtitle": "Choix optimal pour un usage personnel",
+          "price": 29,
+          "period": "par mois",
+          "items": [
+            { "description": "Etiam in libero, et volutpat" },
+            { "description": "Aenean ac nunc dolor tristique" },
+            { "description": "Cras scelerisque accumsan lib" },
+            { "description": "In hac habitasse" }
+          ],
+          "callToActionText": "Commencer"
+        }
+      ]
+    },
+    "featuresPricing": {
+      "title": "Fonctionnalités tarifaires",
+      "subtitle": "Découvrez les avantages de nos plans",
+      "items": []
+    },
+    "stepsWidget": {
+      "title": "Un parcours guidé des plans à la créativité",
+      "tagline": "processus simplifié",
+      "items": []
+    },
+    "faqsPricing": {
+      "title": "FAQ Tarifs",
+      "subtitle": "Choisir le bon plan est important. Nous répondons à vos questions sur nos options tarifaires.",
+      "items": []
+    },
+    "callToActionPricing": {
+      "title": "Prêt à booster vos projets ?",
+      "subtitle": "Rejoignez notre communauté de clients satisfaits qui ont transformé leur travail avec nos modèles.",
+      "actionText": "Commencer maintenant"
+    }
+  },
+  "servicesPage": {
+    "meta": {
+      "title": "Services - Bioenneagram"
+    },
+    "hero": {
+      "tagline": "Services",
+      "title": "Élevez vos projets avec nos modèles époustouflants",
+      "subtitle": "Découvrez nos modèles méticuleusement conçus pour diverses industries. Des présentations captivantes aux designs de sites fonctionnels - nous fournissons les outils pour réussir.",
+      "actionText": "Explorer",
+      "imageAlt": "Image des services Bioenneagram"
+    },
+    "featuresTemplates": {
+      "title": "Découvrez nos modèles variés",
+      "subtitle": "Parcourez notre sélection pour optimiser vos projets.",
+      "items": []
+    },
+    "contentMainFeatures": {
+      "blockTitle": "Fonctionnalités clés",
+      "items": []
+    },
+    "contentBenefits": {
+      "blockTitle": "Avantages",
+      "items": []
+    },
+    "testimonialsServices": {
+      "title": "Témoignages clients",
+      "items": [],
+      "callToActionText": "Plus de témoignages..."
+    },
+    "callToActionServices": {
+      "title": "Plongez dans notre collection de modèles",
+      "subtitle": "Que vous soyez en entreprise, design ou éducation, nos modèles améliorent vos projets.",
+      "actionText": "Explorer maintenant"
     }
   }
 }

@@ -80,6 +80,29 @@
       "developedBy": "Developed by",
       "rightsReserved": "All rights reserved."
     }
+  },"routes": {
+    "home": "/", 
+    "about": "about", 
+    "contact": "contact", 
+    "terms": "terms", 
+    "privacy": "privacy", 
+    "services": "services", 
+    "blog": "blog",
+    "pricing": "pricing", 
+    "building": "building",     
+    "courseEnneagramGame": "landing/course-enneagram-game",     
+    "productRetreat": "products/retreat",
+    "productIndividualTherapy": "products/individual-therapy",
+    "productCouplesTherapy": "products/couples-therapy",
+    "workshopManifestation": "workshops/manifestation",
+    "workshopEmotions": "workshops/emotions",
+    "courseIntroBrain": "courses/intro-brain",
+    "courseIntroEnneagram": "courses/intro-enneagram",
+    "courseIntroBiodecoding": "courses/intro-biodecoding",
+    "servicesTeamWorkshop": "services/team-workshop",
+    "servicesConferences": "services/conferences",
+    "servicesConsultationPackage": "services/consultation-package",
+    "socialImpact": "social-impact"
   },
   "videoask": {
     "triggerText": "Let's Talk"
@@ -195,23 +218,23 @@
         {
           "title": "Individual Therapy",
           "subtitle": "Discover a personalized therapeutic experience tailored to your needs and goals",
-          "price": "80k",
-          "period": "COP",
+          "price": "100",
+          "period": "EUR",
           "callToActionText": "Manage Your Emotions"
         },
         {
           "title": "Couples Therapy",
           "subtitle": "Safe space to address challenges and improve couple communication",
-          "price": "150k",
-          "period": "COP",
+          "price": "180",
+          "period": "EUR",
           "callToActionText": "Grow as a Couple",
           "ribbonTitle": "popular"
         },
         {
           "title": "Enneagram Intro Course",
           "subtitle": "Explore the complexities of your personality",
-          "price": "254k",
-          "period": "COP",
+          "price": "350",
+          "period": "EUR",
           "callToActionText": "Unlock Your Power"
         }
       ]
@@ -442,6 +465,162 @@
           "icon": "tabler:headset"
         }
       ]
+    }
+  },
+  "error404Page": {
+    "meta": {
+      "title": "Error 404 - Page Not Found"
+    },
+    "title": "Error 404",
+    "mainText": "404",
+    "sorryText": "Sorry, we couldn't find this page.",
+    "infoText": "But don't worry, you can find plenty of other things on our homepage.",
+    "buttonText": "Return to Home"
+  },
+
+  "buildingPage": {
+    "meta": {
+      "title": "Page Under Construction"
+    },
+    "title": "Building",
+    "statusText": "In Development",
+    "mainText": "Building",
+    "sorryText": "Sorry, this page is under construction.",
+    "infoText": "But don't worry, you can find plenty of other things on our homepage.",
+    "buttonText": "Return to Home"
+  },
+
+  "contactPage": {
+    "meta": {
+      "title": "Contact - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Contact",
+      "title": "Let's Connect!"
+    },
+    "contactForm": {
+      "title": "Send us a message today!",
+      "subtitle": "For faster responses, check our FAQ section. You might find the solution right there! If not, our support team will be happy to help.",
+      "inputs": [
+        { "name": "name", "label": "Name" },
+        { "name": "email", "label": "Email" }
+      ],
+      "textareaLabel": "Message",
+      "disclaimerLabel": "By submitting this contact form, you acknowledge and accept the collection of your personal information.",
+      "description": "Our support team typically responds within 24 business hours."
+    },
+    "featuresSupport": {
+      "title": "We're here to help!",
+      "items": [
+        {
+          "title": "General Support",
+          "description": "Chat with us for account management, website navigation, payment issues, access to purchased templates, or general questions about website functionality."
+        },
+        {
+          "title": "Sales Contact",
+          "description": "Chat with us for purchase questions, customization options, commercial use licenses, specific template inquiries, etc."
+        },
+        {
+          "title": "Technical Support",
+          "description": "Chat with us if you face issues like template installation, editing difficulties, software compatibility problems, download errors, or other technical challenges related to using templates."
+        },
+        { "title": "Phone", "description": "+1 (234) 567-890", "icon": "tabler:headset" },
+        { "title": "Email", "description": "contact@support.com", "icon": "tabler:mail" },
+        { "title": "Location", "description": "1234 Lorem Ipsum St, 12345, Miami, USA", "icon": "tabler:map-pin" }
+      ]
+    }
+  },
+
+  "pricingPage": {
+    "meta": {
+      "title": "Pricing - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Pricing",
+      "title": "Stellar Pricing for Every Journey",
+      "subtitle": "Choose the perfect plan that aligns with your cosmic goals."
+    },
+    "pricesWidget": {
+      "title": "Our Pricing",
+      "subtitle": "Pay only for what you need",
+      "plans": [
+        {
+          "title": "basic",
+          "subtitle": "Optimal choice for personal use",
+          "price": 29,
+          "period": "per month",
+          "items": [
+            { "description": "Etiam in libero, et volutpat" },
+            { "description": "Aenean ac nunc dolor tristique" },
+            { "description": "Cras scelerisque accumsan lib" },
+            { "description": "In hac habitasse" }
+          ],
+          "callToActionText": "Get Started"
+        }
+      ]
+    },
+    "featuresPricing": {
+      "title": "Pricing-Related Features",
+      "subtitle": "Discover the advantages of choosing our plans",
+      "items": [
+      ]
+    },
+    "stepsWidget": {
+      "title": "A Guided Journey from Plans to Creativity",
+      "tagline": "simplified process",
+      "items": [
+      ]
+    },
+    "faqsPricing": {
+      "title": "Pricing FAQs",
+      "subtitle": "Choosing the right plan is important, and we're here to answer your questions. If you have queries about our pricing options, you're in the right place.",
+      "items": [
+      ]
+    },
+    "callToActionPricing": {
+      "title": "Ready to boost your projects?",
+      "subtitle": "Join our community of satisfied customers who've transformed their work with our templates.",
+      "actionText": "Start Now"
+    }
+  },
+
+  "servicesPage": {
+    "meta": {
+      "title": "Services - Bioenneagram"
+    },
+    "hero": {
+      "tagline": "Services",
+      "title": "Elevate your projects with our stunning templates",
+      "subtitle": "Explore our meticulously crafted templates tailored for diverse industries and purposes. From captivating presentations to functional website designs, we provide the tools you need to succeed.",
+      "actionText": "Start Exploring",
+      "imageAlt": "Bioenneagram Services Image"
+    },
+    "featuresTemplates": {
+      "title": "Explore our diverse templates",
+      "subtitle": "Discover our selection below to optimize and elevate your projects.",
+      "items": [
+      ]
+    },
+    "contentMainFeatures": {
+      "blockTitle": "Key Features",
+      "items": [
+      ]
+    },
+    "contentBenefits": {
+      "blockTitle": "Benefits",
+      "items": [
+      ]
+    },
+    "testimonialsServices": {
+      "title": "Words from real customers",
+      "items": [
+      ],
+      "callToActionText": "More testimonials..."
+    },
+    "callToActionServices": {
+      "title": "Dive into our template collection",
+      "subtitle": "Whether you're in business, design, or education, our templates are here to elevate your projects.",
+      "actionText": "Start Exploring"
     }
   }
 }

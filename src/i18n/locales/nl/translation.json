@@ -80,6 +80,29 @@
       "developedBy": "Ontwikkeld door",
       "rightsReserved": "Alle rechten voorbehouden."
     }
+  },"routes": {
+    "home": "/", 
+    "about": "over-ons", 
+    "contact": "contact", 
+    "terms": "voorwaarden", 
+    "privacy": "privacybeleid", 
+    "services": "diensten", 
+    "blog": "blog",
+    "pricing": "prijzen", 
+    "building": "bouw",     
+    "courseEnneagramGame": "bestemmingspagina/enneagram-cursus-spel",     
+    "productRetreat": "producten/retraite",
+    "productIndividualTherapy": "producten/individuele-therapie",
+    "productCouplesTherapy": "producten/paartherapie",
+    "workshopManifestation": "workshops/manifestatie",
+    "workshopEmotions": "workshops/emoties",
+    "courseIntroBrain": "cursussen/introductie-hersenen",
+    "courseIntroEnneagram": "cursussen/introductie-enneagram",
+    "courseIntroBiodecoding": "cursussen/introductie-biodecodering",
+    "servicesTeamWorkshop": "diensten/teamworkshop",
+    "servicesConferences": "diensten/conferenties",
+    "servicesConsultationPackage": "diensten/consultatiepakket",
+    "socialImpact": "sociale-impact"
   },
   "videoask": {
     "triggerText": "Laten we praten"
@@ -195,23 +218,23 @@
         {
           "title": "Individuele Therapie",
           "subtitle": "Ontdek een persoonlijke therapeutische ervaring op maat",
-          "price": "80k",
-          "period": "COP",
+          "price": "100",
+          "period": "EUR",
           "callToActionText": "Beheer je Emoties"
         },
         {
           "title": "Relatietherapie",
           "subtitle": "Veilige ruimte om uitdagingen aan te gaan en communicatie te verbeteren",
-          "price": "150k",
-          "period": "COP",
+          "price": "180",
+          "period": "EUR",
           "callToActionText": "Groei als Koppel",
           "ribbonTitle": "populair"
         },
         {
           "title": "Enneagram Introductiecursus",
           "subtitle": "Verken de complexiteit van je persoonlijkheid",
-          "price": "254k",
-          "period": "COP",
+          "price": "350",
+          "period": "EUR",
           "callToActionText": "Ontsluit je Kracht"
         }
       ]
@@ -442,6 +465,150 @@
           "icon": "tabler:headset"
         }
       ]
+    }
+  },"error404Page": {
+    "meta": {
+      "title": "Fout 404 - Pagina niet gevonden"
+    },
+    "title": "Fout 404",
+    "mainText": "404",
+    "sorryText": "Sorry, we konden deze pagina niet vinden.",
+    "infoText": "Maar geen zorgen, op onze homepage vindt u genoeg andere dingen.",
+    "buttonText": "Terug naar Home"
+  },
+  "buildingPage": {
+    "meta": {
+      "title": "Pagina in aanbouw"
+    },
+    "title": "Bouwen",
+    "statusText": "In ontwikkeling",
+    "mainText": "In aanbouw",
+    "sorryText": "Sorry, deze pagina is in aanbouw.",
+    "infoText": "Maar geen zorgen, op onze homepage vindt u genoeg andere dingen.",
+    "buttonText": "Terug naar Home"
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contact - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Contact",
+      "title": "Laten we contact maken!"
+    },
+    "contactForm": {
+      "title": "Stuur ons vandaag een bericht!",
+      "subtitle": "Voor snellere antwoorden, bekijk onze FAQ. Mogelijk vindt u daar de oplossing! Zo niet, dan helpt ons supportteam u graag.",
+      "inputs": [
+        { "name": "name", "label": "Naam" },
+        { "name": "email", "label": "E-mail" }
+      ],
+      "textareaLabel": "Bericht",
+      "disclaimerLabel": "Door dit contactformulier te verzenden, erkent en accepteert u het verzamelen van uw persoonlijke gegevens.",
+      "description": "Ons supportteam reageert doorgaans binnen 24 werkuren."
+    },
+    "featuresSupport": {
+      "title": "We zijn hier om te helpen!",
+      "items": [
+        {
+          "title": "Algemene ondersteuning",
+          "description": "Chat met ons voor accountbeheer, websitenavigatie, betalingsproblemen, toegang tot gekochte templates of algemene vragen over websitefunctionaliteit."
+        },
+        {
+          "title": "Verkoopcontact",
+          "description": "Chat met ons voor aankoopvragen, aanpassingsopties, commerciële licenties, specifieke template-informatie, etc."
+        },
+        {
+          "title": "Technische ondersteuning",
+          "description": "Chat met ons als u problemen ondervindt zoals template-installatie, bewerkingsmoeilijkheden, softwarecompatibiliteitsproblemen, downloadfouten of andere technische uitdagingen."
+        },
+        { "title": "Telefoon", "description": "+1 (234) 567-890", "icon": "tabler:headset" },
+        { "title": "E-mail", "description": "contact@support.com", "icon": "tabler:mail" },
+        { "title": "Locatie", "description": "1234 Lorem Ipsum St, 12345, Miami, USA", "icon": "tabler:map-pin" }
+      ]
+    }
+  },
+  "pricingPage": {
+    "meta": {
+      "title": "Prijzen - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Prijzen",
+      "title": "Uitstekende prijzen voor elk traject",
+      "subtitle": "Kies het perfecte plan dat aansluit bij uw doelen."
+    },
+    "pricesWidget": {
+      "title": "Onze prijzen",
+      "subtitle": "Betaal alleen voor wat u nodig heeft",
+      "plans": [
+        {
+          "title": "basic",
+          "subtitle": "Optimale keuze voor persoonlijk gebruik",
+          "price": 29,
+          "period": "per maand",
+          "items": [
+            { "description": "Etiam in libero, et volutpat" },
+            { "description": "Aenean ac nunc dolor tristique" },
+            { "description": "Cras scelerisque accumsan lib" },
+            { "description": "In hac habitasse" }
+          ],
+          "callToActionText": "Aan de slag"
+        }
+      ]
+    },
+    "featuresPricing": {
+      "title": "Prijsgerelateerde functies",
+      "subtitle": "Ontdek de voordelen van onze abonnementen",
+      "items": []
+    },
+    "stepsWidget": {
+      "title": "Een begeleide reis van plannen naar creativiteit",
+      "tagline": "vereenvoudigd proces",
+      "items": []
+    },
+    "faqsPricing": {
+      "title": "Prijsvragen",
+      "subtitle": "Het kiezen van het juiste plan is belangrijk. Wij beantwoorden uw vragen over onze prijsopties.",
+      "items": []
+    },
+    "callToActionPricing": {
+      "title": "Klaar om uw projecten te boosten?",
+      "subtitle": "Word lid van onze gemeenschap van tevreden klanten die hun werk hebben getransformeerd met onze templates.",
+      "actionText": "Nu beginnen"
+    }
+  },
+  "servicesPage": {
+    "meta": {
+      "title": "Diensten - Bioenneagram"
+    },
+    "hero": {
+      "tagline": "Diensten",
+      "title": "Verhoog uw projecten met onze prachtige templates",
+      "subtitle": "Ontdek onze zorgvuldig ontworpen templates voor diverse branches. Van boeiende presentaties tot functionele website-ontwerpen - wij bieden de tools die u nodig heeft.",
+      "actionText": "Begin met ontdekken",
+      "imageAlt": "Bioenneagram Diensten Afbeelding"
+    },
+    "featuresTemplates": {
+      "title": "Ontdek onze diverse templates",
+      "subtitle": "Bekijk onze selectie om uw projecten te optimaliseren.",
+      "items": []
+    },
+    "contentMainFeatures": {
+      "blockTitle": "Belangrijkste kenmerken",
+      "items": []
+    },
+    "contentBenefits": {
+      "blockTitle": "Voordelen",
+      "items": []
+    },
+    "testimonialsServices": {
+      "title": "Ervaringen van echte klanten",
+      "items": [],
+      "callToActionText": "Meer ervaringen..."
+    },
+    "callToActionServices": {
+      "title": "Duik in onze template-collectie",
+      "subtitle": "Of u nu in zakelijk, design of onderwijs zit, onze templates verbeteren uw projecten.",
+      "actionText": "Begin met ontdekken"
     }
   }
 }

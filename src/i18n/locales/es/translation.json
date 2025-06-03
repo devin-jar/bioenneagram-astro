@@ -82,6 +82,32 @@
       "rightsReserved": "Todos los derechos reservados."
     }
   },
+  "routes": { 
+    "home": "/", 
+    "about": "nosotros",
+    "contact": "contacto",
+    "terms": "terminos",
+    "privacy": "privacidad",
+    "services": "servicios",
+    "blog": "blog", 
+    "pricing": "precios",
+    "productRetreat": "productos/retiro",
+    "productIndividualTherapy": "productos/terapia-individual",
+    "productCouplesTherapy": "productos/terapia-parejas",
+    "workshopManifestation": "talleres/manifestacion",
+    "workshopEmotions": "talleres/emociones",
+    "courseIntroBrain": "cursos/introduccion-cerebro",
+    "courseIntroEnneagram": "cursos/introduccion-eneagrama",
+    "courseEnneagramGame": "landing/curso-eneagrama-game", 
+    "courseIntroBiodecoding": "cursos/introduccion-biodescodificacion",
+    "servicesTeamWorkshop": "servicios/taller-equipos",
+    "servicesConferences": "servicios/conferencias",
+    "servicesConsultationPackage": "servicios/paquete-consultas",
+    "socialImpact": "impacto-social",
+    "landingLeadGeneration": "landing/generacion-leads",
+    "landingSales": "landing/ventas",
+    "building": "construyendo"
+  },
   "videoask": {
     "triggerText": "Hablemos"
   },
@@ -196,23 +222,23 @@
         {
           "title": "Terapia Individual",
           "subtitle": "Descubre una experiencia terapéutica personalizada que se adapta a tus necesidades y metas",
-          "price": "80k",
-          "period": "cop",
+          "price": "100",
+          "period": "EUR",
           "callToActionText": "Gestiona tus Emociones"
         },
         {
           "title": "Terapia para Parejas",
           "subtitle": "Espacio seguro para abordar desafíos y mejorar la comunicación en pareja",
-          "price": "150k",
-          "period": "cop",
+          "price": "180",
+          "period": "EUR",
           "callToActionText": "Crece en Pareja",
           "ribbonTitle": "popular"
         },
         {
           "title": "Curso de introducción al eneagrama",
           "subtitle": "Explora las complejidades de tu personalidad",
-          "price": "254k",
-          "period": "cop",
+          "price": "350",
+          "period": "EUR",
           "callToActionText": "Desbloquea tu Poder"
         }
       ]
