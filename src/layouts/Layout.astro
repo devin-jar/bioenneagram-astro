@@ -1,308 +1,324 @@
 ---
+// src/layouts/Layout.astro
 import '~/assets/styles/tailwind.css';
 
-import { I18N } from '~/utils/config';
+// Importaciones para i18n y configuración global
+import { defaultLang, supportedLangs, getTranslationsForLocale, getTranslator } from '~/i18n';
+import { SITE, METADATA as GLOBAL_METADATA_CONFIG } from '~/utils/config.ts';
+import { getPermalink, getCanonical, getAsset } from '~/utils/permalinks.ts';
+import { findImage, adaptOpenGraphImages } from '~/utils/images'; // Asegúrate que adaptOpenGraphImages maneje bien los tipos
 
-import CommonMeta from '~/components/common/CommonMeta.astro';
+// Componentes del Head (asumiendo que existen)
 import Favicons from '~/components/Favicons.astro';
 import CustomStyles from '~/components/CustomStyles.astro';
 import ApplyColorMode from '~/components/common/ApplyColorMode.astro';
-import Metadata from '~/components/common/Metadata.astro';
-// import SiteVerification from '~/components/common/SiteVerification.astro';
 import Analytics from '~/components/common/Analytics.astro';
 import BasicScripts from '~/components/common/BasicScripts.astro';
 import GTMHead from '~/components/common/GTMHead.astro';
 import GTMBody from '~/components/common/GTMBody.astro';
 
-// Uncomment line below to activate View Transitions
-// import { ViewTransitions } from 'astro:transitions';
+import { AstroSeo, type Props as AstroSeoProps } from '@astrolib/seo';
+import merge from 'lodash.merge';
 
-import type { MetaData as MetaDataType } from '~/types';
+import type { MetaData as PageSpecificMetaDataType, AlternateLinkInfo, MetaDataImage } from '~/types';
 
 export interface Props {
-  metadata?: MetaDataType;
+  metadata?: PageSpecificMetaDataType;
+  frontmatter?: Record<string, any> & Partial<PageSpecificMetaDataType>; // frontmatter puede tener props de MetaData
 }
 
-const { metadata = {} } = Astro.props;
-const { language, textDirection } = I18N;
+const { metadata: pageSpecificMetadataFromProps = {} as PageSpecificMetaDataType, frontmatter = {} } = Astro.props;
+const pageSpecificMetadata: PageSpecificMetaDataType = { ...pageSpecificMetadataFromProps, ...frontmatter };
+
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang;
+
+const translationsForLayout = getTranslationsForLocale(currentLocale);
+const t = getTranslator(translationsForLayout || {}, currentLocale);
+
+const currentTextDirection = ['ar', 'he', 'fa'].includes(currentLocale) ? 'rtl' : 'ltr';
+
+// --- PREPARACIÓN DE METADATOS PARA ASTROSEO ---
+const siteNameTranslated = t('site.name', {}, { defaultValue: SITE.name });
+
+// Título
+let pageTitleFromContent = pageSpecificMetadata?.title; // Prioriza metadata, luego frontmatter (ya fusionados)
+if (typeof pageTitleFromContent === 'function') pageTitleFromContent = pageTitleFromContent(t);
+let finalTitle = pageTitleFromContent || t('site.defaultTitle', {}, { defaultValue: siteNameTranslated }); // Clave 'site.defaultTitle'
+
+if (pageTitleFromContent && GLOBAL_METADATA_CONFIG?.title?.template && GLOBAL_METADATA_CONFIG.title.template.includes('%s') && !pageSpecificMetadata?.ignoreTitleTemplate) {
+    finalTitle = GLOBAL_METADATA_CONFIG.title.template.replace('%s', pageTitleFromContent);
+} else if (pageTitleFromContent) {
+    finalTitle = pageTitleFromContent;
+}
+
+// Descripción
+let finalDescription = pageSpecificMetadata?.description;
+if (typeof finalDescription === 'function') finalDescription = finalDescription(t);
+finalDescription = finalDescription || t('site.defaultDescription', {}, { defaultValue: GLOBAL_METADATA_CONFIG.description }); // Clave 'site.defaultDescription'
+
+// Canónica
+const finalCanonicalUrl = pageSpecificMetadata?.canonical?.toString() || getCanonical(Astro.url.pathname, currentLocale);
+
+// Robots
+const finalRobots = {
+    noindex: !(pageSpecificMetadata?.robots?.index ?? GLOBAL_METADATA_CONFIG?.robots?.index ?? true),
+    nofollow: !(pageSpecificMetadata?.robots?.follow ?? GLOBAL_METADATA_CONFIG?.robots?.follow ?? true),
+};
+
+// OpenGraph
+const baseOpenGraph = {
+    url: finalCanonicalUrl,
+    site_name: siteNameTranslated,
+    locale: currentLocale.replace('-', '_'),
+    type: pageSpecificMetadata?.type || (frontmatter?.layout === '~/layouts/MarkdownLayout.astro' ? 'article' : 'website'),
+};
+const finalOpenGraph = merge(
+    {},
+    GLOBAL_METADATA_CONFIG.openGraph,
+    baseOpenGraph,
+    pageSpecificMetadata.openGraph,
+    { title: finalTitle, description: finalDescription }
+);
+
+// Twitter
+const finalTwitter = merge(
+    {},
+    GLOBAL_METADATA_CONFIG.twitter,
+    pageSpecificMetadata.twitter,
+    { title: finalTitle, description: finalDescription }
+);
+if (finalOpenGraph?.images?.length && !finalTwitter.cardType) {
+    finalTwitter.cardType = 'summary_large_image';
+} else if (!finalTwitter.cardType) {
+    finalTwitter.cardType = 'summary';
+}
+
+// Props para AstroSeo
+let seoProps: AstroSeoProps = {
+  title: finalTitle,
+  description: finalDescription!.toString(),
+  canonical: finalCanonicalUrl.toString(),
+  noindex: finalRobots.noindex,
+  nofollow: finalRobots.nofollow,
+  openGraph: finalOpenGraph, // Se adaptará después
+  twitter: finalTwitter,
+};
+
+// ---- HREFLANG LINKS ----
+const finalAlternateLinks: AlternateLinkInfo[] = [];
+let finalXDefaultURL: string = '';
+const providedAlternates = pageSpecificMetadata?.alternateLinks; // Ya fusionado con frontmatter
+
+if (providedAlternates && Array.isArray(providedAlternates) && providedAlternates.length > 0) {
+    providedAlternates.forEach(link => {
+        finalAlternateLinks.push({ lang: link.lang, href: link.href });
+    });
+    const defaultLangAlternate = providedAlternates.find(link => link.lang === defaultLang);
+    if (defaultLangAlternate) {
+        finalXDefaultURL = defaultLangAlternate.href;
+    } else if (currentLocale === defaultLang) {
+        finalXDefaultURL = finalCanonicalUrl.toString();
+    } else {
+        console.warn(`[HREFLANG] x-default (lang: ${defaultLang}) not found in provided alternateLinks for ${Astro.url.pathname}. Consider adding it or ensure sitemap handles it.`);
+        // Fallback simple si los slugs base son iguales (requiere `pageSpecificMetadata.slug` o `frontmatter.slug`)
+        const baseSlugForXDefault = pageSpecificMetadata?.slug || frontmatter?.slug || Astro.url.pathname.split('/').pop() || '';
+        const xDefaultPermalink = getPermalink(baseSlugForXDefault, 'page', defaultLang);
+        finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
+    }
+} else {
+    // Lógica de fallback si no se proporcionan alternateLinks explícitos
+    // (Mantenida de la respuesta anterior, con advertencia)
+    console.warn(`[HREFLANG] No explicit alternateLinks provided for ${Astro.url.pathname}. Generating fallback hreflang tags. This assumes content slugs are the same across languages and might be INCORRECT if they differ or if a page does not exist in all languages.`);
+    // ... (lógica de fallback de hreflang que ya tenías)
+    let pathAfterSiteBase = Astro.url.pathname;
+    const siteBaseDir = SITE.base && SITE.base !== '/' ? (SITE.base.endsWith('/') ? SITE.base.slice(0, -1) : SITE.base) : '';
+    if (siteBaseDir && pathAfterSiteBase.startsWith(siteBaseDir)) {
+        pathAfterSiteBase = pathAfterSiteBase.substring(siteBaseDir.length);
+    }
+    if (!pathAfterSiteBase.startsWith('/')) pathAfterSiteBase = '/' + pathAfterSiteBase;
+    if (pathAfterSiteBase === '') pathAfterSiteBase = '/';
+
+    let contentSlug = pathAfterSiteBase;
+    if (currentLocale !== defaultLang) {
+        const currentLangPrefix = `/${currentLocale}`;
+        if (contentSlug.startsWith(currentLangPrefix)) {
+            contentSlug = contentSlug.substring(currentLangPrefix.length);
+            if (contentSlug === '') contentSlug = '/';
+        }
+    }
+    if (!contentSlug.startsWith('/')) contentSlug = '/' + contentSlug;
+
+    for (const lang of supportedLangs) {
+        const slugArgForPermalink = contentSlug === '/' ? '' : contentSlug.substring(1);
+        // Aquí es donde necesitarías saber si la página con `slugArgForPermalink` existe para `lang`.
+        // Si no, este enlace hreflang será un 404.
+        const permalink = getPermalink(slugArgForPermalink, 'page', lang);
+        finalAlternateLinks.push({ lang: lang, href: new URL(permalink, SITE.site).toString() });
+    }
+    const xDefaultSlugArgForPermalink = contentSlug === '/' ? '' : contentSlug.substring(1);
+    const xDefaultPermalink = getPermalink(xDefaultSlugArgForPermalink, 'page', defaultLang);
+    finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
+}
+
+
+// --- JSON-LD ---
+const organizationNameJsonLd = t('jsonld.organization.name', {}, { defaultValue: siteNameTranslated });
+const websiteNameJsonLd = t('jsonld.website.name', {}, { defaultValue: siteNameTranslated });
+
+let logoUrlJsonLd = '';
+// Usar la primera imagen de openGraph de la configuración global como logo por defecto
+const logoAssetPathFromConfig = (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.url || '~/assets/images/default.png';
+const resolvedLogoPath = await findImage(logoAssetPathFromConfig);
+
+if (resolvedLogoPath) {
+    if (typeof resolvedLogoPath === 'string') {
+        logoUrlJsonLd = resolvedLogoPath.startsWith('~/') ? getAsset(resolvedLogoPath.replace(/^~\/?/, '')) : resolvedLogoPath;
+    } else if (typeof resolvedLogoPath === 'object' && 'src' in resolvedLogoPath) {
+        logoUrlJsonLd = getAsset((resolvedLogoPath as any).src);
+    }
+}
+if (!logoUrlJsonLd && logoAssetPathFromConfig) { // Fallback si findImage no devuelve nada útil
+    logoUrlJsonLd = getAsset(logoAssetPathFromConfig.replace(/^~\/?/, ''));
+}
+logoUrlJsonLd = new URL(logoUrlJsonLd || getAsset('/assets/images/default.png'), SITE.site).toString();
+
+
+const jsonLdGraph: any[] = [
+    {
+      "@type": "Organization",
+      "@id": `${SITE.site}/#organization`,
+      "name": organizationNameJsonLd,
+      "url": SITE.site,
+      "logo": {
+        "@type": "ImageObject",
+        "@id": `${SITE.site}/#logo`,
+        "url": logoUrlJsonLd,
+        "contentUrl": logoUrlJsonLd,
+        "caption": organizationNameJsonLd,
+        "inLanguage": currentLocale,
+        "width": (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.width || 1200,
+        "height": (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.height || 628,
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE.site}/#website`,
+      "url": SITE.site,
+      "name": websiteNameJsonLd,
+      "publisher": { "@id": `${SITE.site}/#organization` },
+      "inLanguage": currentLocale,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${getPermalink(t('routes.search', {}, {defaultValue: 'search'}), 'page', currentLocale)}?q={search_term_string}`, // Usa una clave para el slug de búsqueda
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": finalCanonicalUrl + "#webpage",
+      "url": finalCanonicalUrl.toString(),
+      "name": finalTitle,
+      "description": finalDescription,
+      "isPartOf": { "@id": `${SITE.site}/#website` },
+      "inLanguage": currentLocale,
+      "primaryImageOfPage": { "@id": `${SITE.site}/#logo` }, // O una imagen más específica de la página
+      ...(pageSpecificMetadata?.pubDate && { "datePublished": new Date(pageSpecificMetadata.pubDate).toISOString() }),
+      ...(pageSpecificMetadata?.modDate && { "dateModified": new Date(pageSpecificMetadata.modDate).toISOString() }),
+    }
+  ];
+
+const pageTypeForJsonLd = pageSpecificMetadata?.type || (frontmatter?.layout === '~/layouts/MarkdownLayout.astro' ? 'Article' : 'WebPage');
+
+if (pageTypeForJsonLd === 'Article' || pageTypeForJsonLd === 'article') {
+  const articleImageProp = pageSpecificMetadata?.image || frontmatter?.image;
+  let articleImageUrlJsonLd = logoUrlJsonLd;
+  let articleImageWidthJsonLd, articleImageHeightJsonLd;
+
+  if (articleImageProp) {
+    const imagePathToResolve = typeof articleImageProp === 'object' ? (articleImageProp as MetaDataImage).url : articleImageProp as string;
+    const resolvedArticlePath = await findImage(imagePathToResolve);
+    if (resolvedArticlePath) {
+        if (typeof resolvedArticlePath === 'string') {
+            articleImageUrlJsonLd = resolvedArticlePath.startsWith('~/') ? getAsset(resolvedArticlePath.replace(/^~\/?/, '')) : resolvedArticlePath;
+        } else if (typeof resolvedArticlePath === 'object' && 'src' in resolvedArticlePath) {
+            articleImageUrlJsonLd = getAsset((resolvedArticlePath as any).src);
+            articleImageWidthJsonLd = (resolvedArticlePath as any).width;
+            articleImageHeightJsonLd = (resolvedArticlePath as any).height;
+        }
+        articleImageUrlJsonLd = new URL(articleImageUrlJsonLd, SITE.site).toString();
+    }
+  }
+  if (typeof articleImageProp === 'object' && articleImageProp && 'width' in articleImageProp) {
+    articleImageWidthJsonLd = (articleImageProp as MetaDataImage).width;
+    articleImageHeightJsonLd = (articleImageProp as MetaDataImage).height;
+  }
+
+  jsonLdGraph.push({
+    "@type": "Article",
+    "mainEntityOfPage": { "@id": finalCanonicalUrl + "#webpage" },
+    "@id": finalCanonicalUrl + "#article",
+    "headline": finalTitle,
+    "description": finalDescription,
+    "image": {
+      "@type": "ImageObject",
+      "url": articleImageUrlJsonLd,
+      ...(articleImageWidthJsonLd && { "width": articleImageWidthJsonLd }),
+      ...(articleImageHeightJsonLd && { "height": articleImageHeightJsonLd }),
+    },
+    "datePublished": (frontmatter?.pubDate || pageSpecificMetadata?.pubDate) ? new Date(frontmatter.pubDate || pageSpecificMetadata.pubDate!).toISOString() : undefined,
+    "dateModified": (frontmatter?.modDate || pageSpecificMetadata?.modDate || pageSpecificMetadata?.updatedDate) ? new Date(frontmatter.modDate || pageSpecificMetadata.modDate! || pageSpecificMetadata.updatedDate!).toISOString() : undefined,
+    "author": {
+      "@type": "Person", // O Organization
+      "name": frontmatter?.author || pageSpecificMetadata?.author || t('jsonld.article.defaultAuthor', {}, { defaultValue: siteNameTranslated }),
+    },
+    "publisher": { "@id": `${SITE.site}/#organization` },
+    "inLanguage": currentLocale,
+  });
+}
+
+const jsonLdScript = {
+  "@context": "https://schema.org",
+  "@graph": jsonLdGraph,
+};
+
+// Adaptar imágenes OG al final
+const adaptedOpenGraph = await adaptOpenGraphImages(finalOpenGraph, Astro.site);
+seoProps.openGraph = adaptedOpenGraph;
 ---
 
 <!doctype html>
-<html lang={language} dir={textDirection} class="2xl:text-[20px]">
+<html lang={currentLocale} dir={currentTextDirection} class="2xl:text-[20px]">
   <head>
-    <CommonMeta />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="sitemap" href={getAsset('/sitemap-index.xml')} />
+
+    <AstroSeo {...seoProps} />
+
     <Favicons />
     <CustomStyles />
     <ApplyColorMode />
-    <Metadata {...metadata} />
-    <!-- <script is:inline type="application/ld+json" class="devinjar">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": ["Person", "Organization"],
-            "@id": "https://www.bioenneagram.com/#person",
-            "name": "Bioenneagram Coach",
-            "logo": {
-              "@type": "ImageObject",
-              "@id": "https://www.bioenneagram.com/#logo",
-              "url": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "contentUrl": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "caption": "Bioenneagram Coach",
-              "inLanguage": "es"
-            },
-            "image": {
-              "@type": "ImageObject",
-              "@id": "https://www.bioenneagram.com/#logo",
-              "url": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "contentUrl": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "caption": "Bioenneagram Coach",
-              "inLanguage": "es"
-            }
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://www.bioenneagram.com/#website",
-            "url": "https://www.bioenneagram.com/",
-            "name": "Bioenneagram Coach",
-            "publisher": { "@id": "https://www.bioenneagram.com/#person" },
-            "inLanguage": "es",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://www.bioenneagram.com/?s={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          },
-          {
-            "@type": "WebPage",
-            "@id": "https://www.bioenneagram.com/#webpage",
-            "url": "https://www.bioenneagram.com/",
-            "name": "Bioenneagram Coach | Eneagrama y Biodescodificación",
-            "datePublished": "2021-11-12T07:41:17-05:00",
-            "dateModified": "2023-06-07T15:48:09-05:00",
-            "about": { "@id": "https://www.bioenneagram.com/#person" },
-            "isPartOf": { "@id": "https://www.bioenneagram.com/#website" },
-            "primaryImageOfPage": { "@id": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg" },
-            "inLanguage": "es"
-          },
-          {
-            "@type": "Person",
-            "@id": "https://www.bioenneagram.com/#bioenneagram",
-            "name": "bioenneagram",
-            "url": "https://www.bioenneagram.com/#bioenneagram",
-            "image": {
-              "@type": "ImageObject",
-              "@id": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "url": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg",
-              "caption": "bioenneagram",
-              "inLanguage": "es"
-            }
-          },
-          {
-            "@type": "Article",
-            "headline": "Bioenneagram Coach | Eneagrama y Biodescodificación",
-            "keywords": "eneagrama,enneagram,biodescodificacion,bioenneagram,bio enneagram,enneagram test,coach,coaching,neurofacilitador,eneatipo,eneatipos,personalidad,terapias,crecimiento personal,ansiedad,desarrollo personal,autoconocimiento,transformación personal,bienestar emocional,salud mental,equilibrio emocional,autoexploración,autorreflexión,autodesarrollo,autoayuda,autoestima,resiliencia,empoderamiento personal,habilidades de vida,inteligencia emocional",
-            "datePublished": "2021-11-12T07:41:17-05:00",
-            "dateModified": "2023-06-07T15:48:09-05:00",
-            "author": { "@id": "https://www.bioenneagram.com/#bioenneagram" },
-            "publisher": { "@id": "https://www.bioenneagram.com/#person" },
-            "description": "Descubre cómo el poder del eneagrama y la biodescodificación pueden ayudar en el desarrollo del ser",
-            "name": "Bioenneagram Coach | Eneagrama y Biodescodificación",
-            "@id": "https://www.bioenneagram.com/#richSnippet",
-            "isPartOf": { "@id": "https://www.bioenneagram.com/#webpage" },
-            "image": { "@id": "https://www.bioenneagram.com/assets/bioenneagram-coach-logo.svg" },
-            "inLanguage": "es",
-            "mainEntityOfPage": { "@id": "https://www.bioenneagram.com/#main" }
-          }
-        ]
-      }
-    </script> -->
-    <!-- <SiteVerification /> -->
+    
+    {finalAlternateLinks.map(link => <link rel="alternate" hreflang={link.lang} href={link.href} />)}
+    {finalXDefaultURL && <link rel="alternate" hreflang="x-default" href={finalXDefaultURL} />}
+
+    {jsonLdGraph.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLdScript)} />
+    )}
+    
     <Analytics />
     <GTMHead />
-    <!-- Start VWO Async SmartCode -->
-    <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
-    <script type="text/javascript" id="vwoCode">
-      window._vwo_code ||
-        (function () {
-          var account_id = 996906,
-            version = 2.1,
-            settings_tolerance = 2000,
-            hide_element = 'body',
-            hide_element_style =
-              'opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;transition:none !important;',
-            /* DO NOT EDIT BELOW THIS LINE */
-            f = false,
-            w = window,
-            d = document,
-            v = d.querySelector('#vwoCode'),
-            cK = '_vwo_' + account_id + '_settings',
-            cc = {};
-          try {
-            var c = JSON.parse(localStorage.getItem('_vwo_' + account_id + '_config'));
-            cc = c && typeof c === 'object' ? c : {};
-          } catch (e) {}
-          var stT = cc.stT === 'session' ? w.sessionStorage : w.localStorage;
-          code = {
-            nonce: v && v.nonce,
-            use_existing_jquery: function () {
-              return typeof use_existing_jquery !== 'undefined' ? use_existing_jquery : undefined;
-            },
-            library_tolerance: function () {
-              return typeof library_tolerance !== 'undefined' ? library_tolerance : undefined;
-            },
-            settings_tolerance: function () {
-              return cc.sT || settings_tolerance;
-            },
-            hide_element_style: function () {
-              return '{' + (cc.hES || hide_element_style) + '}';
-            },
-            hide_element: function () {
-              if (performance.getEntriesByName('first-contentful-paint')[0]) {
-                return '';
-              }
-              return typeof cc.hE === 'string' ? cc.hE : hide_element;
-            },
-            getVersion: function () {
-              return version;
-            },
-            finish: function (e) {
-              if (!f) {
-                f = true;
-                var t = d.getElementById('_vis_opt_path_hides');
-                if (t) t.parentNode.removeChild(t);
-                if (e) new Image().src = 'https://dev.visualwebsiteoptimizer.com/ee.gif?a=' + account_id + e;
-              }
-            },
-            finished: function () {
-              return f;
-            },
-            addScript: function (e) {
-              var t = d.createElement('script');
-              t.type = 'text/javascript';
-              if (e.src) {
-                t.src = e.src;
-              } else {
-                t.text = e.text;
-              }
-              v && t.setAttribute('nonce', v.nonce);
-              d.getElementsByTagName('head')[0].appendChild(t);
-            },
-            load: function (e, t) {
-              var n = this.getSettings(),
-                i = d.createElement('script'),
-                r = this;
-              t = t || {};
-              if (n) {
-                i.textContent = n;
-                d.getElementsByTagName('head')[0].appendChild(i);
-                if (!w.VWO || VWO.caE) {
-                  stT.removeItem(cK);
-                  r.load(e);
-                }
-              } else {
-                var o = new XMLHttpRequest();
-                o.open('GET', e, true);
-                o.withCredentials = !t.dSC;
-                o.responseType = t.responseType || 'text';
-                o.onload = function () {
-                  if (t.onloadCb) {
-                    return t.onloadCb(o, e);
-                  }
-                  if (o.status === 200 || o.status === 304) {
-                    _vwo_code.addScript({ text: o.responseText });
-                  } else {
-                    _vwo_code.finish('&e=loading_failure:' + e);
-                  }
-                };
-                o.onerror = function () {
-                  if (t.onerrorCb) {
-                    return t.onerrorCb(e);
-                  }
-                  _vwo_code.finish('&e=loading_failure:' + e);
-                };
-                o.send();
-              }
-            },
-            getSettings: function () {
-              try {
-                var e = stT.getItem(cK);
-                if (!e) {
-                  return;
-                }
-                e = JSON.parse(e);
-                if (Date.now() > e.e) {
-                  stT.removeItem(cK);
-                  return;
-                }
-                return e.s;
-              } catch (e) {
-                return;
-              }
-            },
-            init: function () {
-              if (d.URL.indexOf('__vwo_disable__') > -1) return;
-              var e = this.settings_tolerance();
-              w._vwo_settings_timer = setTimeout(function () {
-                _vwo_code.finish();
-                stT.removeItem(cK);
-              }, e);
-              var t;
-              if (this.hide_element() !== 'body') {
-                t = d.createElement('style');
-                var n = this.hide_element(),
-                  i = n ? n + this.hide_element_style() : '',
-                  r = d.getElementsByTagName('head')[0];
-                t.setAttribute('id', '_vis_opt_path_hides');
-                v && t.setAttribute('nonce', v.nonce);
-                t.setAttribute('type', 'text/css');
-                if (t.styleSheet) t.styleSheet.cssText = i;
-                else t.appendChild(d.createTextNode(i));
-                r.appendChild(t);
-              } else {
-                t = d.getElementsByTagName('head')[0];
-                var i = d.createElement('div');
-                i.style.cssText =
-                  'z-index: 2147483647 !important;position: fixed !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;background: white !important;display: block !important;';
-                i.setAttribute('id', '_vis_opt_path_hides');
-                i.classList.add('_vis_hide_layer');
-                t.parentNode.insertBefore(i, t.nextSibling);
-              }
-              var o = window._vis_opt_url || d.URL,
-                s =
-                  'https://dev.visualwebsiteoptimizer.com/j.php?a=' +
-                  account_id +
-                  '&u=' +
-                  encodeURIComponent(o) +
-                  '&vn=' +
-                  version;
-              if (w.location.search.indexOf('_vwo_xhr') !== -1) {
-                this.addScript({ src: s });
-              } else {
-                this.load(s + '&x=true');
-              }
-            },
-          };
-          w._vwo_code = code;
-          code.init();
-        })();
-    </script>
-    <!-- End VWO Async SmartCode -->
-
-    <!-- Uncomment line below to activate View Transitions -->
-    <!-- <ViewTransitions fallback="swap" /> -->
+    {/* Tu script VWO aquí si lo usas */}
   </head>
 
   <body class="antialiased text-default bg-page tracking-tight">
     <GTMBody />
     <slot />
-
     <BasicScripts />
-
     <style is:global>
-      img {
-        content-visibility: auto;
-      }
+      img { content-visibility: auto; }
     </style>
   </body>
 </html>

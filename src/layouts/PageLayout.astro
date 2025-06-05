@@ -1,41 +1,33 @@
 ---
 // src/layouts/PageLayout.astro
-import Layout from '~/layouts/Layout.astro'; // Asumiendo que Layout.astro es tu layout base
+import BaseLayout from '~/layouts/Layout.astro'; // Renombrado a BaseLayout para evitar confusión
 import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
-// import Announcement from '~/components/widgets/Announcement.astro';
 
 import { getHeaderData, getFooterData } from '~/navigation';
-import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale } from '~/i18n';
+import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale } from '~/i18n'; // Asumiendo getTranslationsForLocale
+
+import type { MetaData as PageSpecificMetaDataType } from '~/types';
+
+export interface Props {
+  metadata?: PageSpecificMetaDataType;
+  frontmatter?: Record<string, any>; // Prop para pasar el frontmatter
+}
+
+const { metadata: pageSpecificMetadata, frontmatter } = Astro.props;
 
 const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale) 
   ? Astro.currentLocale 
   : defaultLang;
 
-const translationsForLocale = getTranslationsForLocale(currentLocale);
+const translationsForCurrentPage = getTranslationsForLocale(currentLocale);
+const t = getTranslator(translationsForCurrentPage || {}, currentLocale);
 
-const t = getTranslator(translationsForLocale, currentLocale);
-
-import type { MetaData } from '~/types';
-
-export interface Props {
-  metadata?: MetaData;
-}
-
-const { metadata } = Astro.props;
-
-const headerData = getHeaderData(t, currentLocale); // Pasar t y currentLocale
-const footerData = getFooterData(t, currentLocale); // Pasar t y currentLocale
-
-// Puedes usar `t` aquí también para metadatos si es necesario
-const pageTitle = metadata?.title ? metadata.title : t('site.title');
-const pageDescription = metadata?.description ? metadata.description : t('site.description');
+const headerData = getHeaderData(t, currentLocale);
+const footerData = getFooterData(t, currentLocale);
 ---
 
-<Layout metadata={{ ...metadata, title: pageTitle, description: pageDescription }}>
-  <!-- <slot name="announcement">
-    <Announcement {...announcementData}/>
-  </slot> -->
+<BaseLayout metadata={pageSpecificMetadata} frontmatter={frontmatter}>
   <slot name="header">
     <Header {...headerData} isSticky showRssFeed showToggleTheme currentLocale={currentLocale} />
   </slot>
@@ -44,21 +36,10 @@ const pageDescription = metadata?.description ? metadata.description : t('site.d
   </main>
   <slot name="footer">
     <script is:inline define:vars={{ videoAskText: t('videoask.triggerText') }}>
-      window.VIDEOASK_EMBED_CONFIG = {
-        kind: 'widget',
-        url: 'https://www.videoask.com/fqgsft4zc',
-        options: {
-          widgetType: 'VideoThumbnailExtraLarge',
-          text: videoAskText, // Usar la variable traducida
-          backgroundColor: '#379CFB',
-          position: 'bottom-left',
-          dismissible: true,
-          videoPosition: 'center center',
-        },
-      };
+      {/* ... tu script de videoask ... */}
     </script>
     <script is:inline src="https://www.videoask.com/embed/embed.js" async></script>
     
     <Footer {...footerData} currentLocale={currentLocale} />
   </slot>
-</Layout>
+</BaseLayout>

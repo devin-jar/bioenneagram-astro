@@ -32,7 +32,16 @@ const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 const metadata = {
   title: t('courseEnneagramGamePage.meta.title'),
   description: t('courseEnneagramGamePage.meta.description', {}, {defaultValue: 'Learn about the Enneagram Game course.'}),
-  robots: { index: true, follow: true }
+  robots: { index: true, follow: true },  
+  canonical: 'https://bioenneagram.com/landing/curso-eneagrama-game',
+  type: 'website',
+  alternateLinks: [
+    { lang: 'es', href: 'https://bioenneagram.com/landing/curso-eneagrama-game' }, // Incluir la actual
+    { lang: 'en', href: 'https://bioenneagram.com/en/landing/course-enneagram-game' },
+    { lang: 'nl', href: 'https://bioenneagram.com/nl/landing/cursus-enneagram-spel' },
+    { lang: 'fr', href: 'https://bioenneagram.com/fr/page-atterrissage/cours-enneagramme-jeu' },
+    { lang: 'de', href: 'https://bioenneagram.com/de/landung/enneagramm-spiel-kurs' },
+  ],
 };
 
 const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf'; // Se mantiene si el PDF no está localizado

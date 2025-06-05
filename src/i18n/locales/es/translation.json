@@ -4,6 +4,17 @@
     "title": "Bioenneagram Coach | Eneagrama y Biodescodificación",
     "description": "Descubre tu esencia y transforma tu vida con Bioenneagram, fusionando Eneagrama y Biodescodificación para un crecimiento personal profundo."
   },
+  "jsonld": {
+    "organization": {
+      "name": "Bioenneagram" 
+    },
+    "website": {
+      "name": "Sitio Web de Bioenneagram"
+    },
+    "article": {
+      "defaultAuthor": "Alexander Zapata Rendon"
+    }
+  },
   "nav": {
     "home": "Inicio",
     "services": "Servicios",

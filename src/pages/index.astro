@@ -51,6 +51,14 @@ console.log(`[${Astro.url.pathname}] Loaded pageTranslations for ${currentLocale
 const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 // --- FIN DE CARGA DINÁMICA DE TRADUCCIONES ---
 
+const pageFrontmatter = {
+  // title: t('homepage.meta.title'), // El título ya se pasa a metadata
+  // description: t('homepage.meta.description'), // Ya se pasa a metadata
+  // pubDate: "2023-01-01", // Ejemplo si la homepage tuviera fecha de publicación
+  // author: "Bioenneagram Team", // Ejemplo
+  // image: "/path/to/homepage-specific-image.jpg" // Si tienes una imagen OG específica para la home
+};
+
 const metadata = {
   title: t('homepage.meta.title'),
   description: t('homepage.meta.description'),
@@ -94,7 +102,7 @@ const faqsItems = t('homepage.faqs.items') || [];
 const steps2Items = t('homepage.steps2.items') || [];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} frontmatter={pageFrontmatter}>
 
   <Hero
     tagline={t('homepage.hero.tagline')}
