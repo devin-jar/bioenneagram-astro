@@ -2,6 +2,17 @@
 title: 'Terms and Conditions'
 description: 'Read the Terms and Conditions for using Bioenneagram services.'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/terminos/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/terms/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/voorwaarden/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/conditions-generales/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/geschaeftsbedingungen/'
 ---
 
 _Last Updated_: January 06, 2023

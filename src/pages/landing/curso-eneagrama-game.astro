@@ -7,6 +7,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import ImgCourse from '~/assets/images/eneagrama-game.jpg'; // La imagen se mantiene
 
 import { getTranslator, defaultLang } from '~/i18n';
+import { getPageKeyForPath, getAlternateLinks } from '../../utils/hreflang-mapping';
 
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
 const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
@@ -35,14 +36,18 @@ const metadata = {
   robots: { index: true, follow: true },  
   canonical: 'https://bioenneagram.com/landing/curso-eneagrama-game',
   type: 'website',
-  alternateLinks: [
-    { lang: 'es', href: 'https://bioenneagram.com/landing/curso-eneagrama-game' }, // Incluir la actual
-    { lang: 'en', href: 'https://bioenneagram.com/en/landing/course-enneagram-game' },
-    { lang: 'nl', href: 'https://bioenneagram.com/nl/landing/cursus-enneagram-spel' },
-    { lang: 'fr', href: 'https://bioenneagram.com/fr/page-atterrissage/cours-enneagramme-jeu' },
-    { lang: 'de', href: 'https://bioenneagram.com/de/landung/enneagramm-spiel-kurs' },
-  ],
+  // alternateLinks will be managed by the script below
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  if (metadata.alternateLinks) {
+    console.log(`Overwriting existing alternateLinks for ${pageKey}`);
+  }
+  metadata.alternateLinks = alternateLinks;
+}
 
 const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf'; // Se mantiene si el PDF no está localizado
 const courseBookingLink = 'https://events.bioenneagram.com/cursos/curso-eneagrama-game'; // Se mantiene

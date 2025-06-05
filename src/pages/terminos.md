@@ -1,6 +1,17 @@
 ---
 title: 'Terminos y Condiciones'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/terminos/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/terms/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/voorwaarden/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/conditions-generales/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/geschaeftsbedingungen/'
 ---
 
 _Última Actualización_: Enero 06, 2023

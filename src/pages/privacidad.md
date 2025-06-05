@@ -1,6 +1,17 @@
 ---
 title: 'Política de Privacidad'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/privacidad/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/privacy/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/privacybeleid/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/confidentialite/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/datenschutz/'
 ---
 
 _Última Actualización_: Enero 06, 2023

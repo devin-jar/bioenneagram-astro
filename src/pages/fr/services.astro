@@ -5,6 +5,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import Content from '~/components/widgets/Content.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import Hero from '~/components/widgets/Hero.astro';
+import { getPageKeyForPath, getAlternateLinks } from '../../utils/hreflang-mapping';
 import Testimonials from '~/components/widgets/Testimonials.astro';
 
 import { getTranslator, defaultLang } from '~/i18n';
@@ -32,6 +33,16 @@ const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 const metadata = {
   title: t('servicesPage.meta.title'),
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  if (metadata.alternateLinks) {
+    console.log(`Overwriting existing alternateLinks for ${pageKey}`);
+  }
+  metadata.alternateLinks = alternateLinks;
+}
 
 // URLs de imágenes, etc.
 const heroImageServices = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80';

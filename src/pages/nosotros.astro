@@ -10,6 +10,7 @@ import Stats from '~/components/widgets/Stats.astro';
 import Steps2 from '~/components/widgets/Steps2.astro';
 
 import { getTranslator, defaultLang } from '~/i18n';
+import { getPageKeyForPath, getAlternateLinks } from '../utils/hreflang-mapping';
 
 interface JsonModule {
   default?: Record<string, any>;
@@ -46,6 +47,16 @@ const metadata = {
   description: t('aboutpage.meta.description', {}, { defaultValue: 'Learn more about Bioenneagram.' }) // Ejemplo con defaultValue
   // robots: { index: true, follow: true } // Descomenta si es necesario
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  if (metadata.alternateLinks) {
+    console.log(`Overwriting existing alternateLinks for ${pageKey}`);
+  }
+  metadata.alternateLinks = alternateLinks;
+}
 
 // URLs de imágenes (pueden ir al JSON si varían por idioma)
 const heroImageAbout = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';

@@ -2,6 +2,17 @@
 title: 'Algemene Voorwaarden'
 description: 'Lees de Algemene Voorwaarden voor het gebruik van de diensten van Bioenneagram.'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/terminos/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/terms/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/voorwaarden/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/conditions-generales/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/geschaeftsbedingungen/'
 ---
 
 _Laatst bijgewerkt_: 06 januari 2023

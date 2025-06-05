@@ -2,6 +2,17 @@
 title: 'Allgemeine Geschäftsbedingungen'
 description: 'Lesen Sie die Allgemeinen Geschäftsbedingungen für die Nutzung der Bioenneagram-Dienste.'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/terminos/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/terms/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/voorwaarden/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/conditions-generales/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/geschaeftsbedingungen/'
 ---
 
 _Letzte Aktualisierung_: 06. Januar 2023

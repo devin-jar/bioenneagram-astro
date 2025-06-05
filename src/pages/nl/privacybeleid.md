@@ -1,6 +1,17 @@
 ---
 title: 'Privacybeleid'
 layout: '~/layouts/MarkdownLayout.astro'
+alternateLinks:
+  - lang: 'es'
+    href: 'https://bioenneagram.com/privacidad/'
+  - lang: 'en'
+    href: 'https://bioenneagram.com/en/privacy/'
+  - lang: 'nl'
+    href: 'https://bioenneagram.com/nl/privacybeleid/'
+  - lang: 'fr'
+    href: 'https://bioenneagram.com/fr/confidentialite/'
+  - lang: 'de'
+    href: 'https://bioenneagram.com/de/datenschutz/'
 ---
 
 _Laatst bijgewerkt_: 6 januari 2023

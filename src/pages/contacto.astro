@@ -3,6 +3,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro'; // Asegúrate que este componente es solo estructura
+import { getPageKeyForPath, getAlternateLinks } from '../utils/hreflang-mapping';
 import Features2 from '~/components/widgets/Features2.astro';
 
 import { getTranslator, defaultLang } from '~/i18n';
@@ -30,6 +31,13 @@ const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 const metadata = {
   title: t('contactPage.meta.title'),
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  metadata.alternateLinks = alternateLinks;
+}
 
 const contactFormInputs = t('contactPage.contactForm.inputs', {}, {defaultValue: []});
 const featuresSupportItems = t('contactPage.featuresSupport.items', {}, {defaultValue: []});

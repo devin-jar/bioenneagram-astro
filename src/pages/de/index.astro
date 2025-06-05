@@ -15,6 +15,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 // import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 import { getTranslator, defaultLang } from '~/i18n';
+import { getPageKeyForPath, getAlternateLinks } from '../../utils/hreflang-mapping';
 
 // Definición de la interfaz (o importarla)
 interface JsonModule {
@@ -59,6 +60,13 @@ const metadata = {
     follow: true,
   }
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  metadata.alternateLinks = alternateLinks;
+}
 
 const highlight = t('homepage.hero.heroHighlight');
 const title = t('homepage.hero.title', {'0': `<span class="text-accent dark:text-white highlight">${highlight}</span>`});

@@ -2,6 +2,7 @@
 // src/pages/construyendo.astro
 import Layout from '~/layouts/Layout.astro'; // Layout base
 import { getHomePermalink } from '~/utils/permalinks';
+import { getPageKeyForPath, getAlternateLinks } from '../utils/hreflang-mapping';
 
 import { getTranslator, defaultLang } from '~/i18n';
 
@@ -30,6 +31,14 @@ const t = getTranslator(pageTranslations || {}, currentLocaleForBuilding);
 const metadata = {
   title: t('buildingPage.meta.title', {}, { defaultValue: 'Page Under Construction' })
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  metadata.alternateLinks = alternateLinks;
+}
+
 const homeLink = getHomePermalink(currentLocaleForBuilding);
 ---
 

@@ -7,6 +7,7 @@ import CallToAction from '../../../components/widgets/CallToAction.astro';
 import ImgCourse from '../../../assets/images/eneagrama-game.jpg'; // La imagen se mantiene
 
 import { getTranslator, defaultLang } from '../../../i18n';
+import { getPageKeyForPath, getAlternateLinks } from '../../../utils/hreflang-mapping';
 
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
 const currentLocaleFromAstro = Astro.currentLocale || defaultLang;
@@ -34,6 +35,16 @@ const metadata = {
   description: t('courseEnneagramGamePage.meta.description', {}, {defaultValue: 'Learn about the Enneagram Game course.'}),
   robots: { index: true, follow: true }
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  if (metadata.alternateLinks) {
+    console.log(`Overwriting existing alternateLinks for ${pageKey}`);
+  }
+  metadata.alternateLinks = alternateLinks;
+}
 
 const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf'; // Se mantiene si el PDF no está localizado
 const courseBookingLink = 'https://events.bioenneagram.com/cursos/curso-eneagrama-game'; // Se mantiene

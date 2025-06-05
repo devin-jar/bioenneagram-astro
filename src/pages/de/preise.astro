@@ -7,6 +7,7 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Features3 from '~/components/widgets/Features3.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getPageKeyForPath, getAlternateLinks } from '../../utils/hreflang-mapping';
 
 import { getTranslator, defaultLang } from '~/i18n';
 
@@ -33,6 +34,13 @@ const t = getTranslator(pageTranslations || {}, currentLocaleFromAstro);
 const metadata = {
   title: t('pricingPage.meta.title'),
 };
+
+const pageKey = getPageKeyForPath(Astro.url.pathname);
+const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+
+if (alternateLinks && Object.keys(alternateLinks).length > 0) {
+  metadata.alternateLinks = alternateLinks;
+}
 
 const pricingPlans = t('pricingPage.pricesWidget.plans', {}, {defaultValue: []});
 const pricingFeatures = t('pricingPage.featuresPricing.items', {}, {defaultValue: []});
