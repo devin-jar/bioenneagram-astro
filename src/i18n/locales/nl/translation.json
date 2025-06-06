@@ -466,7 +466,26 @@
         }
       ]
     }
-  },"error404Page": {
+  },
+  "courseEnneagramGamePage": {
+  "meta": {
+    "title": "Enneagram Spel Cursus",
+    "description": "Leer het gamification-tool Enneagram Spel gebruiken voor zelfontdekking."
+  },
+  "hero": {
+    "tagline": "Cursussen",
+    "title": "Enneagram Spel Cursus: Een Zelfontdekkingsinstrument",
+    "subtitle": "Doe mee aan mijn LIVE-cursus en ontdek het gamification-tool voor persoonlijkheidsontwikkeling – hetzelfde instrument dat ik gebruik tijdens consultaties met mijn patiënten.",
+    "actionText": "Schrijf Nu In",
+    "imageAlt": "Enneagram Spel Cursus Afbeelding door Bioenneagram Coach"
+  },
+  "callToAction": {
+    "title": "Informatie",
+    "subtitle": "Hieronder vind je een PDF met gedetailleerde cursusinformatie. Lees deze om te bepalen of de cursus bij je past. (Prijzen kunnen variëren)",
+    "actionText": "Download PDF"
+  }
+},  
+  "error404Page": {
     "meta": {
       "title": "Fout 404 - Pagina niet gevonden"
     },

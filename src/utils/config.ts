@@ -6,7 +6,7 @@ import type { MetaData } from '~/types';
 
 export interface SiteConfig {
   name: string;
-  site?: string;
+  site: string;
   base?: string;
   trailingSlash?: boolean;
   googleSiteVerificationId?: string;
@@ -82,19 +82,32 @@ const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
   analytics?: unknown;
 };
 
-const DEFAULT_SITE_NAME = 'Website';
+const DEFAULT_SITE_NAME = 'Bioenneagram';
 
 const getSite = () => {
   const _default = {
     name: DEFAULT_SITE_NAME,
-    site: undefined,
+    site: 'https://bioenneagram.com', // Podrías poner un valor por defecto aquí
     base: '/',
     trailingSlash: false,
-
     googleSiteVerificationId: '',
   };
 
-  return merge({}, _default, config?.site ?? {}) as SiteConfig;
+  const mergedConfig = merge({}, _default, config?.site ?? {});
+
+  // Asegurar que 'site' tenga un valor
+  if (!mergedConfig.site) {
+    // Opción A: Usar un valor por defecto si es apropiado para desarrollo
+    // mergedConfig.site = 'http://localhost:4321'; // O tu URL de desarrollo
+    // console.warn("WARNING: SITE.site is not defined in config.yaml. Falling back to default or development URL.");
+
+    // Opción B: Lanzar un error para forzar su definición
+    throw new Error(
+      "CRITICAL: 'site.site' is not defined in src/config.yaml. This is required for building absolute URLs."
+    );
+  }
+
+  return mergedConfig as SiteConfig; // El 'as SiteConfig' asume que 'site' ahora está definido
 };
 
 const getMetadata = () => {

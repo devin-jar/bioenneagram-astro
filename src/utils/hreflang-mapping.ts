@@ -1,161 +1,209 @@
-export interface LanguageUrls {
-  es?: string;
-  en?: string;
-  nl?: string;
-  fr?: string;
-  de?: string;
-}
+// src/utils/hreflang-mapping.ts
+import type { AlternateLinkInfo } from '~/types';
+import { SITE } from '~/utils/config.ts';
 
-export interface HreflangMapping {
-  [pageKey: string]: LanguageUrls;
-}
+// --- I18N CONFIGURATION CONSTANTS ---
+// Estos valores DEBEN coincidir con tu astro.config.ts y cómo manejas los idiomas.
+const SITE_URL = SITE.site.endsWith('/') ? SITE.site.slice(0, -1) : SITE.site;
+const SUPPORTED_LANGS_CODES = ['en', 'es', 'nl', 'fr', 'de'];
+const DEFAULT_LANG_CODE = 'es';
+const PREFIX_DEFAULT_LOCALE = false;
 
-export const BASE_URL = "https://bioenneagram.com";
-
-export const hreflangMappings: HreflangMapping = {
-  home: {
-    es: `${BASE_URL}/`,
-    en: `${BASE_URL}/en/`,
-    nl: `${BASE_URL}/nl/`,
-    fr: `${BASE_URL}/fr/`,
-    de: `${BASE_URL}/de/`,
-  },
-  contact: {
-    es: `${BASE_URL}/contacto/`,
-    en: `${BASE_URL}/en/contact/`,
-    nl: `${BASE_URL}/nl/contact/`,
-    fr: `${BASE_URL}/fr/contact/`,
-    de: `${BASE_URL}/de/kontakt/`,
-  },
-  services: {
-    es: `${BASE_URL}/servicios/`,
-    en: `${BASE_URL}/en/services/`,
-    nl: `${BASE_URL}/nl/diensten/`,
-    fr: `${BASE_URL}/fr/services/`,
-    de: `${BASE_URL}/de/dienstleistungen/`,
-  },
-  pricing: {
-    es: `${BASE_URL}/pricing/`, // Assuming 'pricing.astro' is the ES version as per file list.
-    en: `${BASE_URL}/en/pricing/`,
-    nl: `${BASE_URL}/nl/prijzen/`,
-    fr: `${BASE_URL}/fr/tarifs/`,
-    de: `${BASE_URL}/de/preise/`,
-  },
-  about: {
-    es: `${BASE_URL}/nosotros/`,
-    en: `${BASE_URL}/en/about/`,
-    nl: `${BASE_URL}/nl/over-ons/`,
-    fr: `${BASE_URL}/fr/a-propos/`,
-    de: `${BASE_URL}/de/ueber-uns/`,
-  },
-  privacy: {
-    es: `${BASE_URL}/privacidad/`,
-    en: `${BASE_URL}/en/privacy/`,
-    nl: `${BASE_URL}/nl/privacybeleid/`,
-    fr: `${BASE_URL}/fr/confidentialite/`,
-    de: `${BASE_URL}/de/datenschutz/`,
-  },
-  terms: {
-    es: `${BASE_URL}/terminos/`,
-    en: `${BASE_URL}/en/terms/`,
-    nl: `${BASE_URL}/nl/voorwaarden/`,
-    fr: `${BASE_URL}/fr/conditions-generales/`,
-    de: `${BASE_URL}/de/geschaeftsbedingungen/`,
-  },
-  building: {
-    es: `${BASE_URL}/contruyendo/`, // Corrected from 'construyendo' to 'contruyendo' as per file list
-    en: `${BASE_URL}/en/building/`,
-    nl: `${BASE_URL}/nl/bouw/`,
-    fr: `${BASE_URL}/fr/construction/`,
-    de: `${BASE_URL}/de/gebaeude/`,
-  },
-  "course-enneagram-game": {
-    es: `${BASE_URL}/landing/curso-eneagrama-game/`,
-    en: `${BASE_URL}/en/landing/course-enneagram-game/`,
-    nl: `${BASE_URL}/nl/bestemmingspagina/enneagram-cursus-spel/`,
-    fr: `${BASE_URL}/fr/page-daccueil/cours-jeu-enneagramme/`,
-    de: `${BASE_URL}/de/startseite/enneagramm-kurs-spiel/`,
-  },
-  "404": {
-    es: `${BASE_URL}/404/`,
-    en: `${BASE_URL}/en/404/`,
-    nl: `${BASE_URL}/nl/404/`,
-    fr: `${BASE_URL}/fr/404/`,
-    de: `${BASE_URL}/de/404/`,
-  },
+const LANG_TO_HREFLANG_MAP: Record<string, string> = {
+  en: 'en-US',
+  es: 'es-ES',
+  nl: 'nl-NL',
+  fr: 'fr-FR',
+  de: 'de-DE',
 };
 
-// Helper function to get URLs for a specific page key
-export function getAlternateLinks(pageKey: string): LanguageUrls | undefined {
-  return hreflangMappings[pageKey];
+// --- PAGE MAPPINGS ---
+// Define la estructura para mapear pageKeys a sus slugs.
+interface PageUrlDefinition {
+  /** El slug base de la página, usualmente para el idioma por defecto o un slug canónico. */
+  baseSlug: string;
+  /** Slugs específicos por idioma si difieren del baseSlug. NO incluir prefijo de idioma aquí. */
+  langSlugs?: {
+    [langCode: string]: string;
+  };
 }
 
-// Helper function to determine the current page's key based on its path
-// This is a simplified example; a more robust solution would be needed for a complex site.
-export function getPageKeyForPath(astroUrlPathname: string): string | undefined {
-  // Remove leading/trailing slashes and language prefixes
-  let path = astroUrlPathname.replace(/^\/|\/$/g, '');
-  const langPrefixes = ['en', 'nl', 'fr', 'de'];
-  for (const prefix of langPrefixes) {
-    if (path.startsWith(`${prefix}/`)) {
-      path = path.substring(prefix.length + 1);
-      break;
+const pageMappings: Record<string, PageUrlDefinition> = {
+  home: { baseSlug: '' }, // Raíz
+  contact: {
+    baseSlug: 'contacto', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'contact',
+      de: 'kontakt',
+      // nl y fr usarán 'contacto' como base si no se definen aquí
+    },
+  },
+  services: {
+    baseSlug: 'servicios', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'services',
+      nl: 'diensten',
+      de: 'dienstleistungen',
+    },
+  },
+  pricing: {
+    baseSlug: 'pricing', // Asumimos que 'pricing' es el slug para 'es' (default)
+    // Si en español es '/precios/', entonces baseSlug: 'precios'
+    langSlugs: {
+      en: 'pricing',
+      nl: 'prijzen',
+      fr: 'tarifs',
+      de: 'preise',
+    },
+  },
+  about: {
+    baseSlug: 'nosotros', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'about',
+      nl: 'over-ons',
+      fr: 'a-propos',
+      de: 'ueber-uns',
+    },
+  },
+  privacy: {
+    baseSlug: 'privacidad', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'privacy',
+      nl: 'privacybeleid',
+      fr: 'confidentialite',
+      de: 'datenschutz',
+    },
+  },
+  terms: {
+    baseSlug: 'terminos', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'terms',
+      nl: 'voorwaarden',
+      fr: 'conditions-generales',
+      de: 'geschaeftsbedingungen',
+    },
+  },
+  building: {
+    baseSlug: 'contruyendo', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'building',
+      nl: 'bouw',
+      fr: 'construction',
+      de: 'gebaeude',
+    },
+  },
+  'course-enneagram-game': {
+    baseSlug: 'landing/curso-eneagrama-game', // Slug para 'es' (default)
+    langSlugs: {
+      en: 'landing/course-enneagram-game',   // Slug para 'en'
+      nl: 'bestemmingspagina/enneagram-cursus-spel',  // Slug para 'nl' (SIN prefijo /nl/)
+      fr: 'page-daccueil/cours-jeu-enneagramme', // Slug para 'fr' (SIN prefijo /fr/)
+      de: 'startseite/enneagramm-kurs-spiel',  // Slug para 'de' (SIN prefijo /de/)
+    },
+  },
+  '404': { baseSlug: '404' }, // El slug '404' suele ser el mismo
+};
+
+/**
+ * Helper para limpiar y normalizar un segmento de slug.
+ * @param slug Segmento de slug.
+ * @returns Slug limpio (sin slashes al inicio/final).
+ */
+function normalizeSlugSegment(slug: string): string {
+  return slug.replace(/^\/+|\/+$/g, '');
+}
+
+/**
+ * Obtiene una clave de página canónica a partir de una ruta de URL de Astro.
+ * @param astroUrlPathname El pathname de Astro.url (ej. '/es/nosotros/', '/about/').
+ * @param currentLocale El locale actual de la página (ej. 'es', 'en').
+ * @returns La clave de página canónica o null si no se encuentra.
+ */
+export function getPageKeyForPath(astroUrlPathname: string, currentLocale: string, defaultLang?: string): string | null {
+  let pathWithoutLangPrefix = normalizeSlugSegment(astroUrlPathname);
+
+  // 1. Quitar el prefijo de idioma si la página actual NO es el idioma por defecto
+  // O si ES el idioma por defecto PERO este SÍ usa prefijo.
+  if (currentLocale !== DEFAULT_LANG_CODE || (currentLocale === DEFAULT_LANG_CODE && PREFIX_DEFAULT_LOCALE)) {
+    if (pathWithoutLangPrefix.startsWith(`${currentLocale}`)) {
+      pathWithoutLangPrefix = normalizeSlugSegment(pathWithoutLangPrefix.substring(currentLocale.length));
     }
   }
-  if (path === '') path = 'home'; // Root path
 
-  // Direct mapping for simple cases (can be expanded)
-  const pathMap: { [path: string]: string } = {
-    home: "home",
-    contact: "contact",
-    contacto: "contact",
-    kontakt: "contact",
-    services: "services",
-    servicios: "services",
-    dienstleistungen: "services",
-    pricing: "pricing",
-    preise: "pricing",
-    tarifs: "pricing",
-    prijzen: "pricing",
-    about: "about",
-    nosotros: "about",
-    "ueber-uns": "about",
-    "a-propos": "about",
-    "over-ons": "about",
-    privacy: "privacy",
-    privacidad: "privacy",
-    datenschutz: "privacy",
-    confidentialite: "privacy",
-    privacybeleid: "privacy",
-    terms: "terms",
-    terminos: "terms",
-    geschaeftsbedingungen: "terms",
-    "conditions-generales": "terms",
-    voorwaarden: "terms",
-    building: "building",
-    contruyendo: "building",
-    gebaeude: "building",
-    construction: "building",
-    bouw: "building",
-    "landing/curso-eneagrama-game": "course-enneagram-game",
-    "en/landing/course-enneagram-game": "course-enneagram-game",
-    "nl/bestemmingspagina/enneagram-cursus-spel": "course-enneagram-game",
-    "fr/page-daccueil/cours-jeu-enneagramme": "course-enneagram-game",
-    "de/startseite/enneagramm-kurs-spiel": "course-enneagram-game",
-    "404": "404"
-  };
+  if (pathWithoutLangPrefix === '') return 'home';
 
-  // Try to find a direct match or a match for known page slugs
-  if (pathMap[path]) {
-    return pathMap[path];
+  // 2. Buscar la pageKey
+  for (const key in pageMappings) {
+    const mapping = pageMappings[key];
+    // Verificar si el path sin prefijo coincide con un langSlug para el idioma actual
+    if (mapping.langSlugs && mapping.langSlugs[currentLocale] === pathWithoutLangPrefix) {
+      return key;
+    }
+    // Verificar si el path sin prefijo coincide con el baseSlug
+    // (esto aplicaría para el idioma por defecto sin prefijo, o si otros idiomas usan el baseSlug)
+    if (mapping.baseSlug === pathWithoutLangPrefix) {
+      return key;
+    }
   }
 
-  // More complex matching for nested pages like course-enneagram-game
-  if (path.includes("curso-eneagrama-game") || path.includes("course-enneagram-game") || path.includes("enneagramm-kurs-spiel") || path.includes("cours-jeu-enneagramme") || path.includes("enneagram-cursus-spel")) {
-    return "course-enneagram-game";
+  console.warn(`[hreflang] No page key found for path: "${astroUrlPathname}" (processed to: "${pathWithoutLangPrefix}" for locale: "${currentLocale}")`);
+  return null;
+}
+
+/**
+ * Genera los enlaces alternate para una clave de página dada.
+ * @param pageKey La clave de página canónica.
+ * @param currentLocaleToExclude Opcional: el locale actual de la página (para no incluirlo en los alternates si se desea).
+ * @returns Un array de objetos AlternateLinkInfo.
+ */
+export function getAlternateLinksForPage(pageKey: string, currentLocaleToExclude?: string): AlternateLinkInfo[] {
+  const mapping = pageMappings[pageKey];
+  if (!mapping) {
+    console.warn(`[hreflang] Invalid pageKey "${pageKey}" for generating alternate links.`);
+    return [];
   }
 
-  // Fallback for unmatched paths - this might need more sophisticated logic
-  console.warn(`No page key found for path: ${astroUrlPathname}`);
-  return undefined;
+  const alternateLinks: AlternateLinkInfo[] = [];
+
+  SUPPORTED_LANGS_CODES.forEach(langCode => {
+    // Descomenta la siguiente línea si NO quieres un enlace hreflang para la página actual
+    // if (currentLocaleToExclude && langCode === currentLocaleToExclude) {
+    //   return;
+    // }
+
+    let langUrlPrefix = '';
+    if (langCode !== DEFAULT_LANG_CODE || (langCode === DEFAULT_LANG_CODE && PREFIX_DEFAULT_LOCALE)) {
+      langUrlPrefix = `/${langCode}`;
+    }
+
+    // Prioridad: slug específico del idioma, luego el baseSlug.
+    // Los slugs en pageMappings NO deben tener prefijos de idioma.
+    const slugForLang = (mapping.langSlugs && mapping.langSlugs[langCode])
+      ? normalizeSlugSegment(mapping.langSlugs[langCode])
+      : normalizeSlugSegment(mapping.baseSlug);
+
+    // Construir la ruta relativa (ej. /es/contacto o /about)
+    const pathParts = [langUrlPrefix, slugForLang].map(normalizeSlugSegment).filter(Boolean);
+    const relativePath = pathParts.length > 0 ? `/${pathParts.join('/')}` : '';
+
+    let finalHref = `${SITE_URL}${relativePath || '/'}`; // Añadir '/' si relativePath es vacío (para home)
+
+    // Asegurar un trailing slash si no es solo el dominio base y si el slug no estaba vacío
+    if (finalHref !== SITE_URL + '/' && slugForLang !== '') {
+      if (!finalHref.endsWith('/')) {
+        finalHref += '/';
+      }
+    } else if (finalHref === SITE_URL && !finalHref.endsWith('/')) { // Para SITE_URL solo
+      finalHref += '/';
+    }
+    finalHref = finalHref.replace(/\/\//g, '/'); // Limpiar doble slashes por si acaso
+
+
+    alternateLinks.push({
+      hreflang: LANG_TO_HREFLANG_MAP[langCode] || langCode, // ej. 'es-ES'
+      href: finalHref,
+    });
+  });
+
+  return alternateLinks;
 }

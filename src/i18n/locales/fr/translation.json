@@ -467,6 +467,24 @@
       ]
     }
   },
+  "courseEnneagramGamePage": {
+  "meta": {
+    "title": "Cours du Jeu de l'Ennéagramme",
+    "description": "Apprenez à utiliser l'outil de gamification du Jeu de l'Ennéagramme pour la découverte de soi."
+  },
+  "hero": {
+    "tagline": "Cours",
+    "title": "Cours du Jeu de l'Ennéagramme : Un outil d'auto-découverte",
+    "subtitle": "Rejoignez mon cours EN DIRECT et découvrez l'outil de gamification pour explorer votre personnalité – le même que j'utilise avec mes patients lors des consultations.",
+    "actionText": "S'inscrire Maintenant",
+    "imageAlt": "Image du Cours du Jeu de l'Ennéagramme par Bioenneagram Coach"
+  },
+  "callToAction": {
+    "title": "Information",
+    "subtitle": "Vous trouverez ci-dessous un PDF avec des informations détaillées sur le cours. Lisez-le pour déterminer s'il vous convient. (Les prix peuvent varier)",
+    "actionText": "Télécharger le PDF"
+  }
+},
   "error404Page": {
     "meta": {
       "title": "Erreur 404 - Page non trouvée"

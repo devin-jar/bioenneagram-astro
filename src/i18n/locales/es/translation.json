@@ -6,10 +6,10 @@
   },
   "jsonld": {
     "organization": {
-      "name": "Bioenneagram" 
+      "name": "Bioenneagram Coach" 
     },
     "website": {
-      "name": "Sitio Web de Bioenneagram"
+      "name": "Sitio Web de Bioenneagram Coach"
     },
     "article": {
       "defaultAuthor": "Alexander Zapata Rendon"

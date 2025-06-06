@@ -466,6 +466,24 @@
       ]
     }
   },
+  "courseEnneagramGamePage": {
+  "meta": {
+    "title": "Enneagramm-Spiel-Kurs",
+    "description": "Lernen Sie das Gamification-Tool Enneagramm-Spiel zur Selbsterkenntnis einzusetzen."
+  },
+  "hero": {
+    "tagline": "Kurse",
+    "title": "Enneagramm-Spiel-Kurs: Ein Selbsterkundungs-Werkzeug",
+    "subtitle": "Nehmen Sie an meinem LIVE-Kurs teil und lernen Sie das Gamification-Tool zur Persönlichkeitsentdeckung kennen – dasselbe, das ich in Beratungen mit meinen Patienten einsetze.",
+    "actionText": "Jetzt Anmelden",
+    "imageAlt": "Enneagramm-Spiel-Kurs Bild von Bioenneagram Coach"
+  },
+  "callToAction": {
+    "title": "Information",
+    "subtitle": "Unten finden Sie ein PDF mit detaillierten Kursinformationen. Lesen Sie es, um zu entscheiden, ob dieser Kurs zu Ihnen passt. (Preise können variieren)",
+    "actionText": "PDF Herunterladen"
+  }
+},
   "error404Page": {
     "meta": {
       "title": "Fehler 404 - Seite nicht gefunden"

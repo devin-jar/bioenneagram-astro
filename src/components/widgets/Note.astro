@@ -1,19 +1,33 @@
 ---
 // src/components/widgets/Note.astro
 import { Icon } from 'astro-icon/components';
+import type { NoteProps as WidgetNoteProps } from '~/types'; // Importa y renombra si es necesario
 
-export interface Props {
-  title?: string;      // Ejemplo: "Filosofía:"
-  values?: string;     // Ejemplo: "Alegría, Tranquilidad y Esperanza"
-  iconName?: string;   // Nombre del ícono, por defecto 'tabler:clover-2'
-  // Podrías añadir más props si el mensaje se vuelve más complejo
-}
+// Puedes usar la interfaz importada o mantener la local si es más simple para este componente
+export interface Props extends WidgetNoteProps {} // Hereda de la global
+// O definirla localmente si es muy simple y no necesita extender Widget:
+// export interface Props {
+//   title?: string;
+//   values?: string | string[];
+//   content?: string;
+//   iconName?: string;
+// }
+
 
 const {
-  title = 'Filosofía:', // Valor por defecto en el idioma base (o una clave genérica si no se pasa)
-  values = 'Alegría, Tranquilidad y Esperanza', // Valor por defecto
-  iconName = 'tabler:clover-2'
-} = Astro.props;
+  title, // Ya no necesita valor por defecto aquí si se provee desde la página
+  values,
+  content, // Si usas content
+  iconName = 'tabler:clover-2' // Puedes mantener el icono por defecto
+} = Astro.props as Props; // Asegurar el tipo
+
+// Lógica para mostrar 'values' si es un array o un string
+let displayValues: string | undefined;
+if (Array.isArray(values)) {
+  displayValues = values.join(', '); // O cualquier otro separador, o renderizar como lista <ul>
+} else {
+  displayValues = values;
+}
 ---
 
 <section class="bg-blue-50 dark:bg-slate-800 not-prose">
