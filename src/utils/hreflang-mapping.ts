@@ -71,7 +71,7 @@ function normalizeSlugSegment(slug: string): string {
   return slug.replace(/^\/+|\/+$/g, '');
 }
 
-export function getPageKeyForPath(astroUrlPathname: string, currentLocale: string): string | null {
+export function getPageKeyForPath(astroUrlPathname: string, currentLocale: string, defaultLang?: string): string | null {
   let pathWithoutLangPrefix = normalizeSlugSegment(astroUrlPathname);
 
   if (currentLocale !== DEFAULT_LANG_CODE || (currentLocale === DEFAULT_LANG_CODE && PREFIX_DEFAULT_LOCALE)) {

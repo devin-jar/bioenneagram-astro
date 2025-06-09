@@ -1,40 +1,48 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { twMerge } from 'tailwind-merge';
-import type { CallToAction } from '~/types';
+import type { ActionLink } from '~/types'; // Usaremos ActionLink que es más específico
+import { clsx } from 'clsx'; // Importamos clsx
 
 const {
   variant = 'secondary',
   target,
-  text = Astro.slots.render('default'),
+  text = await Astro.slots.render('default'),
   icon = '',
-  class: className = '',
-  type,
+  class: className, // Obtenemos la prop 'class'
+  type = 'button', // Damos un valor por defecto
   ...rest
-} = Astro.props as CallToAction;
+} = Astro.props as ActionLink;
+
+// Convertimos la prop 'className' (que puede ser un objeto) a una cadena de texto
+// usando 'clsx'. 'clsx' está diseñado para esto y es usado internamente por twMerge.
+const resolvedClassName = clsx(className);
 
 const variants = {
   primary: 'btn-primary',
   secondary: 'btn-secondary',
   tertiary: 'btn btn-tertiary',
-  link: 'cursor-pointer hover:text-primary',
+  link: 'text-secondary dark:text-slate-400 hover:text-primary dark:hover:text-white-200 underline underline-offset-4 cursor-pointer',
 };
+
+// Combinamos las clases de la variante con las clases resueltas
+const finalClass = twMerge(variants[variant] || '', resolvedClassName);
 ---
 
 {
-  type === 'button' || type === 'submit' || type === 'reset' ? (
-    <button type={type} class={twMerge(variants[variant] || '', className)} {...rest}>
-      <Fragment set:html={text} />
-      {icon && <Icon name={icon} class="w-5 h-5 ml-1 -mr-1.5 rtl:mr-1 rtl:-ml-1.5 inline-block" />}
-    </button>
-  ) : (
+  rest.href ? (
     <a
-      class={twMerge(variants[variant] || '', className)}
-      {...(target ? { target: target, rel: 'noopener noreferrer' } : {})}
+      class={finalClass}
+      {...(target === '_blank' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       {...rest}
     >
       <Fragment set:html={text} />
       {icon && <Icon name={icon} class="w-5 h-5 ml-1 -mr-1.5 rtl:mr-1 rtl:-ml-1.5 inline-block" />}
     </a>
+  ) : (
+    <button type={type as 'button' | 'submit' | 'reset'} class={finalClass} {...rest}>
+      <Fragment set:html={text} />
+      {icon && <Icon name={icon} class="w-5 h-5 ml-1 -mr-1.5 rtl:mr-1 rtl:-ml-1.5 inline-block" />}
+    </button>
   )
 }
