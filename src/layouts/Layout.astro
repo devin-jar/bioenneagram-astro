@@ -2,11 +2,8 @@
 // src/layouts/Layout.astro
 import '~/assets/styles/tailwind.css';
 
-// Importaciones para i18n y configuración global
-import { defaultLang, supportedLangs, getTranslationsForLocale, getTranslator, prefixDefaultLocale } from '~/i18n';
-import { SITE, METADATA as GLOBAL_METADATA_CONFIG, I18N as GLOBAL_I18N_CONFIG } from '~/utils/config.ts';
-import { getPermalink, getCanonical, getAsset } from '~/utils/permalinks.ts';
-import { findImage, adaptOpenGraphImages } from '~/utils/images';
+// Importa el nuevo componente de Metadatos
+import Metadata from '~/components/common/Metadata.astro';
 
 // Componentes del Head
 import Favicons from '~/components/Favicons.astro';
@@ -17,259 +14,39 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import GTMHead from '~/components/common/GTMHead.astro';
 import GTMBody from '~/components/common/GTMBody.astro';
 
-// AstroSeo y sus tipos
-import { AstroSeo, type Props as AstroSeoProps, type OpenGraph as AstroSeoOpenGraphProps, type Twitter as AstroSeoTwitterProps } from '@astrolib/seo';
-import merge from 'lodash.merge';
+import { I18N as GLOBAL_I18N_CONFIG } from '~/utils/config.ts';
+import { getAsset } from '~/utils/permalinks.ts';
+import { defaultLang, supportedLangs } from '~/i18n';
+import type { MetaData as PageSpecificMetaDataType } from '~/types';
 
-import type { MetaData as PageSpecificMetaDataType, AlternateLinkInfo, MetaDataImage, MetaDataOpenGraph, MetaDataRobots, MetaDataTwitter } from '~/types';
 export interface Props {
   metadata?: PageSpecificMetaDataType;
   frontmatter?: Record<string, any> & Partial<PageSpecificMetaDataType>;
 }
 
-const { metadata: pageSpecificMetadataFromProps = {} as PageSpecificMetaDataType, frontmatter = {} } = Astro.props;
-const pageSpecificMetadata: PageSpecificMetaDataType = merge({}, pageSpecificMetadataFromProps, frontmatter);
+const { metadata, frontmatter } = Astro.props;
 
 const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
   ? Astro.currentLocale
   : defaultLang;
 
-const translationsForLayout = getTranslationsForLocale(currentLocale);
-const t = getTranslator(translationsForLayout || {}, currentLocale);
-
 const currentTextDirection = GLOBAL_I18N_CONFIG?.textDirection || (['ar', 'he', 'fa'].includes(currentLocale) ? 'rtl' : 'ltr');
+const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE' };
 
-const LANG_TO_HREFLANG_MAP: Record<string, string> = {
-  en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE',
-};
-
-// --- PREPARACIÓN DE METADATOS ---
-const siteNameTranslated = t('site.name', {}, { defaultValue: SITE.name });
-
-// Título
-let pageTitleValue = pageSpecificMetadata?.title;
-if (typeof pageTitleValue === 'function') { pageTitleValue = pageTitleValue(t); }
-let finalTitle: string = pageTitleValue || t('site.defaultTitle', {}, { defaultValue: siteNameTranslated });
-if (pageTitleValue && GLOBAL_METADATA_CONFIG?.title?.template && GLOBAL_METADATA_CONFIG.title.template.includes('%s') && !pageSpecificMetadata?.ignoreTitleTemplate) {
-    finalTitle = GLOBAL_METADATA_CONFIG.title.template.replace('%s', pageTitleValue);
-}
-
-// Descripción
-let descriptionValue: string | undefined = undefined;
-if (typeof pageSpecificMetadata?.description === 'function') {
-  descriptionValue = pageSpecificMetadata.description(t);
-} else {
-  descriptionValue = pageSpecificMetadata?.description;
-}
-const finalDescription: string = descriptionValue || t('site.defaultDescription', {}, { defaultValue: GLOBAL_METADATA_CONFIG.description || "" });
-
-const finalCanonicalUrl: string = pageSpecificMetadata?.canonical?.toString() || getCanonical(Astro.url.pathname, currentLocale);
-// Robots
-const robotsPageSpecific: Partial<MetaDataRobots> = pageSpecificMetadata?.robots || {};
-const robotsGlobal: Partial<MetaDataRobots> = GLOBAL_METADATA_CONFIG?.robots || {};
-
-const seoNoindex: boolean = robotsPageSpecific.noindex ?? robotsGlobal.noindex ?? !(robotsPageSpecific.index ?? robotsGlobal.index ?? true);
-const seoNofollow: boolean = robotsPageSpecific.nofollow ?? robotsGlobal.nofollow ?? !(robotsPageSpecific.follow ?? robotsGlobal.follow ?? true);
-
-// Construir el objeto para la prop 'robotsProps' de AstroSeo
-const seoRobotsProps: Record<string, string | number | boolean | undefined> = {
-    maxSnippet: robotsPageSpecific.maxSnippet ?? robotsGlobal.maxSnippet,
-    maxImagePreview: robotsPageSpecific.maxImagePreview ?? robotsGlobal.maxImagePreview,
-    maxVideoPreview: robotsPageSpecific.maxVideoPreview ?? robotsGlobal.maxVideoPreview,
-    noarchive: robotsPageSpecific.noarchive ?? robotsGlobal.noarchive,
-    unavailable_after: robotsPageSpecific.unavailable_after ?? robotsGlobal.unavailable_after,
-};
-Object.keys(seoRobotsProps).forEach(key => (seoRobotsProps as any)[key] === undefined && delete (seoRobotsProps as any)[key]);
-// OpenGraph
-const baseOg: Partial<AstroSeoOpenGraphProps> = {
-    url: finalCanonicalUrl,
-    site_name: siteNameTranslated,
-    locale: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale,
-    type: pageSpecificMetadata?.openGraph?.type || pageSpecificMetadata?.type || (frontmatter?.layout?.includes('MarkdownLayout') ? 'article' : 'website'),
-    title: finalTitle,
-    description: finalDescription, // Ya es string
-};
-
-let pageOgImagesProcessed: AstroSeoOpenGraphProps['images'] = []; // Tipo correcto
-const ogImageSource = pageSpecificMetadata?.ogImage || pageSpecificMetadata?.openGraph?.images;
-if (ogImageSource) {
-    const imagesInputArray = Array.isArray(ogImageSource) ? ogImageSource : [ogImageSource];
-    pageOgImagesProcessed = imagesInputArray.map(imgInput => {
-        let urlStr: string = '';
-        let altText: string | undefined = undefined; // alt es string, no función
-        let widthNum: number | undefined; let heightNum: number | undefined;
-        let imgType: string | undefined; let secureUrlStr: string | undefined;
-
-        if (typeof imgInput === 'string') { urlStr = imgInput; }
-        else if (imgInput instanceof URL) { urlStr = imgInput.href; }
-        else if (imgInput && typeof imgInput === 'object' && 'url' in imgInput) {
-            const mdImg = imgInput as MetaDataImage;
-            urlStr = typeof mdImg.url === 'string' ? mdImg.url : (mdImg.url as URL).href;
-            altText = mdImg.alt; // Asumir que alt ya es string o undefined
-            widthNum = mdImg.width; heightNum = mdImg.height;
-            imgType = mdImg.type; secureUrlStr = mdImg.secureUrl;
-        }
-        const finalUrl = urlStr.startsWith('http') ? urlStr : new URL(urlStr, SITE.site).toString();
-        return { url: finalUrl, alt: altText || finalDescription, // Usar finalDescription como fallback
-                 ...(widthNum && {width: widthNum}), ...(heightNum && {height: heightNum}),
-                 ...(imgType && {type: imgType}), ...(secureUrlStr && {secureUrl: secureUrlStr}),
-                };
-    }).filter(img => img.url) as AstroSeoOpenGraphProps['images'];
-}
-
-const globalOgConfigImages = GLOBAL_METADATA_CONFIG.openGraph?.images || [];
-const globalOgImagesData = globalOgConfigImages.map(imgConfig => { // imgConfig es MetaDataImage
-    const altText: string | undefined = imgConfig.alt; // Asumir que alt es string o undefined
-    return {
-        url: imgConfig.url.startsWith('http') ? imgConfig.url : new URL(imgConfig.url, SITE.site).toString(),
-        alt: altText || finalDescription,
-        width: imgConfig.width, height: imgConfig.height, type: imgConfig.type, secureUrl: imgConfig.secureUrl,
-    };
-});
-
-const combinedImages = pageOgImagesProcessed && pageOgImagesProcessed.length > 0 ? pageOgImagesProcessed : globalOgImagesData;
-
-const finalOpenGraphForAstroSeo: AstroSeoOpenGraphProps = {
-    ...baseOg,
-    // Fusionar 'article' de manera que el específico de la página sobrescriba el global si ambos existen
-    article: merge({}, GLOBAL_METADATA_CONFIG.openGraph?.article, pageSpecificMetadata.openGraph?.article),
-    ...(combinedImages && combinedImages.length > 0 && { images: combinedImages }),
-};
-// Limpiar article si quedó vacío después del merge
-if (finalOpenGraphForAstroSeo.article && Object.keys(finalOpenGraphForAstroSeo.article).length === 0) {
-    delete finalOpenGraphForAstroSeo.article;
-}
-
-
-// Twitter
-const pageTwitterUserConfig: MetaDataTwitter = pageSpecificMetadata.twitter || {};
-const globalTwitterUserConfig: MetaDataTwitter = GLOBAL_METADATA_CONFIG.twitter || {};
-
-let twitterImageResolved = pageTwitterUserConfig.image || globalTwitterUserConfig.image;
-if (twitterImageResolved && !(twitterImageResolved.startsWith('http') || twitterImageResolved.startsWith('/'))) { // Podría ser una ruta relativa que necesita getAsset
-    twitterImageResolved = getAsset(twitterImageResolved);
-}
-if (twitterImageResolved && !twitterImageResolved.startsWith('http')) {
-    twitterImageResolved = new URL(twitterImageResolved, SITE.site).toString();
-} else if (!twitterImageResolved && finalOpenGraphForAstroSeo?.images?.[0]?.url) {
-    twitterImageResolved = finalOpenGraphForAstroSeo.images[0].url;
-}
-
-let twitterImageAltResolved = pageTwitterUserConfig.imageAlt || globalTwitterUserConfig.imageAlt;
-if (!twitterImageAltResolved && finalOpenGraphForAstroSeo?.images?.[0]?.alt) {
-    twitterImageAltResolved = finalOpenGraphForAstroSeo.images[0].alt;
-} else if (!twitterImageAltResolved) {
-    twitterImageAltResolved = finalDescription;
-}
-
-const finalTwitterForAstroSeo: AstroSeoTwitterProps = {
-    handle: pageTwitterUserConfig.handle || globalTwitterUserConfig.handle,
-    site: pageTwitterUserConfig.site || globalTwitterUserConfig.site,
-    cardType: pageTwitterUserConfig.cardType || globalTwitterUserConfig.cardType || (twitterImageResolved ? 'summary_large_image' : 'summary'),
-    // title y description son opcionales para AstroSeoTwitterProps; los hereda si no están aquí.
-    // Si quieres anularlos específicamente para Twitter:
-    // title: pageTwitterUserConfig.title || globalTwitterUserConfig.title || finalTitle,
-    // description: pageTwitterUserConfig.description || globalTwitterUserConfig.description || finalDescription,
-    ...(twitterImageResolved && { image: twitterImageResolved }),
-    ...(twitterImageAltResolved && { imageAlt: twitterImageAltResolved }),
-};
-
-
-// --- PROPS INICIALES PARA ASTROSEO ---
-let rawSeoProps: AstroSeoProps = {
-  title: finalTitle,
-  description: finalDescription,
-  canonical: finalCanonicalUrl.toString(),
-  noindex: seoNoindex,     // Pasar directamente
-  nofollow: seoNofollow,   // Pasar directamente
-  robotsProps: Object.keys(seoRobotsProps).length > 0 ? seoRobotsProps : undefined, // Pasar si tiene contenido
-  openGraph: finalOpenGraphForAstroSeo,
-  twitter: finalTwitterForAstroSeo,
-  // languageAlternates y mobileAlternate se manejarán con <link> tags directamente si es necesario
-};
-
-// ---- HREFLANG LINKS ----
-const finalAlternateLinks: AlternateLinkInfo[] = [];
-let finalXDefaultURL: string = '';
-const providedAlternates = pageSpecificMetadata?.alternateLinks;
-
-if (providedAlternates && Array.isArray(providedAlternates) && providedAlternates.length > 0) {
-    providedAlternates.forEach(link => {
-        if (link.hreflang && link.href) {
-            finalAlternateLinks.push({ hreflang: link.hreflang, href: link.href });
-        }
-    });
-    const xDefaultCandidate = providedAlternates.find(link =>
-        link.hreflang === (LANG_TO_HREFLANG_MAP[defaultLang] || defaultLang) || link.hreflang === defaultLang
-    );
-    if (xDefaultCandidate) {
-        finalXDefaultURL = xDefaultCandidate.href;
-    } else if (currentLocale === defaultLang && !prefixDefaultLocale) { // Solo si la página actual es el default Y no tiene prefijo
-        finalXDefaultURL = finalCanonicalUrl;
-    } else {
-        // Solo construir x-default si tenemos un slug base. 'slug' debe estar en MetaData.
-        const baseSlugForXDefault = pageSpecificMetadata?.slug || frontmatter?.slug;
-        if (typeof baseSlugForXDefault === 'string') { // Asegurar que slug sea string
-            const xDefaultPermalink = getPermalink(baseSlugForXDefault, 'page', defaultLang);
-            finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
-        } else {
-            console.warn(`[HREFLANG] Cannot construct x-default for ${Astro.url.pathname}: no base slug (pageSpecificMetadata.slug or frontmatter.slug) provided and no explicit x-default found.`);
-            finalXDefaultURL = new URL(getPermalink('', 'page', defaultLang), SITE.site).toString(); // Fallback a la home del idioma por defecto
-        }
-    }
-} else {
-    console.warn(`[HREFLANG] No explicit alternateLinks provided via page metadata for ${Astro.url.pathname}. Hreflang tags may be incomplete or not generated by this Layout.`);
-}
-
-// --- JSON-LD ---
-const organizationNameJsonLd = t('jsonld.organization.name', {}, { defaultValue: siteNameTranslated });
-const websiteNameJsonLd = t('jsonld.website.name', {}, { defaultValue: siteNameTranslated });
-let logoUrlJsonLd = '';
-const logoAssetPathFromConfig = (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.url || '~/assets/images/default-logo.png';
-const resolvedLogoPath = await findImage(logoAssetPathFromConfig);
-if (resolvedLogoPath) {
-    let logoSrcPath = typeof resolvedLogoPath === 'string' ? resolvedLogoPath : (resolvedLogoPath as any).src;
-    logoUrlJsonLd = logoSrcPath.startsWith('http') ? logoSrcPath : new URL(getAsset(logoSrcPath.replace(/^~\/?assets\//, '')), SITE.site).toString();
-} else {
-    logoUrlJsonLd = new URL(getAsset(logoAssetPathFromConfig.replace(/^~\/?assets\//, '')), SITE.site).toString();
-}
-
-const jsonLdGraph: any[] = [
-    { "@type": "Organization", "@id": `${SITE.site}/#organization`, name: organizationNameJsonLd, url: SITE.site, logo: { "@type": "ImageObject", "@id": `${SITE.site}/#logo`, url: logoUrlJsonLd, contentUrl: logoUrlJsonLd, caption: organizationNameJsonLd, inLanguage: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale, width: (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.width || 1200, height: (GLOBAL_METADATA_CONFIG?.openGraph?.images?.[0] as MetaDataImage)?.height || 628, }, },
-    { "@type": "WebSite", "@id": `${SITE.site}/#website`, url: SITE.site, name: websiteNameJsonLd, publisher: { "@id": `${SITE.site}/#organization` }, inLanguage: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale, potentialAction: { "@type": "SearchAction", "target": `${new URL(getPermalink(t('routes.search', {}, {defaultValue: 'search'}), 'page', currentLocale), SITE.site).toString()}?q={search_term_string}`, "query-input": "required name=search_term_string" } },
-    { "@type": "WebPage", "@id": finalCanonicalUrl + "#webpage", url: finalCanonicalUrl, name: finalTitle, description: finalDescription, isPartOf: { "@id": `${SITE.site}/#website` }, inLanguage: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale, ...(pageSpecificMetadata?.pubDate && { "datePublished": new Date(pageSpecificMetadata.pubDate).toISOString() }), ...(pageSpecificMetadata?.modDate && { "dateModified": new Date(pageSpecificMetadata.modDate).toISOString() }), },
-];
-const isArticlePageForJsonLd = pageSpecificMetadata?.type === 'article' || frontmatter?.layout?.includes('MarkdownLayout');
-if (isArticlePageForJsonLd) {
-    let articleImageDataSource = pageSpecificMetadata?.ogImage || frontmatter?.image;
-    let articleJsonLdImageObject: any = undefined;
-    if (articleImageDataSource) { /* ... (lógica para articleJsonLdImageObject como en la respuesta anterior) ... */ }
-    if (!articleJsonLdImageObject && finalOpenGraphForAstroSeo?.images?.[0]?.url) { /* ... (fallback a OG image) ... */ }
-    jsonLdGraph.push({ "@type": "Article", mainEntityOfPage: { "@id": finalCanonicalUrl + "#webpage" }, "@id": finalCanonicalUrl + "#article", headline: finalTitle, description: finalDescription, ...(articleJsonLdImageObject && {image: articleJsonLdImageObject}), datePublished: (frontmatter?.pubDate || pageSpecificMetadata?.pubDate) ? new Date(frontmatter.pubDate || pageSpecificMetadata.pubDate!).toISOString() : undefined, dateModified: (frontmatter?.modDate || pageSpecificMetadata?.modDate ) ? new Date(frontmatter.modDate || pageSpecificMetadata.modDate!).toISOString() : undefined, author: { "@type": "Person", name: frontmatter?.author || pageSpecificMetadata?.author || t('jsonld.article.defaultAuthor', {}, { defaultValue: siteNameTranslated }), }, publisher: { "@id": `${SITE.site}/#organization` }, inLanguage: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale, });
-}
-const jsonLdScript = { "@context": "https://schema.org", "@graph": jsonLdGraph.filter(item => item), };
-
-// Adaptar imágenes OG al final y actualizar seoProps
-const siteUrlForAdapt = new URL(Astro.site || SITE.site); // Crear objeto URL
-const adaptedOpenGraph = await adaptOpenGraphImages(finalOpenGraphForAstroSeo, siteUrlForAdapt);
-const seoProps: AstroSeoProps = { ...rawSeoProps, openGraph: adaptedOpenGraph, };
 ---
-
 <!doctype html>
 <html lang={LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale} dir={currentTextDirection} class="2xl:text-[20px]">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- ¡Aquí está la magia! Toda la lógica de SEO en un solo lugar. -->
+    <Metadata metadata={metadata} frontmatter={frontmatter} />
+
     <link rel="sitemap" href={getAsset('/sitemap-index.xml')} />
-    <AstroSeo {...seoProps} />
     <Favicons />
     <CustomStyles />
     <ApplyColorMode />
-    {finalAlternateLinks.map(link => <link rel="alternate" hreflang={link.hreflang} href={link.href} />)}
-    {finalXDefaultURL && <link rel="alternate" hreflang="x-default" href={finalXDefaultURL} />}
-    {jsonLdGraph && jsonLdGraph.length > 0 && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLdScript)} />
-    )}
     <Analytics />
     <GTMHead />
   </head>

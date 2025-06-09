@@ -1,68 +1,163 @@
 ---
+// src/components/Metadata.astro
+import { AstroSeo, type Props as AstroSeoProps, type OpenGraph as AstroSeoOpenGraphProps, type Twitter as AstroSeoTwitterProps } from '@astrolib/seo';
 import merge from 'lodash.merge';
-import { AstroSeo } from '@astrolib/seo';
 
-import type { Props as AstroSeoProps } from '@astrolib/seo';
-
-import { SITE, METADATA, I18N } from '~/utils/config';
-import type { MetaData } from '~/types';
-import { getCanonical } from '~/utils/permalinks';
-
+import { SITE, METADATA as GLOBAL_METADATA_CONFIG, I18N as GLOBAL_I18N_CONFIG } from '~/utils/config';
+import type { MetaData as PageMetaData, MetaDataImage, AlternateLinkInfo } from '~/types';
+import { getAsset, getCanonical, getPermalink } from '~/utils/permalinks';
 import { adaptOpenGraphImages } from '~/utils/images';
+import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale, prefixDefaultLocale } from '~/i18n';
 
-export interface Props extends MetaData {
-  dontUseTitleTemplate?: boolean;
+export interface Props {
+  metadata?: PageMetaData;
+  frontmatter?: Record<string, any> & Partial<PageMetaData>;
 }
 
-const {
-  title,
-  ignoreTitleTemplate = false,
-  canonical = String(getCanonical(String(Astro.url.pathname))),
-  robots = {},
-  description,
-  openGraph = {},
-  twitter = {},
-} = Astro.props;
+const { metadata: metadataFromProps = {}, frontmatter = {} } = Astro.props;
+const pageData: PageMetaData = merge({}, frontmatter, metadataFromProps);
 
-const seoProps: AstroSeoProps = merge(
-  {
-    title: '',
-    titleTemplate: '%s',
-    canonical: canonical,
-    noindex: true,
-    nofollow: true,
-    description: undefined,
-    openGraph: {
-      url: canonical,
-      site_name: SITE?.name,
-      images: [],
-      locale: I18N?.language || 'en',
-      type: 'website',
-    },
-    twitter: {
-      cardType: openGraph?.images?.length ? 'summary_large_image' : 'summary',
-    },
-  },
-  {
-    title: METADATA?.title?.default,
-    titleTemplate: METADATA?.title?.template,
-    noindex: typeof METADATA?.robots?.index !== 'undefined' ? !METADATA.robots.index : undefined,
-    nofollow: typeof METADATA?.robots?.follow !== 'undefined' ? !METADATA.robots.follow : undefined,
-    description: METADATA?.description,
-    openGraph: METADATA?.openGraph,
-    twitter: METADATA?.twitter,
-  },
-  {
-    title: title,
-    titleTemplate: ignoreTitleTemplate ? '%s' : undefined,
-    canonical: canonical,
-    noindex: typeof robots?.index !== 'undefined' ? !robots.index : undefined,
-    nofollow: typeof robots?.follow !== 'undefined' ? !robots.follow : undefined,
-    description: description,
-    openGraph: { url: canonical, ...openGraph },
-    twitter: twitter,
+
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale) ? Astro.currentLocale : defaultLang;
+const translations = getTranslationsForLocale(currentLocale);
+const t = getTranslator(translations || {}, currentLocale);
+const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE' };
+
+
+const siteNameTranslated = t('site.name', {}, { defaultValue: SITE.name });
+
+let resolvedPageTitle: string | undefined;
+if (typeof pageData.title === 'function') {
+  resolvedPageTitle = pageData.title(t);
+} else {
+  resolvedPageTitle = pageData.title;
+}
+// FIX 1: Este error se soluciona con el cambio en config.ts
+const titleFromGlobalConfig = typeof GLOBAL_METADATA_CONFIG.title?.default === 'function' ? GLOBAL_METADATA_CONFIG.title.default(t) : GLOBAL_METADATA_CONFIG.title?.default;
+const finalTitle: string = resolvedPageTitle || titleFromGlobalConfig || siteNameTranslated;
+const finalTitleTemplate: string = pageData.ignoreTitleTemplate ? '%s' : (GLOBAL_METADATA_CONFIG.title?.template || '%s');
+
+let resolvedPageDescription: string | undefined;
+if (typeof pageData.description === 'function') {
+  resolvedPageDescription = pageData.description(t);
+} else {
+  resolvedPageDescription = pageData.description;
+}
+const globalDescription = typeof GLOBAL_METADATA_CONFIG.description === 'function' ? GLOBAL_METADATA_CONFIG.description(t) : GLOBAL_METADATA_CONFIG.description;
+const finalDescription: string = resolvedPageDescription || globalDescription || '';
+
+const finalCanonical: string = (pageData.canonical || getCanonical(String(Astro.url.pathname), currentLocale)).toString();
+const finalRobots = { ...GLOBAL_METADATA_CONFIG.robots, ...pageData.robots };
+const seoNoIndex: boolean = finalRobots.noindex ?? !(finalRobots.index ?? true);
+const seoNoFollow: boolean = finalRobots.nofollow ?? !(finalRobots.follow ?? true);
+const robotsProps = {
+    maxSnippet: finalRobots.maxSnippet, maxImagePreview: finalRobots.maxImagePreview,
+    maxVideoPreview: finalRobots.maxVideoPreview, noarchive: finalRobots.noarchive,
+    unavailable_after: finalRobots.unavailable_after,
+};
+Object.keys(robotsProps).forEach(key => (robotsProps as any)[key] === undefined && delete (robotsProps as any)[key]);
+
+const globalOg = GLOBAL_METADATA_CONFIG.openGraph || {};
+const pageOg = pageData.openGraph || {};
+const finalOpenGraphBase: Partial<AstroSeoOpenGraphProps> = {
+    url: finalCanonical,
+    site_name: siteNameTranslated,
+    locale: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale,
+    type: pageData.type || pageOg.type || globalOg.type || 'website',
+};
+
+let imagesSource = pageData.ogImage || pageOg.images || globalOg.images;
+if (imagesSource && !Array.isArray(imagesSource)) {
+    imagesSource = [imagesSource];
+}
+
+let ogImages: AstroSeoOpenGraphProps['images'] = [];
+if (imagesSource && imagesSource.length > 0) {
+    ogImages = (imagesSource as any[]).map(imgInput => {
+        let urlStr: string = '';
+        let altText: string | undefined, widthNum: number | undefined, heightNum: number | undefined, imgType: string | undefined, secureUrlStr: string | undefined;
+        
+        if (typeof imgInput === 'string') { urlStr = imgInput; } 
+        else if (imgInput instanceof URL) { urlStr = imgInput.href; } 
+        else if (imgInput && typeof imgInput === 'object' && 'url' in imgInput) {
+            const mdImg = imgInput as MetaDataImage;
+            const urlInput = mdImg.url;
+            urlStr = typeof urlInput === 'string' ? urlInput : urlInput.href;
+            altText = mdImg.alt; widthNum = mdImg.width; heightNum = mdImg.height; imgType = mdImg.type; secureUrlStr = mdImg.secureUrl;
+        }
+
+        if (urlStr.trim() === '') return null;
+        const finalImgUrl = urlStr.startsWith('http') ? urlStr : new URL(urlStr, SITE.site).toString();
+        return { url: finalImgUrl, alt: altText || finalDescription, ...(widthNum && {width: widthNum}), ...(heightNum && {height: heightNum}), ...(imgType && {type: imgType}), ...(secureUrlStr && {secureUrl: secureUrlStr}) };
+    }).filter(img => img !== null) as AstroSeoOpenGraphProps['images'];
+}
+
+const finalOpenGraph: AstroSeoOpenGraphProps = merge({}, globalOg, pageOg, finalOpenGraphBase, {
+  title: finalTitle,
+  description: finalDescription,
+  // FIX 2: Verificar si 'ogImages' existe antes de acceder a 'length'
+  ...(ogImages && ogImages.length > 0 && { images: ogImages }),
+});
+if (finalOpenGraph.article && Object.keys(finalOpenGraph.article).length === 0) {
+  delete finalOpenGraph.article;
+}
+
+const globalTw = GLOBAL_METADATA_CONFIG.twitter || {};
+const pageTw = pageData.twitter || {};
+let twitterImageResolved = pageTw.image || globalTw.image;
+if (twitterImageResolved && !twitterImageResolved.startsWith('http')) {
+    twitterImageResolved = new URL(getAsset(twitterImageResolved), SITE.site).toString();
+} else if (!twitterImageResolved && finalOpenGraph?.images?.[0]?.url) {
+    twitterImageResolved = finalOpenGraph.images[0].url;
+}
+const twitterImageAltResolved = pageTw.imageAlt || globalTw.imageAlt || finalOpenGraph?.images?.[0]?.alt || finalDescription;
+
+// FIX 3: Construir el objeto Twitter con propagación condicional para satisfacer a TypeScript
+const finalTwitter: AstroSeoTwitterProps = {
+    handle: pageTw.handle || globalTw.handle,
+    site: pageTw.site || globalTw.site,
+    cardType: pageTw.cardType || globalTw.cardType || (twitterImageResolved ? 'summary_large_image' : 'summary'),
+    ...(twitterImageResolved && { image: twitterImageResolved }),
+    ...(twitterImageAltResolved && { imageAlt: twitterImageAltResolved }),
+};
+
+const finalAlternateLinks: AlternateLinkInfo[] = [];
+let finalXDefaultURL: string = '';
+if (pageData.alternateLinks && pageData.alternateLinks.length > 0) {
+    finalAlternateLinks.push(...pageData.alternateLinks);
+    const xDefaultCandidate = pageData.alternateLinks.find(link => link.hreflang === (LANG_TO_HREFLANG_MAP[defaultLang] || defaultLang) || link.hreflang === defaultLang);
+    finalXDefaultURL = xDefaultCandidate?.href || '';
+} else {
+  const baseSlug = pageData.slug;
+  if (typeof baseSlug === 'string') {
+      supportedLangs.forEach(lang => {
+          const permalink = getPermalink(baseSlug, 'page', lang);
+          finalAlternateLinks.push({ hreflang: LANG_TO_HREFLANG_MAP[lang] || lang, href: new URL(permalink, SITE.site).toString() });
+      });
+      const xDefaultPermalink = getPermalink(baseSlug, 'page', defaultLang);
+      finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
+  } else {
+      console.warn(`[HREFLANG-MD] No 'slug' or 'alternateLinks' provided for ${Astro.url.pathname}. Hreflang tags may be incomplete.`);
   }
-);
+}
+if (!finalXDefaultURL && currentLocale === defaultLang && !prefixDefaultLocale) {
+  finalXDefaultURL = finalCanonical;
+}
+
+const astroSeoProps: AstroSeoProps = {
+  title: finalTitle,
+  titleTemplate: finalTitleTemplate,
+  description: finalDescription,
+  canonical: finalCanonical,
+  noindex: seoNoIndex,
+  nofollow: seoNoFollow,
+  ...(Object.keys(robotsProps).length > 0 && { robotsProps }),
+  openGraph: await adaptOpenGraphImages(finalOpenGraph, new URL(SITE.site)),
+  twitter: finalTwitter,
+};
 ---
 
-<AstroSeo {...{ ...seoProps, openGraph: await adaptOpenGraphImages(seoProps?.openGraph, Astro.site) }} />
+<AstroSeo {...astroSeoProps} />
+
+{finalAlternateLinks.map(link => <link rel="alternate" hreflang={link.hreflang} href={link.href} />)}
+{finalXDefaultURL && <link rel="alternate" hreflang="x-default" href={finalXDefaultURL} />}

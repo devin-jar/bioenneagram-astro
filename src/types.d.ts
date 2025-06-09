@@ -2,62 +2,77 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import type { HTMLAttributes, HTMLInputTypeAttribute } from 'astro/types';
 
+// --- TIPOS DE CONFIGURACIÓN GLOBAL (para config.ts) ---
+
+/** Representa el objeto de configuración de título en config.ts */
+export interface GlobalTitleConfig {
+  default: string | ((t: Function) => string);
+  template?: string;
+}
+
+/** Representa el objeto de configuración global de metadatos en config.ts */
+export interface GlobalMetaDataConfig {
+  title?: GlobalTitleConfig;
+  description?: string | ((t: Function) => string);
+  robots?: MetaDataRobots;
+  openGraph?: MetaDataOpenGraph;
+  twitter?: MetaDataTwitter;
+  // Puedes añadir más configuraciones globales aquí
+}
+
 // --- METADATA Y SEO ---
 
 /** Representa una imagen para metadatos (Open Graph, Twitter, JSON-LD) */
 export interface MetaDataImage {
-  url: string;        // URL absoluta o relativa que se resolverá
+  url: string | URL;
   width?: number;
   height?: number;
-  alt?: string;        // Texto alternativo (traducido)
-  type?: string;       // ej. 'image/jpeg' (para OG)
-  secureUrl?: string; // URL segura (para OG)
+  alt?: string;
+  type?: string;
+  secureUrl?: string;
 }
 
-/** Propiedades para Open Graph, alineadas con lo que AstroSeo podría esperar */
+/** Propiedades para Open Graph, alineadas con AstroSeo */
 export interface MetaDataOpenGraph {
-  url?: string | URL;         // URL canónica de la página
-  siteName?: string;        // Nombre del sitio (AstroSeo usa siteName)
-  title?: string;             // Título específico para OG
-  description?: string;       // Descripción específica para OG
-  images?: Array<MetaDataImage>; // Array de imágenes OG
-  locale?: string;            // ej. 'en_US', 'es_ES'
+  url?: string | URL;
+  siteName?: string;
+  title?: string;
+  description?: string;
+  images?: Array<MetaDataImage | string | URL>; // Permitimos strings/URL como atajo
+  locale?: string;
   type?: 'website' | 'article' | 'book' | 'profile' | string;
   article?: {
-    publishedTime?: string; // ISO 8601 (AstroSeo usa publishedTime)
-    modifiedTime?: string;  // ISO 8601 (AstroSeo usa modifiedTime)
-    expirationTime?: string;// ISO 8601
-    author?: string | string[]; // URLs a perfiles o nombres
-    section?: string;          // Categoría
-    tag?: string[];            // Tags
+    publishedTime?: string;
+    modifiedTime?: string;
+    expirationTime?: string;
+    author?: string | string[];
+    section?: string;
+    tag?: string[];
   };
-  // Agrega otras propiedades OG que necesites (ej. video, audio)
 }
 
 /** Propiedades para Twitter Cards, alineadas con AstroSeo */
 export interface MetaDataTwitter {
-  handle?: string;    // @username del creador/sitio (AstroSeo usa esto como 'creator' o 'site' a veces)
-  site?: string;      // @username del sitio
-  cardType?: 'summary' | 'summary_large_image' | 'app' | 'player'; // AstroSeo usa 'card'
-  title?: string;       // Título específico (opcional, hereda del principal)
-  description?: string; // Descripción específica (opcional, hereda)
-  image?: string;       // URL de imagen (AstroSeo espera URL absoluta)
-  imageAlt?: string;    // Alt text para la imagen
-  // Agrega otras propiedades de Twitter que necesites
+  handle?: string;
+  site?: string;
+  cardType?: 'summary' | 'summary_large_image' | 'app' | 'player';
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 /** Directivas para robots meta tag */
 export interface MetaDataRobots {
   index?: boolean;
   follow?: boolean;
-  noindex?: boolean;   // Preferido por AstroSeo sobre !index
-  nofollow?: boolean;  // Preferido por AstroSeo sobre !follow
-  maxSnippet?: number; // 'max-snippet'
-  maxImagePreview?: 'none' | 'standard' | 'large'; // 'max-image-preview'
-  maxVideoPreview?: number; // 'max-video-preview'
+  noindex?: boolean;
+  nofollow?: boolean;
+  maxSnippet?: number;
+  maxImagePreview?: 'none' | 'standard' | 'large';
+  maxVideoPreview?: number;
   noarchive?: boolean;
-  unavailable_after?: string; // Formato RFC 850 o ISO 8601
-  // Añade otras directivas según sea necesario
+  unavailable_after?: string;
 }
 
 /** Información para un enlace <link rel="alternate" hreflang="..."> */
@@ -71,21 +86,20 @@ export interface MetaData {
   title?: string | ((t: Function) => string);
   description?: string | ((t: Function) => string);
   canonical?: string | URL;
-  robots?: MetaDataRobots;         // Usa la interfaz MetaDataRobots definida arriba
-  openGraph?: MetaDataOpenGraph;   // Usa la interfaz MetaDataOpenGraph
-  twitter?: MetaDataTwitter;       // Usa la interfaz MetaDataTwitter
-  alternateLinks?: AlternateLinkInfo[]; // Para hreflang
+  robots?: MetaDataRobots;
+  openGraph?: MetaDataOpenGraph;
+  twitter?: MetaDataTwitter;
+  alternateLinks?: AlternateLinkInfo[];
+  slug?: string;
 
-  slug?: string; // Slug base de la página (sin idioma), útil para hreflang fallbacks
-
-  // Atajos comunes o propiedades adicionales
-  ogImage?: string | URL | MetaDataImage; // Imagen principal para OG (puede ser un atajo)
-  type?: 'website' | 'article' | string;  // Tipo de página (puede influir en OG y JSON-LD)
-  pubDate?: string | Date;                // Fecha de publicación (para artículos)
-  modDate?: string | Date;                // Fecha de modificación (para artículos)
-  author?: string;                        // Autor (para artículos)
+  // Atajos comunes
+  ogImage?: string | URL | MetaDataImage | Array<string | URL | MetaDataImage>;
+  type?: 'website' | 'article' | string;
+  pubDate?: string | Date;
+  modDate?: string | Date;
+  author?: string;
   keywords?: string[] | string;
-  ignoreTitleTemplate?: boolean;          // Para anular plantillas de título globales
+  ignoreTitleTemplate?: boolean;
 }
 
 // --- CONTENIDO Y ESTRUCTURA DEL SITIO ---
@@ -102,12 +116,18 @@ export interface ActionLink extends Link, HTMLAttributes<'a'> { variant?: 'prima
 export interface MenuLink extends Link { links?: Array<MenuLink>; }
 
 // --- WIDGETS Y COMPONENTES DE UI ---
-export interface Widget { id?: string; isDark?: boolean; bg?: string; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; /* Cambiado classes a class */ }
-export interface Headline { title?: string; subtitle?: string; tagline?: string; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
+export interface Widget {
+  id?: string; isDark?: boolean; bg?: string;
+  classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; /* Cambiado classes a class */
+}
+export interface Headline { title?: string; subtitle?: string; tagline?: string; classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
 
-export interface Item { title?: string; description?: string; icon?: string; href?: string; callToAction?: ActionLink; image?: Image; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
+export interface Item {
+  title?: string; description?: string; icon?: string; href?: string; callToAction?: ActionLink; image?: Image;
+  classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>;
+}
 export interface Price { title?: string; subtitle?: string; description?: string; price?: number | string; period?: string; items?: Array<Item>; callToAction?: ActionLink; hasRibbon?: boolean; ribbonTitle?: string; }
-export interface Testimonial { testimonial?: string; name?: string; job?: string; image?: Image; }
+export interface Testimonial { title?: string; testimonial?: string; name?: string; job?: string; image?: Image; }
 export interface TeamMember { name?: string; job?: string; image?: Image; socials?: Array<Link>; description?: string; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
 export interface Stat { amount?: number | string; title?: string; icon?: string; }
 
@@ -133,8 +153,11 @@ export interface StepsProps extends Headline, Widget { items: Array<Item>; image
 export interface PricingProps extends Headline, Widget { prices: Array<Price>; }
 export interface TestimonialsProps extends Headline, Widget { testimonials: Array<Testimonial>; callToAction?: ActionLink; }
 export interface FaqsProps extends Headline, Widget { items: Array<Item>; columns?: number; iconUp?: string; iconDown?: string; }
-export interface CallToActionProps extends Headline, Widget { actions?: ActionLink[]; text?: string; href?: string; icon?: string; target?: string; variant?: string; }
+export interface CallToActionProps extends Headline, Widget {
+  actions?: ActionLink[]; text?: string; href?: string; icon?: string; target?: string; variant?: string; type?: string;
+  classes?: Record<string, string>;
+}
 export interface ContactProps extends Headline, Form, Widget { }
 export interface TeamProps extends Headline, Widget { members: Array<TeamMember>; }
 export interface StatsProps extends Headline, Widget { stats: Array<Stat>; }
-export interface BrandsProps extends Headline, Widget { images?: Array<Image>; }
+export interface BrandsProps extends Headline, Widget { icons?: Array<string>; images?: Array<Image>; }

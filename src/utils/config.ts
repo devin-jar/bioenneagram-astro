@@ -1,8 +1,11 @@
+// src/utils/config.ts
+
 import fs from 'fs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
 
-import type { MetaData } from '~/types';
+// FIX: Importar los tipos detallados desde types.d.ts
+import type { MetaData, GlobalMetaDataConfig as MetaDataConfig } from '~/types';
 
 export interface SiteConfig {
   name: string;
@@ -11,12 +14,9 @@ export interface SiteConfig {
   trailingSlash?: boolean;
   googleSiteVerificationId?: string;
 }
-export interface MetaDataConfig extends Omit<MetaData, 'title'> {
-  title?: {
-    default: string;
-    template: string;
-  };
-}
+// La interfaz MetaDataConfig ahora se importa directamente desde types.d.ts,
+// por lo que ya no es necesario definirla aquí. Esto garantiza consistencia.
+
 export interface I18NConfig {
   language: string;
   textDirection: string;
@@ -87,33 +87,27 @@ const DEFAULT_SITE_NAME = 'Bioenneagram';
 const getSite = () => {
   const _default = {
     name: DEFAULT_SITE_NAME,
-    site: 'https://bioenneagram.com', // Podrías poner un valor por defecto aquí
+    site: 'https://bioenneagram.com',
     base: '/',
-    trailingSlash: false,
+    trailingSlash: true,
     googleSiteVerificationId: '',
   };
 
   const mergedConfig = merge({}, _default, config?.site ?? {});
 
-  // Asegurar que 'site' tenga un valor
   if (!mergedConfig.site) {
-    // Opción A: Usar un valor por defecto si es apropiado para desarrollo
-    // mergedConfig.site = 'http://localhost:4321'; // O tu URL de desarrollo
-    // console.warn("WARNING: SITE.site is not defined in config.yaml. Falling back to default or development URL.");
-
-    // Opción B: Lanzar un error para forzar su definición
     throw new Error(
       "CRITICAL: 'site.site' is not defined in src/config.yaml. This is required for building absolute URLs."
     );
   }
 
-  return mergedConfig as SiteConfig; // El 'as SiteConfig' asume que 'site' ahora está definido
+  return mergedConfig as SiteConfig;
 };
 
 const getMetadata = () => {
   const siteConfig = getSite();
 
-  const _default = {
+  const _default: MetaDataConfig = {
     title: {
       default: siteConfig?.name || DEFAULT_SITE_NAME,
       template: '%s',
@@ -128,6 +122,7 @@ const getMetadata = () => {
     },
   };
 
+  // Usamos el tipo importado MetaDataConfig para la aserción final
   return merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
 };
 

@@ -1,6 +1,6 @@
 ---
 import Image from '~/components/common/Image.astro';
-import type { CallToAction } from '~/types';
+import type { CallToActionProps } from '~/types';
 import Button from '~/components/ui/Button.astro';
 
 export interface Props {
@@ -8,7 +8,7 @@ export interface Props {
   subtitle?: string;
   tagline?: string;
   content?: string;
-  actions?: string | CallToAction[];
+  actions?: string | CallToActionProps[];
   image?: string | any; // TODO: find HTMLElementProps
 }
 
