@@ -6,6 +6,7 @@ import merge from 'lodash.merge';
 
 // FIX: Importar los tipos detallados desde types.d.ts
 import type { MetaData, GlobalMetaDataConfig as MetaDataConfig } from '~/types';
+import { getTranslator, getTranslationsForLocale } from '~/i18n';
 
 export interface SiteConfig {
   name: string;
@@ -109,15 +110,18 @@ const getMetadata = () => {
 
   const _default: MetaDataConfig = {
     title: {
-      default: siteConfig?.name || DEFAULT_SITE_NAME,
-      template: '%s',
+      // Esta función buscará la traducción 'site.title'
+      default: (t) => t('site.title'),
+      template: '%s — Bioenneagram', // Mantener el template es opcional
     },
-    description: '',
+    // Esta función buscará la traducción 'site.description'
+    description: (t) => t('site.description'),
     robots: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
     openGraph: {
+      siteName: siteConfig.name,
       type: 'website',
     },
   };

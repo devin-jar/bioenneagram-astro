@@ -7,9 +7,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Bioenneagram
+    # default: Bioenneagram
     template: '%s - Bioenneagram'
-  description: "🧘‍♂️  Descubre cómo el poder del eneagrama y la biodescodificación pueden ayudar en el desarrollo del ser."
+  # description: "🧘‍♂️  Descubre cómo el poder del eneagrama y la biodescodificación pueden ayudar en el desarrollo del ser."
   robots:
     index: true
     follow: true

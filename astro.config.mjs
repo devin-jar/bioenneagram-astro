@@ -8,7 +8,7 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
-import tasks from './src/utils/tasks';
+// import tasks from './src/utils/tasks';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
 
@@ -26,7 +26,7 @@ const whenExternalScripts = (items = []) =>
 export default defineConfig({
   site: SITE.site,
   base: SITE.base,
-  trailingSlash: 'always',
+  trailingSlash: (SITE.trailingSlash ? 'always' : 'never') || 'always',
 
   output: 'static',
 
@@ -80,7 +80,7 @@ export default defineConfig({
       })
     ),
 
-    tasks(),
+    // tasks(),
   ],
 
   image: {},
