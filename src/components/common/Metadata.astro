@@ -57,8 +57,12 @@ if (typeof pageData.description === 'function') {
 const globalDescription = typeof GLOBAL_METADATA_CONFIG.description === 'function' ? GLOBAL_METADATA_CONFIG.description(t) : GLOBAL_METADATA_CONFIG.description;
 const finalDescription: string = resolvedPageDescription || globalDescription || '';
 
+const permalink = getPermalink(pageData.slug, currentLocale);
+
 // URL Canónica y Robots
-const finalCanonical: string = (pageData.canonical || getCanonical(String(Astro.url.pathname), currentLocale)).toString();
+const finalCanonical: string = pageData.canonical 
+    ? pageData.canonical.toString() 
+    : getCanonical(permalink);
 const finalRobots = { ...GLOBAL_METADATA_CONFIG.robots, ...pageData.robots };
 const seoNoIndex: boolean = finalRobots.noindex ?? !(finalRobots.index ?? true);
 const seoNoFollow: boolean = finalRobots.nofollow ?? !(finalRobots.follow ?? true);
@@ -144,10 +148,10 @@ if (pageData.alternateLinks && pageData.alternateLinks.length > 0) {
   const baseSlug = pageData.slug;
   if (typeof baseSlug === 'string') {
       supportedLangs.forEach(lang => {
-          const permalink = getPermalink(baseSlug, 'page', lang);
+          const permalink = getPermalink(baseSlug, 'page');
           finalAlternateLinks.push({ hreflang: LANG_TO_HREFLANG_MAP[lang] || lang, href: new URL(permalink, SITE.site).toString() });
       });
-      const xDefaultPermalink = getPermalink(baseSlug, 'page', defaultLang);
+      const xDefaultPermalink = getPermalink(baseSlug, 'page');
       finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
   } else {
       console.warn(`[HREFLANG-MD] No 'slug' or 'alternateLinks' provided for ${Astro.url.pathname}. Hreflang tags may be incomplete.`);
