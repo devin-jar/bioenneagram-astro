@@ -2,43 +2,75 @@
 // src/pages/en/building.astro
 import Layout from '~/layouts/Layout.astro'; // Layout base
 import { getHomePermalink } from '~/utils/permalinks';
-import { getPageKeyForPath, getAlternateLinks } from '../../utils/hreflang-mapping';
 
-import { getTranslator, defaultLang } from '~/i18n';
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
 
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
-// Similar a 404, el currentLocale puede ser ambiguo si se accede directamente a /building
-const currentLocaleForBuilding = Astro.currentLocale || defaultLang;
 
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
 const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
 let pageTranslations: Record<string, any> | undefined;
-const expectedModulePath = `/src/i18n/locales/${currentLocaleForBuilding}/translation.json`;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
 const moduleCandidate = translationModules[expectedModulePath];
 
 if (moduleCandidate) {
   pageTranslations = moduleCandidate.default || moduleCandidate;
 } else {
-  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
-  const defaultModuleCandidate = translationModules[defaultModulePath];
-  if (defaultModuleCandidate) {
-    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
-  } else {
-    pageTranslations = {};
-  }
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
 }
-const t = getTranslator(pageTranslations || {}, currentLocaleForBuilding);
 
-const metadata = {
-  title: t('buildingPage.meta.title', {}, { defaultValue: 'Page Under Construction' })
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { index: true, follow: true },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'de_DE', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
+  }
 };
 
-const pageKey = getPageKeyForPath(Astro.url.pathname);
-const alternateLinks = pageKey ? getAlternateLinks(pageKey) : undefined;
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
 
-if (alternateLinks && Object.keys(alternateLinks).length > 0) {
-  metadata.alternateLinks = alternateLinks;
-}
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
 
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+
+// Similar a 404, el currentLocale puede ser ambiguo si se accede directamente a /building
+const currentLocaleForBuilding = Astro.currentLocale || defaultLang;
 const homeLink = getHomePermalink(currentLocaleForBuilding);
 ---
 
