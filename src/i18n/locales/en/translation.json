@@ -467,6 +467,24 @@
       ]
     }
   },
+  "courseEnneagramGamePage": {
+  "meta": {
+    "title": "Eneagram Game Course",
+    "description": "Learn to use the Eneagram Game gamification tool for self-discovery."
+  },
+  "hero": {
+    "tagline": "Courses",
+    "title": "Eneagram Game Course: A Self-Discovery Tool",
+    "subtitle": "Join my LIVE course and learn about the gamification tool for discovering your personality – the same one I use with my patients during consultations.",
+    "actionText": "Enroll Now",
+    "imageAlt": "Eneagram Game Course Image by Bioenneagram Coach"
+  },
+  "callToAction": {
+    "title": "Information",
+    "subtitle": "Below you'll find a PDF with detailed course information. Read it to determine if this course is right for you. (Prices may vary)",
+    "actionText": "Download PDF"
+  }
+},
   "error404Page": {
     "meta": {
       "title": "Error 404 - Page Not Found"

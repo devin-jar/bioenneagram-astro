@@ -35,7 +35,7 @@ if (moduleCandidate) {
 const t = getTranslator(pageTranslations || {}, currentLocale);
 
 // Construcción de Metadata
-const baseMetadata: MetaData = {
+const metadata: MetaData = {
   title: t('courseEnneagramGamePage.meta.title'),
   description: t('courseEnneagramGamePage.meta.description'),
   robots: { index: true, follow: true },
@@ -56,15 +56,6 @@ const baseMetadata: MetaData = {
     image: new URL(ImgCourse.src, Astro.site).href, // URL absoluta
     imageAlt: t('courseEnneagramGamePage.hero.imageAlt'),
   }
-};
-
-// Lógica Hreflang
-const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale, defaultLang);
-const alternateLinksArray = pageKey ? getAlternateLinksForPage(pageKey) : []; // Espera un array
-
-const metadata: MetaData = {
-  ...baseMetadata,
-  ...(alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
 };
 
 // Datos para los Widgets (URLs se mantienen, textos se traducen)

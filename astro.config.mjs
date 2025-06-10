@@ -8,10 +8,8 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
-// import tasks from './src/utils/tasks';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin } from './src/utils/frontmatter.mjs';
-
 import { ANALYTICS, SITE } from './src/utils/config.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,17 +41,51 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     sitemap({
-      // ++ IMPORTANT FOR SITEMAP WITH i18n ++
-      // Tell the sitemap about your i18n setup
+      // Configuración de i18n para el sitemap
       i18n: {
-        defaultLocale: 'es', // Must match
+        defaultLocale: 'es',
         locales: {
-          en: 'en-US', // Or 'en-US' if you prefer more specific locale codes
-          es: 'es-ES', // Or 'es-ES'
-          de: 'de-DE', // Or 'de-DE'
-          nl: 'nl-NL', // Or 'nl-NL'
-          fr: 'fr-FR', // Or 'fr-FR'
+          en: 'en-US',
+          es: 'es-ES',
+          de: 'de-DE',
+          nl: 'nl-NL',
+          fr: 'fr-FR',
         },
+      },
+      // --- FILTRO ACTUALIZADO Y SIMPLIFICADO ---
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+
+        // Lista de slugs base permitidos (sin prefijos de idioma ni slashes)
+        const allowedSlugs = new Set([
+          '', // Para todas las páginas de inicio (/, /en/, /fr/, etc.)
+          // Slugs de la Landing Page en todos los idiomas
+          'landing/curso-eneagrama-game',
+          'landing/course-enneagram-game',
+          'page-daccueil/cours-jeu-enneagramme',
+          'bestemmingspagina/enneagram-cursus-spel',
+          'startseite/enneagramm-kurs-spiel',
+          // Slugs de Términos y Condiciones en todos los idiomas
+          'terminos',
+          'terms',
+          'conditions-generales',
+          'voorwaarden',
+          'geschaeftsbedingungen',
+          // Slugs de Política de Privacidad (ejemplo adicional si lo necesitas)
+          // 'privacidad',
+          // 'privacy',
+          // 'confidentialite',
+          // 'privacybeleid',
+          // 'datenschutz',
+        ]);
+
+        // 1. Quitar prefijo de idioma: /es/terminos/ -> /terminos/
+        const pathWithoutLang = pathname.replace(/^\/(en|es|de|fr|nl)/, '');
+        // 2. Quitar slashes de los extremos: /terminos/ -> terminos
+        const cleanSlug = pathWithoutLang.replace(/^\/|\/$/g, '');
+
+        // 3. Comprobar si el slug limpio está en el Set de permitidos
+        return allowedSlugs.has(cleanSlug);
       },
     }),
     mdx(),
@@ -79,8 +111,6 @@ export default defineConfig({
         config: { forward: ['dataLayer.push'] },
       })
     ),
-
-    // tasks(),
   ],
 
   image: {},

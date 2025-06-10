@@ -105,6 +105,9 @@ export function getAlternateLinksForPage(pageKey: string, currentLocaleToExclude
 
   const alternateLinks: AlternateLinkInfo[] = [];
 
+
+  let xDefaultHref: string | null = null;
+
   SUPPORTED_LANGS_CODES.forEach(langCode => {
     let langUrlPrefix = '';
     if (langCode !== DEFAULT_LANG_CODE || (langCode === DEFAULT_LANG_CODE && PREFIX_DEFAULT_LOCALE)) {
@@ -139,6 +142,13 @@ export function getAlternateLinksForPage(pageKey: string, currentLocaleToExclude
       href: finalHref,
     });
   });
+
+  if (xDefaultHref) {
+    alternateLinks.push({
+      hreflang: 'x-default',
+      href: xDefaultHref,
+    });
+  }
 
   return alternateLinks;
 }

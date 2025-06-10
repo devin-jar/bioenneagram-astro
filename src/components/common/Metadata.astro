@@ -3,11 +3,12 @@
 import { AstroSeo, type Props as AstroSeoProps, type OpenGraph as AstroSeoOpenGraphProps, type Twitter as AstroSeoTwitterProps } from '@astrolib/seo';
 import merge from 'lodash.merge';
 
-import { SITE, METADATA as GLOBAL_METADATA_CONFIG, I18N as GLOBAL_I18N_CONFIG } from '~/utils/config';
+import { SITE, METADATA as GLOBAL_METADATA_CONFIG } from '~/utils/config';
 import type { MetaData as PageMetaData, MetaDataImage, AlternateLinkInfo } from '~/types';
 import { getAsset, getCanonical, getPermalink } from '~/utils/permalinks';
 import { adaptOpenGraphImages } from '~/utils/images';
 import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale, prefixDefaultLocale } from '~/i18n';
+import { getPageKeyForPath, getAlternateLinksForPage } from '~/utils/hreflang-mapping';
 
 export interface Props {
   metadata?: PageMetaData;
@@ -18,63 +19,49 @@ export interface Props {
 const { metadata: metadataFromProps = {}, frontmatter = {}, lang: forcedLang } = Astro.props;
 const pageData: PageMetaData = merge({}, frontmatter, metadataFromProps);
 
-// Lógica de idioma: prioriza la prop `lang` forzada, luego `Astro.currentLocale`, y finalmente el idioma por defecto.
 const currentLocale = (forcedLang && supportedLangs.includes(forcedLang))
   ? forcedLang
   : (Astro.currentLocale && supportedLangs.includes(Astro.currentLocale) ? Astro.currentLocale : defaultLang);
 
-// Log de depuración para confirmar el idioma en uso.
-console.log(`[Metadata.astro] 🎯 Received Lang Prop: ${forcedLang}, Astro Locale: ${Astro.currentLocale}, Final Locale: ${currentLocale}`);
+console.log(`[Metadata.astro] 🎯 Final Locale: ${currentLocale}`);
 
-// Preparación de traducciones y constantes de idioma
 const translations = getTranslationsForLocale(currentLocale);
 const t = getTranslator(translations || {}, currentLocale);
 const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE' };
 
-// --- RESOLUCIÓN DE VALORES DE METADATOS ---
-
-// Nombre del sitio
 const siteNameTranslated = t('site.name', {}, { defaultValue: SITE.name });
 
 // Título
 let resolvedPageTitle: string | undefined;
-if (typeof pageData.title === 'function') {
-  resolvedPageTitle = pageData.title(t);
-} else {
-  resolvedPageTitle = pageData.title;
-}
+if (typeof pageData.title === 'function') { resolvedPageTitle = pageData.title(t); } 
+else { resolvedPageTitle = pageData.title; }
 const titleFromGlobalConfig = typeof GLOBAL_METADATA_CONFIG.title?.default === 'function' ? GLOBAL_METADATA_CONFIG.title.default(t) : GLOBAL_METADATA_CONFIG.title?.default;
 const finalTitle: string = resolvedPageTitle || titleFromGlobalConfig || siteNameTranslated;
 const finalTitleTemplate: string = pageData.ignoreTitleTemplate ? '%s' : (GLOBAL_METADATA_CONFIG.title?.template || '%s');
 
 // Descripción
 let resolvedPageDescription: string | undefined;
-if (typeof pageData.description === 'function') {
-  resolvedPageDescription = pageData.description(t);
-} else {
-  resolvedPageDescription = pageData.description;
-}
+if (typeof pageData.description === 'function') { resolvedPageDescription = pageData.description(t); } 
+else { resolvedPageDescription = pageData.description; }
 const globalDescription = typeof GLOBAL_METADATA_CONFIG.description === 'function' ? GLOBAL_METADATA_CONFIG.description(t) : GLOBAL_METADATA_CONFIG.description;
 const finalDescription: string = resolvedPageDescription || globalDescription || '';
 
-// --- URL Canónica (CON CORRECCIÓN) ---
-// Usamos el pathname de la URL actual como fallback si no hay slug ni canónica definida.
-const permalinkPath = pageData.slug ?? Astro.url.pathname;
-const permalink = getPermalink(permalinkPath, currentLocale);
-const finalCanonical: string = pageData.canonical 
-    ? pageData.canonical.toString() 
-    : getCanonical(permalink);
+// Canónica
+const permalink = getPermalink(Astro.url.pathname);
+const finalCanonical: string = pageData.canonical?.toString() || getCanonical(permalink);
 
-// --- Robots ---
+// Robots
 const finalRobots = { ...GLOBAL_METADATA_CONFIG.robots, ...pageData.robots };
 const seoNoIndex: boolean = finalRobots.noindex ?? !(finalRobots.index ?? true);
 const seoNoFollow: boolean = finalRobots.nofollow ?? !(finalRobots.follow ?? true);
-const robotsProps = {
-    maxSnippet: finalRobots.maxSnippet, maxImagePreview: finalRobots.maxImagePreview,
-    maxVideoPreview: finalRobots.maxVideoPreview, noarchive: finalRobots.noarchive,
-    unavailable_after: finalRobots.unavailable_after,
-};
-Object.keys(robotsProps).forEach(key => (robotsProps as any)[key] === undefined && delete (robotsProps as any)[key]);
+
+// Hreflang (Lógica 100% Automática)
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const finalAlternateLinks = pageKey ? getAlternateLinksForPage(pageKey) : [];
+
+if (!pageKey && !Astro.url.pathname.endsWith('/404/')) {
+  console.warn(`[HREFLANG] No page key found for ${Astro.url.pathname}. No hreflang tags will be generated for this page.`);
+}
 
 // OpenGraph
 const globalOg = GLOBAL_METADATA_CONFIG.openGraph || {};
@@ -85,59 +72,43 @@ const finalOpenGraphBase: Partial<AstroSeoOpenGraphProps> = {
     locale: LANG_TO_HREFLANG_MAP[currentLocale] || currentLocale,
     type: pageData.type || pageOg.type || globalOg.type || 'website',
 };
-
 let imagesSource = pageData.ogImage || pageOg.images || globalOg.images;
-if (imagesSource && !Array.isArray(imagesSource)) {
-    imagesSource = [imagesSource];
-}
-
+if (imagesSource && !Array.isArray(imagesSource)) { imagesSource = [imagesSource]; }
 let ogImages: AstroSeoOpenGraphProps['images'] = [];
-
 const siteUrl = SITE.site ? new URL(SITE.site) : undefined;
-
 if (siteUrl && imagesSource && imagesSource.length > 0) {
     ogImages = (imagesSource as any[]).map(imgInput => {
         let urlStr: string = '';
-        let altText: string | undefined, widthNum: number | undefined, heightNum: number | undefined, imgType: string | undefined, secureUrlStr: string | undefined;
-        
+        let altText: string | undefined;
         if (typeof imgInput === 'string') { urlStr = imgInput; } 
         else if (imgInput instanceof URL) { urlStr = imgInput.href; } 
         else if (imgInput && typeof imgInput === 'object' && 'url' in imgInput) {
             const mdImg = imgInput as MetaDataImage;
             const urlInput = mdImg.url;
             urlStr = typeof urlInput === 'string' ? urlInput : urlInput.href;
-            altText = mdImg.alt; widthNum = mdImg.width; heightNum = mdImg.height; imgType = mdImg.type; secureUrlStr = mdImg.secureUrl;
+            altText = mdImg.alt;
         }
-
         if (!urlStr || urlStr.trim() === '') return null;
-
-        const finalImgUrl = urlStr.startsWith('http') ? urlStr : siteUrl ? new URL(urlStr, siteUrl).href : '';
+        const finalImgUrl = urlStr.startsWith('http') ? urlStr : siteUrl ? new URL(getAsset(urlStr), siteUrl).href : '';
         if (!finalImgUrl) return null;
-
-        return { url: finalImgUrl, alt: altText || finalDescription, ...(widthNum && {width: widthNum}), ...(heightNum && {height: heightNum}), ...(imgType && {type: imgType}), ...(secureUrlStr && {secureUrl: secureUrlStr}) };
-    }).filter(img => img !== null) as AstroSeoOpenGraphProps['images'];
+        return { url: finalImgUrl, alt: altText || finalDescription };
+    }).filter(Boolean) as AstroSeoOpenGraphProps['images'];
 }
-
 const finalOpenGraph: AstroSeoOpenGraphProps = merge({}, globalOg, pageOg, finalOpenGraphBase, {
   title: finalTitle,
   description: finalDescription,
   ...(ogImages && ogImages.length > 0 && { images: ogImages }),
 });
-if (finalOpenGraph.article && Object.keys(finalOpenGraph.article).length === 0) {
-  delete finalOpenGraph.article;
-}
+if (finalOpenGraph.article && Object.keys(finalOpenGraph.article).length === 0) { delete finalOpenGraph.article; }
+const adaptedOpenGraph = finalOpenGraph && Object.keys(finalOpenGraph).length > 0 && siteUrl ? await adaptOpenGraphImages(finalOpenGraph, siteUrl) : undefined;
 
 // Twitter
 const globalTw = GLOBAL_METADATA_CONFIG.twitter || {};
 const pageTw = pageData.twitter || {};
 let twitterImageResolved = pageTw.image || globalTw.image;
 if (siteUrl && twitterImageResolved && !twitterImageResolved.startsWith('http')) { 
-    try {
-        twitterImageResolved = new URL(getAsset(twitterImageResolved), siteUrl).href;
-    } catch (e) {
-        console.error(`Error creating Twitter image URL for: ${twitterImageResolved}`, e);
-        twitterImageResolved = ''; // Invalidar si falla
-    }
+    try { twitterImageResolved = new URL(getAsset(twitterImageResolved), siteUrl).href; } 
+    catch (e) { twitterImageResolved = ''; }
 } else if (!twitterImageResolved && finalOpenGraph?.images?.[0]?.url) {
     twitterImageResolved = finalOpenGraph.images[0].url;
 }
@@ -151,36 +122,7 @@ const finalTwitter: AstroSeoTwitterProps = {
     ...(twitterImageAltResolved && { imageAlt: twitterImageAltResolved }),
 };
 
-// Hreflang
-const finalAlternateLinks: AlternateLinkInfo[] = [];
-let finalXDefaultURL: string = '';
-if (pageData.alternateLinks && pageData.alternateLinks.length > 0) {
-    finalAlternateLinks.push(...pageData.alternateLinks);
-    const xDefaultCandidate = pageData.alternateLinks.find(link => link.hreflang === (LANG_TO_HREFLANG_MAP[defaultLang] || defaultLang) || link.hreflang === defaultLang);
-    finalXDefaultURL = xDefaultCandidate?.href || '';
-} else if (typeof pageData.slug === 'string') {
-    // Generación automática solo si existe pageData.slug
-    supportedLangs.forEach(lang => {
-        const permalink = getPermalink(pageData.slug!, lang); // Usamos '!' porque ya comprobamos que es string
-        finalAlternateLinks.push({ hreflang: LANG_TO_HREFLANG_MAP[lang] || lang, href: getCanonical(permalink) });
-    });
-    const xDefaultPermalink = getPermalink(pageData.slug!, defaultLang);
-    finalXDefaultURL = getCanonical(xDefaultPermalink);
-} else {
-    // Si no hay 'alternateLinks' ni 'slug' (como en la página 404), no hacemos nada.
-    console.warn(`[HREFLANG] No 'slug' or 'alternateLinks' provided for ${Astro.url.pathname}. Hreflang tags will not be generated for this page.`);
-}
-if (!finalXDefaultURL && currentLocale === defaultLang && !prefixDefaultLocale) {
-  finalXDefaultURL = finalCanonical;
-}
-
-// --- PREPARACIÓN Y RENDERIZADO FINAL ---
-
-// Adaptar imágenes de OpenGraph y construir props finales para AstroSeo
-const adaptedOpenGraph = finalOpenGraph && Object.keys(finalOpenGraph).length > 0 && siteUrl
-    ? await adaptOpenGraphImages(finalOpenGraph, siteUrl)
-    : undefined;
-
+// Props finales para AstroSeo
 const astroSeoProps: AstroSeoProps = {
   title: finalTitle,
   titleTemplate: finalTitleTemplate,
@@ -188,14 +130,10 @@ const astroSeoProps: AstroSeoProps = {
   canonical: finalCanonical,
   noindex: seoNoIndex,
   nofollow: seoNoFollow,
-  ...(Object.keys(robotsProps).length > 0 && { robotsProps }),
-  ...(adaptedOpenGraph && { openGraph: adaptedOpenGraph }), 
   openGraph: adaptedOpenGraph,
   twitter: finalTwitter,
+  languageAlternates: finalAlternateLinks.length > 0 ? finalAlternateLinks : undefined,
 };
 ---
 
 <AstroSeo {...astroSeoProps} />
-
-{finalAlternateLinks.map(link => <link rel="alternate" hreflang={link.hreflang} href={link.href} />)}
-{finalXDefaultURL && <link rel="alternate" hreflang="x-default" href={finalXDefaultURL} />}
