@@ -96,11 +96,11 @@ export const getHomePermalink = (lang: string = defaultLang): string => getPerma
  * Obtiene el permalink de la página de listado del blog para un idioma dado.
  * Necesita la función 't' para obtener el slug base del blog traducido.
  */
-// export const getBlogPermalink = (t: Function, lang: string = i18nDefaultLang): string => {
-//   // Obtiene el slug base del blog (ej. 'blog', 'nieuws') del archivo de traducción
-//   const blogRouteSlug = t('routes.blog', {}, { defaultValue: BLOG_BASE_DEFAULT_SLUG });
-//   return getPermalink(blogRouteSlug, 'page', lang);
-// };
+export const getBlogPermalink = (t: Function, lang: string = i18nDefaultLang): string => {
+  // Obtiene el slug base del blog (ej. 'blog', 'nieuws') del archivo de traducción
+  const blogRouteSlug = t('routes.blog', {}, { defaultValue: BLOG_BASE_DEFAULT_SLUG });
+  return getPermalink(blogRouteSlug, 'page');
+};
 
 /**
  * Genera una URL de recurso (asset) correcta, respetando SITE.base.

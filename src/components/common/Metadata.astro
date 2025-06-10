@@ -57,12 +57,15 @@ if (typeof pageData.description === 'function') {
 const globalDescription = typeof GLOBAL_METADATA_CONFIG.description === 'function' ? GLOBAL_METADATA_CONFIG.description(t) : GLOBAL_METADATA_CONFIG.description;
 const finalDescription: string = resolvedPageDescription || globalDescription || '';
 
-const permalink = getPermalink(pageData.slug, currentLocale);
-
-// URL Canónica y Robots
+// --- URL Canónica (CON CORRECCIÓN) ---
+// Usamos el pathname de la URL actual como fallback si no hay slug ni canónica definida.
+const permalinkPath = pageData.slug ?? Astro.url.pathname;
+const permalink = getPermalink(permalinkPath, currentLocale);
 const finalCanonical: string = pageData.canonical 
     ? pageData.canonical.toString() 
     : getCanonical(permalink);
+
+// --- Robots ---
 const finalRobots = { ...GLOBAL_METADATA_CONFIG.robots, ...pageData.robots };
 const seoNoIndex: boolean = finalRobots.noindex ?? !(finalRobots.index ?? true);
 const seoNoFollow: boolean = finalRobots.nofollow ?? !(finalRobots.follow ?? true);
@@ -89,7 +92,10 @@ if (imagesSource && !Array.isArray(imagesSource)) {
 }
 
 let ogImages: AstroSeoOpenGraphProps['images'] = [];
-if (imagesSource && imagesSource.length > 0) {
+
+const siteUrl = SITE.site ? new URL(SITE.site) : undefined;
+
+if (siteUrl && imagesSource && imagesSource.length > 0) {
     ogImages = (imagesSource as any[]).map(imgInput => {
         let urlStr: string = '';
         let altText: string | undefined, widthNum: number | undefined, heightNum: number | undefined, imgType: string | undefined, secureUrlStr: string | undefined;
@@ -103,8 +109,11 @@ if (imagesSource && imagesSource.length > 0) {
             altText = mdImg.alt; widthNum = mdImg.width; heightNum = mdImg.height; imgType = mdImg.type; secureUrlStr = mdImg.secureUrl;
         }
 
-        if (urlStr.trim() === '') return null;
-        const finalImgUrl = urlStr.startsWith('http') ? urlStr : new URL(urlStr, SITE.site).toString();
+        if (!urlStr || urlStr.trim() === '') return null;
+
+        const finalImgUrl = urlStr.startsWith('http') ? urlStr : siteUrl ? new URL(urlStr, siteUrl).href : '';
+        if (!finalImgUrl) return null;
+
         return { url: finalImgUrl, alt: altText || finalDescription, ...(widthNum && {width: widthNum}), ...(heightNum && {height: heightNum}), ...(imgType && {type: imgType}), ...(secureUrlStr && {secureUrl: secureUrlStr}) };
     }).filter(img => img !== null) as AstroSeoOpenGraphProps['images'];
 }
@@ -122,8 +131,13 @@ if (finalOpenGraph.article && Object.keys(finalOpenGraph.article).length === 0) 
 const globalTw = GLOBAL_METADATA_CONFIG.twitter || {};
 const pageTw = pageData.twitter || {};
 let twitterImageResolved = pageTw.image || globalTw.image;
-if (twitterImageResolved && !twitterImageResolved.startsWith('http')) {
-    twitterImageResolved = new URL(getAsset(twitterImageResolved), SITE.site).toString();
+if (siteUrl && twitterImageResolved && !twitterImageResolved.startsWith('http')) { 
+    try {
+        twitterImageResolved = new URL(getAsset(twitterImageResolved), siteUrl).href;
+    } catch (e) {
+        console.error(`Error creating Twitter image URL for: ${twitterImageResolved}`, e);
+        twitterImageResolved = ''; // Invalidar si falla
+    }
 } else if (!twitterImageResolved && finalOpenGraph?.images?.[0]?.url) {
     twitterImageResolved = finalOpenGraph.images[0].url;
 }
@@ -144,18 +158,17 @@ if (pageData.alternateLinks && pageData.alternateLinks.length > 0) {
     finalAlternateLinks.push(...pageData.alternateLinks);
     const xDefaultCandidate = pageData.alternateLinks.find(link => link.hreflang === (LANG_TO_HREFLANG_MAP[defaultLang] || defaultLang) || link.hreflang === defaultLang);
     finalXDefaultURL = xDefaultCandidate?.href || '';
+} else if (typeof pageData.slug === 'string') {
+    // Generación automática solo si existe pageData.slug
+    supportedLangs.forEach(lang => {
+        const permalink = getPermalink(pageData.slug!, lang); // Usamos '!' porque ya comprobamos que es string
+        finalAlternateLinks.push({ hreflang: LANG_TO_HREFLANG_MAP[lang] || lang, href: getCanonical(permalink) });
+    });
+    const xDefaultPermalink = getPermalink(pageData.slug!, defaultLang);
+    finalXDefaultURL = getCanonical(xDefaultPermalink);
 } else {
-  const baseSlug = pageData.slug;
-  if (typeof baseSlug === 'string') {
-      supportedLangs.forEach(lang => {
-          const permalink = getPermalink(baseSlug, 'page');
-          finalAlternateLinks.push({ hreflang: LANG_TO_HREFLANG_MAP[lang] || lang, href: new URL(permalink, SITE.site).toString() });
-      });
-      const xDefaultPermalink = getPermalink(baseSlug, 'page');
-      finalXDefaultURL = new URL(xDefaultPermalink, SITE.site).toString();
-  } else {
-      console.warn(`[HREFLANG-MD] No 'slug' or 'alternateLinks' provided for ${Astro.url.pathname}. Hreflang tags may be incomplete.`);
-  }
+    // Si no hay 'alternateLinks' ni 'slug' (como en la página 404), no hacemos nada.
+    console.warn(`[HREFLANG] No 'slug' or 'alternateLinks' provided for ${Astro.url.pathname}. Hreflang tags will not be generated for this page.`);
 }
 if (!finalXDefaultURL && currentLocale === defaultLang && !prefixDefaultLocale) {
   finalXDefaultURL = finalCanonical;
@@ -164,7 +177,10 @@ if (!finalXDefaultURL && currentLocale === defaultLang && !prefixDefaultLocale) 
 // --- PREPARACIÓN Y RENDERIZADO FINAL ---
 
 // Adaptar imágenes de OpenGraph y construir props finales para AstroSeo
-const adaptedOpenGraph = await adaptOpenGraphImages(finalOpenGraph, new URL(SITE.site));
+const adaptedOpenGraph = finalOpenGraph && Object.keys(finalOpenGraph).length > 0 && siteUrl
+    ? await adaptOpenGraphImages(finalOpenGraph, siteUrl)
+    : undefined;
+
 const astroSeoProps: AstroSeoProps = {
   title: finalTitle,
   titleTemplate: finalTitleTemplate,
@@ -173,6 +189,7 @@ const astroSeoProps: AstroSeoProps = {
   noindex: seoNoIndex,
   nofollow: seoNoFollow,
   ...(Object.keys(robotsProps).length > 0 && { robotsProps }),
+  ...(adaptedOpenGraph && { openGraph: adaptedOpenGraph }), 
   openGraph: adaptedOpenGraph,
   twitter: finalTwitter,
 };
