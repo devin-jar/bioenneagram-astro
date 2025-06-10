@@ -91,6 +91,7 @@ export interface MetaData {
   twitter?: MetaDataTwitter;
   alternateLinks?: AlternateLinkInfo[];
   slug?: string;
+  lang?: string;
 
   // Atajos comunes
   ogImage?: string | URL | MetaDataImage | Array<string | URL | MetaDataImage>;

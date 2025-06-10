@@ -12,31 +12,42 @@ import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale, p
 export interface Props {
   metadata?: PageMetaData;
   frontmatter?: Record<string, any> & Partial<PageMetaData>;
+  lang?: string;
 }
 
-const { metadata: metadataFromProps = {}, frontmatter = {} } = Astro.props;
+const { metadata: metadataFromProps = {}, frontmatter = {}, lang: forcedLang } = Astro.props;
 const pageData: PageMetaData = merge({}, frontmatter, metadataFromProps);
 
+// Lógica de idioma: prioriza la prop `lang` forzada, luego `Astro.currentLocale`, y finalmente el idioma por defecto.
+const currentLocale = (forcedLang && supportedLangs.includes(forcedLang))
+  ? forcedLang
+  : (Astro.currentLocale && supportedLangs.includes(Astro.currentLocale) ? Astro.currentLocale : defaultLang);
 
-const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale) ? Astro.currentLocale : defaultLang;
+// Log de depuración para confirmar el idioma en uso.
+console.log(`[Metadata.astro] 🎯 Received Lang Prop: ${forcedLang}, Astro Locale: ${Astro.currentLocale}, Final Locale: ${currentLocale}`);
+
+// Preparación de traducciones y constantes de idioma
 const translations = getTranslationsForLocale(currentLocale);
 const t = getTranslator(translations || {}, currentLocale);
 const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE' };
 
+// --- RESOLUCIÓN DE VALORES DE METADATOS ---
 
+// Nombre del sitio
 const siteNameTranslated = t('site.name', {}, { defaultValue: SITE.name });
 
+// Título
 let resolvedPageTitle: string | undefined;
 if (typeof pageData.title === 'function') {
   resolvedPageTitle = pageData.title(t);
 } else {
   resolvedPageTitle = pageData.title;
 }
-// FIX 1: Este error se soluciona con el cambio en config.ts
 const titleFromGlobalConfig = typeof GLOBAL_METADATA_CONFIG.title?.default === 'function' ? GLOBAL_METADATA_CONFIG.title.default(t) : GLOBAL_METADATA_CONFIG.title?.default;
 const finalTitle: string = resolvedPageTitle || titleFromGlobalConfig || siteNameTranslated;
 const finalTitleTemplate: string = pageData.ignoreTitleTemplate ? '%s' : (GLOBAL_METADATA_CONFIG.title?.template || '%s');
 
+// Descripción
 let resolvedPageDescription: string | undefined;
 if (typeof pageData.description === 'function') {
   resolvedPageDescription = pageData.description(t);
@@ -46,6 +57,7 @@ if (typeof pageData.description === 'function') {
 const globalDescription = typeof GLOBAL_METADATA_CONFIG.description === 'function' ? GLOBAL_METADATA_CONFIG.description(t) : GLOBAL_METADATA_CONFIG.description;
 const finalDescription: string = resolvedPageDescription || globalDescription || '';
 
+// URL Canónica y Robots
 const finalCanonical: string = (pageData.canonical || getCanonical(String(Astro.url.pathname), currentLocale)).toString();
 const finalRobots = { ...GLOBAL_METADATA_CONFIG.robots, ...pageData.robots };
 const seoNoIndex: boolean = finalRobots.noindex ?? !(finalRobots.index ?? true);
@@ -57,6 +69,7 @@ const robotsProps = {
 };
 Object.keys(robotsProps).forEach(key => (robotsProps as any)[key] === undefined && delete (robotsProps as any)[key]);
 
+// OpenGraph
 const globalOg = GLOBAL_METADATA_CONFIG.openGraph || {};
 const pageOg = pageData.openGraph || {};
 const finalOpenGraphBase: Partial<AstroSeoOpenGraphProps> = {
@@ -95,13 +108,13 @@ if (imagesSource && imagesSource.length > 0) {
 const finalOpenGraph: AstroSeoOpenGraphProps = merge({}, globalOg, pageOg, finalOpenGraphBase, {
   title: finalTitle,
   description: finalDescription,
-  // FIX 2: Verificar si 'ogImages' existe antes de acceder a 'length'
   ...(ogImages && ogImages.length > 0 && { images: ogImages }),
 });
 if (finalOpenGraph.article && Object.keys(finalOpenGraph.article).length === 0) {
   delete finalOpenGraph.article;
 }
 
+// Twitter
 const globalTw = GLOBAL_METADATA_CONFIG.twitter || {};
 const pageTw = pageData.twitter || {};
 let twitterImageResolved = pageTw.image || globalTw.image;
@@ -112,7 +125,6 @@ if (twitterImageResolved && !twitterImageResolved.startsWith('http')) {
 }
 const twitterImageAltResolved = pageTw.imageAlt || globalTw.imageAlt || finalOpenGraph?.images?.[0]?.alt || finalDescription;
 
-// FIX 3: Construir el objeto Twitter con propagación condicional para satisfacer a TypeScript
 const finalTwitter: AstroSeoTwitterProps = {
     handle: pageTw.handle || globalTw.handle,
     site: pageTw.site || globalTw.site,
@@ -121,6 +133,7 @@ const finalTwitter: AstroSeoTwitterProps = {
     ...(twitterImageAltResolved && { imageAlt: twitterImageAltResolved }),
 };
 
+// Hreflang
 const finalAlternateLinks: AlternateLinkInfo[] = [];
 let finalXDefaultURL: string = '';
 if (pageData.alternateLinks && pageData.alternateLinks.length > 0) {
@@ -144,6 +157,10 @@ if (!finalXDefaultURL && currentLocale === defaultLang && !prefixDefaultLocale) 
   finalXDefaultURL = finalCanonical;
 }
 
+// --- PREPARACIÓN Y RENDERIZADO FINAL ---
+
+// Adaptar imágenes de OpenGraph y construir props finales para AstroSeo
+const adaptedOpenGraph = await adaptOpenGraphImages(finalOpenGraph, new URL(SITE.site));
 const astroSeoProps: AstroSeoProps = {
   title: finalTitle,
   titleTemplate: finalTitleTemplate,
@@ -152,7 +169,7 @@ const astroSeoProps: AstroSeoProps = {
   noindex: seoNoIndex,
   nofollow: seoNoFollow,
   ...(Object.keys(robotsProps).length > 0 && { robotsProps }),
-  openGraph: await adaptOpenGraphImages(finalOpenGraph, new URL(SITE.site)),
+  openGraph: adaptedOpenGraph,
   twitter: finalTwitter,
 };
 ---

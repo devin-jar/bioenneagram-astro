@@ -65,7 +65,7 @@ export const getFooterData = (t, lang) => {
           // { text: t('footer.products.emotionsWorkshop'), href: getPermalink(t('routes.workshopEmotions', {}, { defaultValue: 'workshops/emotions' }), 'page', lang) },
           // { text: t('footer.products.brainIntroCourse'), href: getPermalink(t('routes.courseIntroBrain', {}, { defaultValue: 'courses/intro-brain' }), 'page', lang) },
           // { text: t('footer.products.enneagramIntroCourse'), href: getPermalink(t('routes.courseIntroEnneagram', {}, { defaultValue: 'courses/intro-enneagram' }), 'page', lang) },
-          { text: t('footer.products.enneagramGameCourse'), href: getPermalink(t('routes.courseEnneagramGame', {}, { defaultValue: 'landing/course-enneagram-game' }), 'page', lang) },
+          { text: t('footer.products.enneagramGameCourse'), href: getPermalink(t('routes.courseEnneagramGame', {}, { defaultValue: 'landing/curso-eneagrama-game' }), 'page', lang) },
           // { text: t('footer.products.biodescodificacionIntroCourse'), href: getPermalink(t('routes.courseIntroBiodecoding', {}, { defaultValue: 'courses/intro-biodecoding' }), 'page', lang) },
         ],
       },

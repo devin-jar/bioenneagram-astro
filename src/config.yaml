@@ -2,7 +2,7 @@ site:
   name: Bioenneagram
   site: 'https://bioenneagram.com'
   base: '/'
-  trailingSlash: false
+  trailingSlash: true
 
 # Default SEO metadata
 metadata:

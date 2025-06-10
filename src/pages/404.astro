@@ -1,76 +1,35 @@
 ---
 // src/pages/404.astro
-import Layout from '~/layouts/Layout.astro'; // Layout base
+import Layout from '~/layouts/Layout.astro'; // Usamos el Layout principal
+
 import { getHomePermalink } from '~/utils/permalinks';
+import { getTranslator, defaultLang, supportedLangs, getTranslationsForLocale } from '~/i18n';
+import type { MetaData } from '~/types';
 
-import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
-import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
-import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+// --- LÓGICA DE DETECCIÓN DE IDIOMA Y TRADUCCIÓN ---
+let currentLocale = defaultLang;
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
 
-interface JsonModule { default?: Record<string, any>; [key: string]: any; }
-
-// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
-// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
-const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
-  ? Astro.currentLocale
-  : defaultLang; // 'es'
-
-// Carga de Traducciones
-const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
-let pageTranslations: Record<string, any> | undefined;
-const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
-const moduleCandidate = translationModules[expectedModulePath];
-
-if (moduleCandidate) {
-  pageTranslations = moduleCandidate.default || moduleCandidate;
-} else {
-  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
-  pageTranslations = {};
+if (pathSegments.length > 0 && supportedLangs.includes(pathSegments[0])) {
+    currentLocale = pathSegments[0];
 }
 
-const t = getTranslator(pageTranslations || {}, currentLocale);
+console.log(`[404.astro] 🚀 Path: ${Astro.url.pathname}, Detected Locale: ${currentLocale}`);
 
-// --- METADATA ---
-// Imágenes específicas para OG/Twitter de esta página (si las tienes)
-// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+const translations = getTranslationsForLocale(currentLocale);
+const t = getTranslator(translations || {}, currentLocale);
 
-const baseMetadata: MetaData = {
-  title: t('homepage.meta.title'),
-  description: t('homepage.meta.description'),
-  robots: { index: true, follow: true },
-  canonical: Astro.url.href, // URL actual de esta página
-  type: 'website',
-  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
-  openGraph: {
-    title: t('homepage.meta.title'),
-    description: t('homepage.meta.description'),
-    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
-    type: 'website',
-    locale: 'es_ES', // Específico para la página en español
-  },
-  twitter: {
-    cardType: 'summary_large_image',
-    title: t('homepage.meta.title'),
-    description: t('homepage.meta.description'),
-    // image: new URL(ogImageHomeEs, Astro.site).href,
-    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
-  }
-};
-
-const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
-const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
-
-console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
-console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
-
+// --- GENERACIÓN DE METADATOS PARA EL LAYOUT ---
 const metadata: MetaData = {
-  ...baseMetadata,
-  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+  // Pasamos el idioma detectado al Layout para que todo sea consistente
+  lang: currentLocale,
+  title: t('error404Page.meta.title'),
+  description: t('site.description'), // Usamos la descripción del sitio en el idioma correcto
+  robots: { noindex: true, follow: false },
 };
 
-
-const currentLocaleFor404 = Astro.currentLocale || defaultLang;
-const homeLink = getHomePermalink(currentLocaleFor404);
+// Obtenemos el enlace al home en el idioma correcto
+const homeLink = getHomePermalink(currentLocale);
 ---
 
 <Layout metadata={metadata}>

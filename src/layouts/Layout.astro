@@ -26,11 +26,13 @@ export interface Props {
 
 const { metadata, frontmatter } = Astro.props;
 
-const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
-  ? Astro.currentLocale
-  : defaultLang;
+const currentLocale = metadata?.lang && supportedLangs.includes(metadata.lang) 
+  ? metadata.lang
+  : (Astro.currentLocale || defaultLang);
 
-const currentTextDirection = GLOBAL_I18N_CONFIG?.textDirection || (['ar', 'he', 'fa'].includes(currentLocale) ? 'rtl' : 'ltr');
+console.log(`[Layout.astro] 🚀 Metadata Lang: ${metadata?.lang}, Astro Locale: ${Astro.currentLocale}, Final Locale: ${currentLocale}`);
+
+const currentTextDirection = GLOBAL_I18N_CONFIG?.textDirection || 'ltr';
 const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES', nl: 'nl-NL', fr: 'fr-FR', de: 'de-DE' };
 
 ---
@@ -41,7 +43,7 @@ const LANG_TO_HREFLANG_MAP: Record<string, string> = { en: 'en-US', es: 'es-ES',
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- ¡Aquí está la magia! Toda la lógica de SEO en un solo lugar. -->
-    <Metadata metadata={metadata} frontmatter={frontmatter} />
+    <Metadata metadata={metadata} frontmatter={frontmatter} lang={currentLocale}/>
 
     <link rel="sitemap" href={getAsset('/sitemap-index.xml')} />
     <Favicons />

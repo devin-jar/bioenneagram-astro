@@ -25,6 +25,9 @@ const t = getTranslator(translationsForCurrentPage || {}, currentLocale);
 
 const headerData = getHeaderData(t, currentLocale);
 const footerData = getFooterData(t, currentLocale);
+
+console.log(`[PageLayout.astro] 🍔 Pasando metadata al BaseLayout.`);
+
 ---
 
 <BaseLayout metadata={pageSpecificMetadata} frontmatter={frontmatter}>
