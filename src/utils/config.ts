@@ -6,7 +6,6 @@ import merge from 'lodash.merge';
 
 // FIX: Importar los tipos detallados desde types.d.ts
 import type { MetaData, GlobalMetaDataConfig as MetaDataConfig } from '~/types';
-import { getTranslator, getTranslationsForLocale } from '~/i18n';
 
 export interface SiteConfig {
   name: string;
