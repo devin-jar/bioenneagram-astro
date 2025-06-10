@@ -43,7 +43,7 @@ const t = getTranslator(pageTranslations || {}, currentLocale);
 const baseMetadata: MetaData = {
   title: t('homepage.meta.title'),
   description: t('homepage.meta.description'),
-  robots: { index: true, follow: true },
+  robots: { noindex: true, follow: false },
   canonical: Astro.url.href, // URL actual de esta página
   type: 'website',
   // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
