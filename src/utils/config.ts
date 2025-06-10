@@ -1,22 +1,22 @@
+// src/utils/config.ts
+
 import fs from 'fs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
 
-import type { MetaData } from '~/types';
+// FIX: Importar los tipos detallados desde types.d.ts
+import type { MetaData, GlobalMetaDataConfig as MetaDataConfig } from '~/types';
 
 export interface SiteConfig {
   name: string;
-  site?: string;
+  site: string;
   base?: string;
   trailingSlash?: boolean;
   googleSiteVerificationId?: string;
 }
-export interface MetaDataConfig extends Omit<MetaData, 'title'> {
-  title?: {
-    default: string;
-    template: string;
-  };
-}
+// La interfaz MetaDataConfig ahora se importa directamente desde types.d.ts,
+// por lo que ya no es necesario definirla aquí. Esto garantiza consistencia.
+
 export interface I18NConfig {
   language: string;
   textDirection: string;
@@ -82,45 +82,56 @@ const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
   analytics?: unknown;
 };
 
-const DEFAULT_SITE_NAME = 'Website';
+const DEFAULT_SITE_NAME = 'Bioenneagram';
 
 const getSite = () => {
   const _default = {
     name: DEFAULT_SITE_NAME,
-    site: undefined,
+    site: 'https://bioenneagram.com',
     base: '/',
-    trailingSlash: false,
-
+    trailingSlash: true,
     googleSiteVerificationId: '',
   };
 
-  return merge({}, _default, config?.site ?? {}) as SiteConfig;
+  const mergedConfig = merge({}, _default, config?.site ?? {});
+
+  if (!mergedConfig.site) {
+    throw new Error(
+      "CRITICAL: 'site.site' is not defined in src/config.yaml. This is required for building absolute URLs."
+    );
+  }
+
+  return mergedConfig as SiteConfig;
 };
 
 const getMetadata = () => {
   const siteConfig = getSite();
 
-  const _default = {
+  const _default: MetaDataConfig = {
     title: {
-      default: siteConfig?.name || DEFAULT_SITE_NAME,
-      template: '%s',
+      // Esta función buscará la traducción 'site.title'
+      default: (t) => t('site.title'),
+      template: '%s — Bioenneagram', // Mantener el template es opcional
     },
-    description: '',
+    // Esta función buscará la traducción 'site.description'
+    description: (t) => t('site.description'),
     robots: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
     openGraph: {
+      siteName: siteConfig.name,
       type: 'website',
     },
   };
 
+  // Usamos el tipo importado MetaDataConfig para la aserción final
   return merge({}, _default, config?.metadata ?? {}) as MetaDataConfig;
 };
 
 const getI18N = () => {
   const _default = {
-    language: 'es',
+    language: 'en',
     textDirection: 'ltr',
   };
 

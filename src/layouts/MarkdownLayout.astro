@@ -1,28 +1,80 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
+// src/layouts/MarkdownLayout.astro
+import Layout from '~/layouts/PageLayout.astro'; // Asumiendo que PageLayout maneja la i18n global (Header, Footer)
 
 import type { MetaData } from '~/types';
+import { getTranslator, defaultLang } from '~/i18n'; // Importar para 't' si es necesario en el layout
+
+// Definición de la interfaz (o importarla si la tienes en un archivo de tipos global)
+interface JsonModule {
+  default?: Record<string, any>;
+  [key: string]: any;
+}
 
 export interface Props {
   frontmatter: {
-    title?: string
-  }
+    title?: string; // Título del contenido Markdown
+    description?: string; // Opcional: descripción para metadatos desde el frontmatter
+    // Puedes añadir más props del frontmatter aquí si las necesitas
+  };
+  // No necesitas pasar 'content' explícitamente, Astro lo maneja con <slot />
 }
 
 const { frontmatter } = Astro.props;
 
+// --- Lógica de i18n para este Layout (si es necesaria para textos del layout) ---
+const currentLocaleForLayout = Astro.currentLocale || defaultLang;
+
+// Carga dinámica de traducciones para el layout (solo si el layout tiene textos propios que traducir)
+// Si PageLayout.astro ya pasa 't', y este layout no tiene textos propios, esto puede ser opcional aquí.
+// Sin embargo, es bueno tenerlo si este layout podría evolucionar.
+const translationModulesForLayout = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+
+let layoutTranslations: Record<string, any> | undefined;
+const expectedModulePathForLayout = `/src/i18n/locales/${currentLocaleForLayout}/translation.json`;
+const moduleCandidateForLayout = translationModulesForLayout[expectedModulePathForLayout];
+
+if (moduleCandidateForLayout) {
+  layoutTranslations = moduleCandidateForLayout.default || moduleCandidateForLayout;
+} else {
+  console.warn(`[MarkdownLayout] Translation file for locale "${currentLocaleForLayout}" not found. Falling back to default.`);
+  const defaultModulePathForLayout = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidateForLayout = translationModulesForLayout[defaultModulePathForLayout];
+  if (defaultModuleCandidateForLayout) {
+    layoutTranslations = defaultModuleCandidateForLayout.default || defaultModuleCandidateForLayout;
+  } else {
+    layoutTranslations = {};
+  }
+}
+const tLayout = getTranslator(layoutTranslations || {}, currentLocaleForLayout);
+// --- Fin de lógica i18n para Layout ---
+
+
+// Construir metadatos para PageLayout
+// El título principal viene del frontmatter del Markdown.
+// Si el frontmatter no tiene título, podrías tener un fallback (aunque es raro para Markdown).
+const pageTitle = frontmatter?.title || tLayout('markdownLayout.defaultTitle', {}, { defaultValue: 'Content Page' });
+const pageDescription = frontmatter?.description || tLayout('site.description'); // Usar descripción global si no hay específica
+
 const metadata: MetaData = {
-  title: frontmatter?.title,
+  title: pageTitle,
+  description: pageDescription,
+  // Aquí podrías añadir más metadatos si es necesario, o leerlos del frontmatter
 };
 ---
 
 <Layout metadata={metadata}>
   <section class="px-4 py-16 sm:px-6 mx-auto lg:px-8 lg:py-20 max-w-4xl">
-    <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter">{frontmatter.title}</h1>
+    {/* El título principal de la página se renderiza aquí, tomado del frontmatter */}
+    {frontmatter.title && (
+      <h1 class="font-bold font-heading text-4xl md:text-5xl leading-tighter tracking-tighter mb-8">
+        {frontmatter.title}
+      </h1>
+    )}
     <div
-      class="mx-auto prose prose-lg max-w-4xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8"
+      class="mx-auto prose prose-lg max-w-4xl dark:prose-invert dark:prose-headings:text-slate-300 prose-md prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg"
     >
-      <slot />
+      <slot /> {/* Aquí se renderiza el contenido del archivo .md */}
     </div>
   </section>
 </Layout>

@@ -1,7 +1,8 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
+// src/pages/index.astro (Página de inicio en ESPAÑOL - Idioma por defecto)
+import Layout from '~/layouts/PageLayout.astro'; // Usar PageLayout para páginas principales
 
-import Header from '~/components/widgets/Header.astro';
+// Importar componentes
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
@@ -9,387 +10,237 @@ import Steps2 from '~/components/widgets/Steps2.astro';
 import Content from '~/components/widgets/Content.astro';
 import Pricing from '~/components/widgets/Pricing.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
-
-import { headerData } from '~/navigation';
 import Testimonials from '~/components/widgets/Testimonials.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import CallToActionWidget from '~/components/widgets/CallToAction.astro'; // Renombrado para claridad
 // import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
-const metadata = {
-  title: 'Bioenneagram Coach | Eneagrama y Biodescodificación',
-  robots: {
-    index: true,
-    follow: true,
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { index: true, follow: true },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'es_ES', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
   }
+};
+
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
+
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
+
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+// --- DATOS PARA WIDGETS ---
+// URLs de imágenes (se mantienen, a menos que varíen por idioma y estén en el JSON)
+const heroImageSrc = 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageEmpresarial = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageParejas = 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageIndividual = 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=1790&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const testimonialImagesSrcs = [
+  'https://i.postimg.cc/V6fSq5R2/img-photo-profile-aleja.jpg',
+  'https://i.postimg.cc/zfSbHTnn/img-photo-profile-juanda.jpg',
+  'https://i.postimg.cc/XJsbTvbM/img-photo-profile-sara.jpg',
+];
+
+// HREFs (se mantienen, o se pueden mover al JSON si son muy específicos del idioma)
+const bookingLink = 'https://booking.bioenneagram.com/book';
+const youtubeLink = 'https://www.youtube.com/@bioenneagram';
+const whatsappBaseLink = 'https://api.whatsapp.com/send/?phone=573004481819&type=phone_number&app_absent=0';
+const whatsappLink = `${whatsappBaseLink}&text=${encodeURIComponent(t('footer.social.whatsappMessage'))}`; // Mensaje traducido
+const formsLink = 'https://forms.gle/H1dRuGBHvAGP9hy3A';
+const mailtoBase = 'mailto:bioenneagramcoach@gmail.com';
+const mailtoLink = `${mailtoBase}?Subject=${encodeURIComponent(t('homepage.mailtoSubject'))}`; // Asunto traducido
+const telLink = 'tel:+573004481819';
+const instagramLink = 'https://www.instagram.com/bioenneagramcoach/';
+
+// Preparar datos para los widgets usando 't'
+const heroData: HeroProps = {
+  tagline: t('homepage.hero.tagline'),
+  title: t('homepage.hero.title', {'0': `<span class="text-accent dark:text-white highlight">${t('homepage.hero.heroHighlight')}</span>`}),
+  subtitle: t('homepage.hero.subtitle', {'1': `<span class="font-semibold">Bioenneagram</span>`}),
+  actions: [{ variant: 'primary', target: '_blank', text: t('homepage.hero.actionText'), href: bookingLink }],
+  image: { src: heroImageSrc, alt: t('homepage.hero.imageAlt') },
+};
+
+const noteData: NoteProps = {
+  title: t('homepage.note.philosophyTitle'), // Asegúrate que estas claves existan en tu JSON
+  values: t('homepage.note.philosophyValues'), // Esto espera un array de strings
+  iconName: t('homepage.note.iconName', {}, { defaultValue: "tabler:clover-2"}), // Ícono del JSON o fallback
+};
+
+const featuresData: FeaturesProps = {
+  id: "features",
+  title: t('homepage.features.title'),
+  subtitle: t('homepage.features.subtitle'),
+  columns: 2,
+  items: t('homepage.features.items') || [],
+};
+
+const contentSectionsData: ContentProps[] = (t('homepage.contentSections') || []).map((sectionData, index) => {
+  const rawTitle = t(sectionData.blockTitle);
+
+  // --- LÓGICA DE RENDERIZADO MEJORADA ---
+
+  // 1. Limpiamos TODOS los corchetes de la cadena original primero.
+  const titleWithoutBrackets = rawTitle.replace(/[\[\]]/g, '');
+  // Ahora tenemos, por ejemplo: "Terapia Individual: <br /><0>Desbloqueando...</0>"
+
+  // 2. Dividimos la cadena limpia por la etiqueta <0>
+  const parts = titleWithoutBrackets.split(/<0>|<\/0>/);
+  // parts[0] => "Terapia Individual: <br /> "
+  // parts[1] => "Desbloqueando el Potencial Personal"
+  
+  const beforeHighlight = parts[0] || '';
+  const highlightText = parts[1] || '';
+
+  // 3. Construimos el HTML final
+  const preRenderedTitle = `${beforeHighlight}<span class="text-2xl">${highlightText}</span>`;
+
+  return {
+    preRenderedContentTitle: preRenderedTitle, 
+    title: index === 0 ? t(sectionData.mainTitle).replace(/[\[\]]/g, '') : undefined,
+    subtitle: index === 0 ? t(sectionData.mainSubtitle).replace(/[\[\]]/g, '') : undefined,
+    isReversed: index === 0 || index === 2,
+    isAfterContent: index > 0,
+    items: (sectionData.items || []).map(item => {
+      const cleanTitle = t(item.title).replace(/[\[\]]/g, '');
+      const cleanDescription = t(item.description).replace(/[\[\]]/g, '');
+      return {
+        title: cleanTitle,
+        description: cleanDescription.replace(/<br \/>/g, '<br />'),
+      };
+    }),
+    image: {
+      src: index === 0 ? contentImageEmpresarial : index === 1 ? contentImageParejas : contentImageIndividual,
+      alt: t(sectionData.imageAlt)
+    },
+  };
+});
+
+const pricingData: PricingProps = {
+  title: t('homepage.pricing.title'),
+  prices: (t('homepage.pricing.items') || []).map((item, idx) => ({
+    ...item, // Mantiene price, period, ribbonTitle (si están en JSON)
+    callToAction: {
+      target: '_blank',
+      text: item.callToActionText, // Ya viene del JSON
+      href: idx === 0 ? youtubeLink : whatsappLink, // Lógica para href
+    },
+    hasRibbon: !!item.ribbonTitle,
+  })),
+};
+
+const testimonialsData: TestimonialsProps = {
+  title: t('homepage.testimonials.title'),
+  subtitle: t('homepage.testimonials.subtitle'),
+  testimonials: (t('homepage.testimonials.items') || []).map((item, index) => ({
+    ...item, // Mantiene testimonial, name, job (del JSON)
+    image: {
+      src: testimonialImagesSrcs[index % testimonialImagesSrcs.length],
+      alt: item.imageAlt || `${item.name} Image`
+    },
+  })),
+};
+
+const callToActionWidgetData: CallToActionProps = {
+  title: t('homepage.callToActionWidget.title'),
+  subtitle: t('homepage.callToActionWidget.subtitle'),
+  actions: [{ variant: 'primary', text: t('homepage.callToActionWidget.actionText'), href: whatsappLink }],
+};
+
+const faqsData: FaqsProps = {
+  title: t('homepage.faqs.title'),
+  items: t('homepage.faqs.items') || [], // Los items ya vienen con title, description, icon del JSON
+};
+
+const steps2Data: StepsProps = {
+  title: t('homepage.steps2.title'),
+  subtitle: t('homepage.steps2.subtitle'),
+  callToAction: { text: t('homepage.steps2.callToActionText'), target: '_blank', href: formsLink },
+  items: (t('homepage.steps2.items') || []).map((item, index) => ({
+    ...item, // Mantiene title, description, icon (del JSON)
+    href: index === 0 ? mailtoLink : index === 1 ? telLink : instagramLink, // Lógica para href
+  })),
 };
 ---
 
 <Layout metadata={metadata}>
-  <Fragment slot="header">
-    <Header {...headerData} isSticky />
-  </Fragment>
-  <!-- Hero Widget ******************* -->
+  <Hero {...heroData} />
+  <Note {...noteData} />
+  <Features {...featuresData} />
 
-  <Hero
-    tagline="Crecimiento Personal"
-    actions={[
-      {
-        variant: 'primary',
-        target: '_blank',
-        text: 'Agendar Ahora',
-        href: 'https://booking.bioenneagram.com/book',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Bioenneagram Hero Image ',
-    }}
-  >
-    <Fragment slot="title">
-      Listo para descrubrir los secretos de <br /> tu personalidad : <span class="text-accent dark:text-white highlight"
-        >ENEAGRAMA - BIODESCODIFICACIÓN</span
-      ><br />
-    </Fragment><Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        Descubre tus fortalezas, debilidades y como mejorar tus relaciones personales con <span class="font-semibold"
-          >Bioenneagram</span
-        >.</span
-      >
-    </Fragment>
-  </Hero>
-
-  <!-- Note Widget *************** -->
-
-  <Note />
-
-  <!-- Features Widget *************** -->
-
-  <Features
-    id="features"
-    title="Por qué escoger Bioenneagram?"
-    subtitle="Cada una de las siguientes caracteristicas es la propuesta de valor de Bioenneagram."
-    columns={2}
-    items={[
-      {
-        title: 'Experimenta un cambio real y duradero en tu vida con nuestros servicios',
-        description:
-          'Desde terapias individuales hasta retiros de desarrollo personal, cada intervención está diseñada para producir resultados tangibles. Alcanza tus metas de bienestar y crecimiento personal de manera eficiente y significativa.',
-        icon: 'tabler:report-analytics',
-      },
-      {
-        title: 'Confía en un profesional dedicado a tu bienestar',
-        description: `Altamente capacitado y comprometido con brindar un servicio de calidad. La profesionalidad se refleja en cada interacción, desde sesiones terapéuticas hasta talleres y conferencias, proporcionándote un ambiente de confianza y respeto.`,
-        icon: 'tabler:file-certificate',
-      },
-      {
-        title: 'Tu paz mental es prioridad',
-        description:
-          'Creamos entornos que fomenten la calma y la tranquilidad. Ya sea que estés participando en una terapia individual o en un relajante retiro, nuestro objetivo es que te sientas tranquilo y en armonía. Aquí, encontrarás un espacio seguro para explorar y crecer.',
-        icon: 'tabler:brain',
-      },
-      {
-        title: 'Abraza tu camino hacia el desarrollo personal',
-        description: `Ofrecemos no solo terapias, sino también retiros, talleres y cursos diseñados para nutrir tu crecimiento. Cada experiencia está diseñada para desbloquear tu potencial y fomentar un desarrollo integral en todas las áreas de tu vida.`,
-        icon: 'tabler:rocket',
-      },
-      {
-        title: 'El bienestar no debería ser un lujo inalcanzable',
-        description: `Nos esforzamos por hacer nuestros servicios accesibles para todos. Asequibilidad no significa comprometer la calidad; significa que todos merecen acceder a recursos que fomenten su bienestar. Descubre cómo el cuidado de tu salud mental puede ser una inversión asequible y valiosa en tu vida.`,
-        icon: 'tabler:receipt-2',
-      },
-    ]}
-  />
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    title="Construye tu Éxito"
-    subtitle="Sumérjete en en un viaje a tu mundo interior y experimenta un cambio.  Explora cómo las soluciones a medida de Bioenneagram son fundamentales para impulsar el éxito en diversos contextos, desde impulsar cambios corporativos hasta reavivar chispas románticas e impulsar el crecimiento individual."
-    isReversed
-    items={[
-      {
-        title: 'Descripción:',
-        description:
-          '¿Es tu empresa la que aspira a una notable transformación? Sé testigo de lo que puede pasar en tu organización al experimentar una transformación integral. Nuestras estrategias personalizadas no solo aumentaran la productividad, sino que también cultivaran un entorno de trabajo más saludable. Desde programas de bienestar emocional hasta cambios culturales, descubre cómo nuestro enfoque optimizó la eficiencia y elevó el bienestar general de los empleados.',
-      },
-      {
-        title: 'Beneficios:',
-        description: `Aumento Sostenible de la Productividad. <br /> Reducción Significativa de la Rotación de Personal. <br /> Mejora Tangible en el Clima Laboral.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Empresa Imagen ',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Éxito Empresarial: <br /><span class="text-2xl">Impulsando la Productividad y el Bienestar Laboral</span>
-      </h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isAfterContent={true}
-    items={[
-      {
-        title: 'Descripción:',
-        description: `Embárcate en un conmovedor viaje con tu pareja para lograr superar desafíos significativos. Nuestra terapia de pareja especializada y el uso estratégico del eneagrama y la bio descodificación les permitiran reconstruir no solo la comunicación, sino también tener una conexión emocional más profunda. Descubre cómo la autoconciencia y la comprensión mutua pueden transformar su relación.`,
-      },
-      {
-        title: 'Beneficios:',
-        description: `Fortalecimiento de la Comunicación y la Conexión. <br /> Herramientas para Comprender y Apreciar las Diferencias. <br /> Renovación de la Relación en Niveles Profundos.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Relacion Amorosa Imagen',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Relaciones Amorosas: <br /><span class="text-2xl">Reconstruyendo la Conexión en Parejas</span>
-      </h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent={true}
-    items={[
-      {
-        title: 'Descripción:',
-        description: `Únete a un viaje transformador  y  experimenta un crecimiento personal significativo a través de la terapia individual. Desde la gestión del estrés hasta superar patrones de comportamiento limitantes, descubre cómo la combinación de biodescodificación y eneagrama desbloquea tu potencial oculto. La honestidad con uno mismo y la autoconciencia serán claves para una vida más plena y satisfactoria.`,
-      },
-      {
-        title: 'Beneficios:',
-        description: `Gestión Efectiva del Estrés y las Tensiones Personales. <br /> Superación de Patrones de Comportamiento Limitantes. <br /> Logro de un Mayor Sentido de Satisfacción Personal.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=1790&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'Terapia Individual Imagen',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
-        Terapia Individual: <br /><span class="text-2xl">Desbloqueando el Potencial Personal</span>
-      </h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Pricing Widget ******************* -->
-
-  <Pricing
-    title="Precios asequibles"
-    prices={[
-      {
-        title: 'Conferencias Inspiradoras',
-        subtitle:
-          'Ve y asiste a conferencias impactantes que desafían tu perspectiva y estimulan el crecimiento personal',
-        price: '0',
-        period: 'cop',
-        callToAction: {
-          target: '_blank',
-          text: 'Eleva tu Consciencia',
-          href: 'https://www.youtube.com/@bioenneagram',
-        },
-        hasRibbon: true,
-        ribbonTitle: 'gratis',
-      },
-      {
-        title: 'Terapia Individual',
-        subtitle: 'Descubre una experiencia terapéutica personalizada que se adapta a tus necesidades y metas',
-        price: '80k',
-        period: 'cop',
-        callToAction: {
-          target: '_blank',
-          text: 'Gestiona tus Emociones',
-          href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
-        },
-      },
-      {
-        title: 'Terapia para Parejas',
-        subtitle: 'Espacio seguro para abordar desafíos y mejorar la comunicación en pareja',
-        price: '150k',
-        period: 'cop',
-        callToAction: {
-          target: '_blank',
-          text: 'Crece en Pareja',
-          href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
-        },
-        hasRibbon: true,
-        ribbonTitle: 'popular',
-      },
-      {
-        title: 'Curso de introducción al eneagrama',
-        subtitle: 'Explora las complejidades de tu personalidad',
-        price: '254k',
-        period: 'cop',
-        callToAction: {
-          target: '_blank',
-          text: 'Desbloquea tu Poder',
-          href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
-        },
-      },
-    ]}
-  />
-
-  <!-- Testimonials Widget *********** -->
-
-  <Testimonials
-    title="Quienes Confiaron"
-    subtitle="Descubre lo que nuestros clientes tienen para decir sobre sus experiencias trabajando con nosotros."
-    testimonials={[
-      {
-        testimonial: `Mi experiencia con BioEnneagram ha sido realmente transformadora. El coach tiene una habilidad única para combinar el eneagrama y la biodescodificación de una manera que te guía hacia una profunda comprensión de ti mismo. En solo unas sesiones, he experimentado un cambio significativo en mi perspectiva y en la forma en que manejo los desafíos de la vida. Recomiendo encarecidamente esta terapia a cualquiera que busque un cambio positivo y duradero.`,
-        name: 'Alejandra',
-        job: 'Empleada en Huspost',
-        image: {
-          src: 'https://i.postimg.cc/V6fSq5R2/img-photo-profile-aleja.jpg',
-          alt: 'Alejandra Image',
-        },
-      },
-      {
-        testimonial: `No tengo palabras para expresar lo agradecido que estoy por haber descubierto BioEnneagram. El eneagrama y la biodescodificación han sido herramientas clave para comprender mis patrones de comportamiento y superar obstáculos emocionales. El coach tiene una manera de abordar los problemas con empatía y sabiduría. Mi vida ha dado un giro positivo, y no puedo agradecer lo suficiente por esta experiencia transformadora.`,
-        name: 'Juan David Cardona',
-        job: 'Fundador de Raices',
-        image: {
-          src: 'https://i.postimg.cc/zfSbHTnn/img-photo-profile-juanda.jpg',
-          alt: 'Juan David Cardona Image',
-        },
-      },
-      {
-        testimonial: `Después de participar en las sesiones de BioEnneagram, siento que finalmente estoy conectando con mi verdadero yo. El eneagrama y la biodescodificación me han brindado una visión profunda de mis bloqueos emocionales y cómo superarlos. El coach ha sido un guía excepcional en este viaje de autodescubrimiento. Mi perspectiva de la vida ha cambiado, y estoy experimentando una paz interior que nunca pensé posible.`,
-        name: 'Sara',
-        job: 'Violinista Profesional',
-        image: {
-          src: 'https://i.postimg.cc/XJsbTvbM/img-photo-profile-sara.jpg',
-          alt: 'Sara Image',
-        },
-      },
-      // {
-      //   testimonial: `Mi experiencia con BioEnneagram ha sido simplemente asombrosa. El coach tiene una capacidad única para llevar el eneagrama y la biodescodificación a un nivel totalmente nuevo. Cada sesión ha sido reveladora, y he experimentado cambios positivos en mi vida en un tiempo sorprendentemente corto. Recomiendo BioEnneagram a cualquiera que busque un enfoque integral para el crecimiento personal y la transformación.`,
-      //   name: 'Camilo Gonzalez',
-      //   job: 'Docente',
-      //   image: {
-      //     src: 'https://images.unsplash.com/photo-1554727242-741c14fa561c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
-      //     alt: 'Camilo Gonzalez Image',
-      //   },
-      // },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    title="Vamos a crear juntos"
-    subtitle="¿Listo para lograr un cambio significativo en tu vida?"
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Conversemos',
-        href: 'https://api.whatsapp.com/send/?phone=573004481819&text=Hola%2C+me+gustar%C3%ADa+agendar+un+espacio+contigo&type=phone_number&app_absent=0',
-      },
-    ]}
-  />
-
-  <!-- FAQs Widget ******************* -->
-
-  <FAQs
-    title="Preguntas Frecuentes"
-    items={[
-      {
-        title: '¿Qué es Bioenneagram y cómo se diferencia de la biodescodificación y el eneagrama por separado?',
-        description: `Bioeneagram es una integración única de biodescodificación y eneagrama. Combina el poder de la biodescodificación para entender las conexiones emocionales con el eneagrama para explorar los patrones de personalidad. Esta sinergia proporciona una visión más completa de cómo nuestras experiencias pasadas impactan nuestra personalidad y comportamiento actual.`,
-        icon: 'tabler:chevrons-right',
-      },
-      {
-        title: '¿En qué consiste la biodescodificación y cómo puede beneficiarme?',
-        description:
-          'La biodescodificación es un enfoque terapéutico que busca comprender la conexión entre las emociones y la salud. Trabaja desentrañando el significado emocional de los síntomas físicos o emocionales. Experimentar la biodescodificación puede ayudarte a comprender y liberar patrones emocionales que pueden estar afectando tu bienestar.',
-        icon: 'tabler:chevrons-right',
-      },
-      {
-        title:
-          '¿Es necesario tener experiencia previa en biodescodificación o eneagrama para participar en sesiones de Bioenneagram?',
-        description: `No se requiere experiencia previa. Las sesiones de Bioenneagram están diseñadas para adaptarse a todos los niveles de familiaridad con la biodescodificación y el eneagrama. Nuestros profesionales te guiarán a través del proceso, asegurándose de que te sientas cómodo y comprendas cada etapa.`,
-        icon: 'tabler:chevrons-right',
-      },
-      {
-        title: '¿Cómo se utiliza el eneagrama en sus servicios?',
-        description: `El eneagrama es una poderosa herramienta de autoconocimiento que utilizamos para entender los patrones de personalidad y motivaciones. Ofrecemos sesiones y talleres específicos de eneagrama para ayudarte a descubrir tu tipo y aplicar este conocimiento en tu vida cotidiana.`,
-        icon: 'tabler:chevrons-right',
-      },
-      {
-        title: '¿Ofrecen servicios en línea?',
-        description: `Sí, algunos de nuestros servicios están disponibles en línea. Esto proporciona flexibilidad para aquellos que prefieren participar desde la comodidad de su hogar. Comunícate con nosotros para obtener más detalles sobre la disponibilidad en línea.`,
-        icon: 'tabler:chevrons-right',
-      },
-    ]}
-  >
+  {contentSectionsData.map((sectionProps) => (
+    <Content
+      {...sectionProps}
+    >
+      <Fragment slot="content">
+        <h3 
+          class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2"
+          set:html={sectionProps.preRenderedContentTitle}
+        />
+      </Fragment>
+      <!-- ... -->
+    </Content>
+  ))}
+  
+  <Pricing {...pricingData} />
+  <Testimonials {...testimonialsData} />
+  <CallToActionWidget {...callToActionWidgetData} />
+  <FAQs {...faqsData}>
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </FAQs>
+  <Steps2 {...steps2Data} />
 
-  <!-- Steps2 Widget ****************** -->
-
-  <Steps2
-    title="Pónte en contacto con nosotros"
-    subtitle="¿Tienes alguna pregunta? Ponte en contacto con nosotros a través del siguiente formulario. Estamos aquí para ayudarte!"
-    callToAction={{
-      text: 'Comentanos',
-      target: '_blank',
-      href: 'https://forms.gle/H1dRuGBHvAGP9hy3A',
-    }}
-    items={[
-      {
-        title: 'Escribenos',
-        description: 'bioenneagramcoach@gmail.com',
-        href: 'mailto:bioenneagramcoach@gmail.com?Subject=Interesado%20en%20los%20productos',
-        icon: 'tabler:mail',
-      },
-      {
-        title: 'Contactanos',
-        description: '+57 (300) 448-1819',
-        href: 'tel:+573004481819',
-        icon: 'tabler:headset',
-      },
-      {
-        title: 'Siguenos',
-        description: '@bioenneagramcoach',
-        href: 'https://www.instagram.com/bioenneagramcoach/',
-        icon: 'tabler:brand-instagram',
-      },
-    ]}
-  />
-
- <!-- BlogLatestPost Widget **************** -->
-  <!-- 
-  <BlogLatestPosts
-    id="blog"
-    title="Manténgase informado con el blog de Bioenneagram"
-    information={`Explore our collection of articles, guides, and tutorials on web development, design trends, and using bioenneagram effectively for your projects.`}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </BlogLatestPosts> -->
+  {/* ... BlogLatestPosts ... */}
 </Layout>

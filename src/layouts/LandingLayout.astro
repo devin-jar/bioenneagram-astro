@@ -1,15 +1,45 @@
 ---
+// src/layouts/LandingLayout.astro
 import PageLayout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 
-import { headerData } from '~/navigation';
+import { getHeaderData } from '~/navigation';
 import type { MetaData } from '~/types';
+
+// --- INICIO DE LÓGICA i18n PARA ESTE LAYOUT ---
+import { getTranslator, defaultLang, getTranslationsForLocale } from '~/i18n'; // Asumiendo que getTranslationsForLocale existe
+
+const currentLocaleForLanding = Astro.currentLocale || defaultLang;
+const translationsForLanding = getTranslationsForLocale(currentLocaleForLanding); // Usar la función helper
+const t = getTranslator(translationsForLanding || {}, currentLocaleForLanding); // Asegurar que translationsForLanding es un objeto
+// --- FIN DE LÓGICA i18n ---
 
 export interface Props {
   metadata?: MetaData;
 }
 
 const { metadata } = Astro.props;
+
+// Llama a getHeaderData con 't' y 'currentLocaleForLanding'
+const headerNavData = getHeaderData(t, currentLocaleForLanding);
+
+// Lógica para obtener solo el tercer link (índice 2) si existe y si headerNavData y headerNavData.links existen
+const specificHeaderLinks = 
+  headerNavData && 
+  Array.isArray(headerNavData.links) && 
+  headerNavData.links.length > 2 
+    ? [headerNavData.links[2]] 
+    : undefined; // O [] si prefieres un array vacío en lugar de undefined
+
+// Define las acciones para este layout específico.
+// El texto 'Reserva' debería venir de tus traducciones.
+const landingHeaderActions = [
+  {
+    text: t('nav.actions.book'), // Usar la clave de traducción
+    href: 'https://booking.bioenneagram.com/book',
+    target: '_blank' // Buena práctica para enlaces externos
+  },
+];
 ---
 
 <PageLayout metadata={metadata}>
@@ -19,17 +49,14 @@ const { metadata } = Astro.props;
   <Fragment slot="header">
     <slot name="header">
       <Header
-        links={headerData?.links[2] ? [headerData.links[2]] : undefined}
-        actions={[
-          {
-            text: 'Reserva',
-            href: 'https://booking.bioenneagram.com/book'
-          },
-        ]}
+        links={specificHeaderLinks}
+        actions={landingHeaderActions}
         showToggleTheme
         position="right"
+        currentLocale={currentLocaleForLanding} 
+        isSticky={true}
       />
     </slot>
   </Fragment>
-  <slot />
+  <slot /> {/* Contenido principal de la página de aterrizaje */}
 </PageLayout>

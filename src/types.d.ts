@@ -1,282 +1,164 @@
+// src/types.ts
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes, HTMLInputTypeAttribute } from 'astro/types';
 
-export interface Post {
-  /** A unique ID number that identifies a post. */
-  id: string;
+// --- TIPOS DE CONFIGURACIÓN GLOBAL (para config.ts) ---
 
-  /** A post’s unique slug – part of the post’s URL based on its name, i.e. a post called “My Sample Page” has a slug “my-sample-page”. */
-  slug: string;
-
-  /**  */
-  permalink: string;
-
-  /**  */
-  publishDate: Date;
-  /**  */
-  updateDate?: Date;
-
-  /**  */
-  title: string;
-  /** Optional summary of post content. */
-  excerpt?: string;
-  /**  */
-  image?: string;
-
-  /**  */
-  category?: string;
-  /**  */
-  tags?: Array<string>;
-  /**  */
-  author?: string;
-
-  /**  */
-  metadata?: MetaData;
-
-  /**  */
-  draft?: boolean;
-
-  /**  */
-  Content?: AstroComponentFactory;
-  content?: string;
-
-  /**  */
-  readingTime?: number;
+/** Representa el objeto de configuración de título en config.ts */
+export interface GlobalTitleConfig {
+  default: string | ((t: Function) => string);
+  template?: string;
 }
 
-export interface MetaData {
-  title?: string;
-  ignoreTitleTemplate?: boolean;
-
-  canonical?: string;
-
+/** Representa el objeto de configuración global de metadatos en config.ts */
+export interface GlobalMetaDataConfig {
+  title?: GlobalTitleConfig;
+  description?: string | ((t: Function) => string);
   robots?: MetaDataRobots;
-
-  description?: string;
-
   openGraph?: MetaDataOpenGraph;
   twitter?: MetaDataTwitter;
+  // Puedes añadir más configuraciones globales aquí
 }
 
-export interface MetaDataRobots {
-  index?: boolean;
-  follow?: boolean;
-}
+// --- METADATA Y SEO ---
 
+/** Representa una imagen para metadatos (Open Graph, Twitter, JSON-LD) */
 export interface MetaDataImage {
-  url: string;
+  url: string | URL;
   width?: number;
   height?: number;
-}
-
-export interface MetaDataOpenGraph {
-  url?: string;
-  siteName?: string;
-  images?: Array<MetaDataImage>;
-  locale?: string;
+  alt?: string;
   type?: string;
+  secureUrl?: string;
 }
 
+/** Propiedades para Open Graph, alineadas con AstroSeo */
+export interface MetaDataOpenGraph {
+  url?: string | URL;
+  siteName?: string;
+  title?: string;
+  description?: string;
+  images?: Array<MetaDataImage | string | URL>; // Permitimos strings/URL como atajo
+  locale?: string;
+  type?: 'website' | 'article' | 'book' | 'profile' | string;
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    expirationTime?: string;
+    author?: string | string[];
+    section?: string;
+    tag?: string[];
+  };
+}
+
+/** Propiedades para Twitter Cards, alineadas con AstroSeo */
 export interface MetaDataTwitter {
   handle?: string;
   site?: string;
-  cardType?: string;
-}
-
-export interface Image {
-  src: string;
-  alt?: string;
-}
-
-export interface Video {
-  src: string;
-  type?: string;
-}
-
-export interface Widget {
-  id?: string;
-  isDark?: boolean;
-  bg?: string;
-  classes?: Record<string, string>;
-}
-
-export interface Headline {
+  cardType?: 'summary' | 'summary_large_image' | 'app' | 'player';
   title?: string;
-  subtitle?: string;
-  tagline?: string;
-  classes?: Record<string, string>;
-}
-
-interface TeamMember {
-  name?: string;
-  job?: string;
-  image?: Image;
-  socials?: Array<Social>;
   description?: string;
-  classes?: Record<string, string>;
+  image?: string;
+  imageAlt?: string;
 }
 
-interface Social {
-  icon?: string;
-  href?: string;
+/** Directivas para robots meta tag */
+export interface MetaDataRobots {
+  index?: boolean;
+  follow?: boolean;
+  noindex?: boolean;
+  nofollow?: boolean;
+  maxSnippet?: number;
+  maxImagePreview?: 'none' | 'standard' | 'large';
+  maxVideoPreview?: number;
+  noarchive?: boolean;
+  unavailable_after?: string;
 }
 
-export interface Stat {
-  amount?: number;
-  title?: string;
-  icon?: string;
+/** Información para un enlace <link rel="alternate" hreflang="..."> */
+export interface AlternateLinkInfo {
+  hreflang: string; // Código de idioma-región (ej. 'es-ES')
+  href: string;     // URL absoluta completa
 }
+
+/** Interfaz principal para los metadatos de una página */
+export interface MetaData {
+  title?: string | ((t: Function) => string);
+  description?: string | ((t: Function) => string);
+  canonical?: string | URL;
+  robots?: MetaDataRobots;
+  openGraph?: MetaDataOpenGraph;
+  twitter?: MetaDataTwitter;
+  alternateLinks?: AlternateLinkInfo[];
+  slug?: string;
+  lang?: string;
+
+  // Atajos comunes
+  ogImage?: string | URL | MetaDataImage | Array<string | URL | MetaDataImage>;
+  type?: 'website' | 'article' | string;
+  pubDate?: string | Date;
+  modDate?: string | Date;
+  author?: string;
+  keywords?: string[] | string;
+  ignoreTitleTemplate?: boolean;
+}
+
+// --- CONTENIDO Y ESTRUCTURA DEL SITIO ---
+export interface Post { /* ... (sin cambios si ya estaba bien) ... */
+  id: string; slug: string; permalink: string; publishDate: Date; updateDate?: Date; title: string;
+  excerpt?: string; image?: string | MetaDataImage; category?: string; tags?: Array<string>;
+  author?: string; metadata?: MetaData; draft?: boolean; Content?: AstroComponentFactory;
+  content?: string; readingTime?: number;
+}
+export interface Image { src: string; alt?: string; }
+export interface Video { src: string; type?: string; }
+export interface Link { text?: string; href?: string; ariaLabel?: string; icon?: string; target?: '_self' | '_blank' | '_parent' | '_top'; }
+export interface ActionLink extends Link, HTMLAttributes<'a'> { variant?: 'primary' | 'secondary' | 'tertiary' | 'link' | string; }
+export interface MenuLink extends Link { links?: Array<MenuLink>; }
+
+// --- WIDGETS Y COMPONENTES DE UI ---
+export interface Widget {
+  id?: string; isDark?: boolean; bg?: string;
+  classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; /* Cambiado classes a class */
+}
+export interface Headline { title?: string; subtitle?: string; tagline?: string; classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
 
 export interface Item {
-  title?: string;
-  description?: string;
-  icon?: string;
-  classes?: Record<string, string>;
-  callToAction?: CallToAction;
-  image?: Image;
+  title?: string; description?: string; icon?: string; href?: string; callToAction?: ActionLink; image?: Image;
+  classes?: Record<string, string>; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>;
 }
+export interface Price { title?: string; subtitle?: string; description?: string; price?: number | string; period?: string; items?: Array<Item>; callToAction?: ActionLink; hasRibbon?: boolean; ribbonTitle?: string; }
+export interface Testimonial { title?: string; testimonial?: string; name?: string; job?: string; image?: Image; }
+export interface TeamMember { name?: string; job?: string; image?: Image; socials?: Array<Link>; description?: string; class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>; }
+export interface Stat { amount?: number | string; title?: string; icon?: string; }
 
-export interface Price {
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  price?: number;
-  period?: string;
-  items?: Array<Item>;
-  callToAction?: CallToAction;
-  hasRibbon?: boolean;
-  ribbonTitle?: string;
+// Campos de Formulario (sin cambios significativos si ya estaban bien)
+export interface Input { type: HTMLInputTypeAttribute; name: string; label?: string; autocomplete?: string; placeholder?: string; value?: string | number; required?: boolean; }
+export interface Textarea { name: string; label?: string; placeholder?: string; rows?: number; value?: string; required?: boolean; }
+export interface Checkbox { name: string; label?: string; checked?: boolean; required?: boolean; }
+export interface RadioOption { label: string; value: string; }
+export interface RadioGroup { name: string; label?: string; options: RadioOption[]; value?: string; required?: boolean; }
+export interface SelectOption { label: string; value: string; disabled?: boolean; }
+export interface Select { name: string; label?: string; options: SelectOption[]; value?: string; required?: boolean; placeholder?: string; }
+export interface Disclaimer { label?: string; }
+export interface Form { inputs?: Array<Input>; radioGroups?: Array<RadioGroup>; selects?: Array<Select>; checkboxes?: Array<Checkbox>; textarea?: Textarea; disclaimer?: Disclaimer; button?: string; description?: string; }
+
+// Props para componentes de Widgets (sin cambios significativos si ya estaban bien, solo asegurar consistencia con Widget/Headline)
+export interface NoteProps extends Widget { title?: string; values?: string | string[]; content?: string; iconName?: string; }
+export interface HeroProps extends Headline, Widget { content?: string; image?: Image; actions?: ActionLink[]; isReversed?: boolean; }
+export interface FeaturesProps extends Headline, Widget { items: Array<Item>; columns?: number; defaultIcon?: string; image?: Image; video?: Video; isReversed?: boolean; isBeforeContent?: boolean; isAfterContent?: boolean; callToAction?: ActionLink; }
+export interface ContentProps extends Headline, Widget {
+  [x: string]: string; content?: string; image?: Image; items?: Array<Item>; columns?: number; isReversed?: boolean; isAfterContent?: boolean; callToAction?: ActionLink;
 }
-
-export interface Testimonial {
-  title?: string;
-  testimonial?: string;
-  name?: string;
-  job?: string;
-  image?: string | unknown;
-}
-
-export interface Input {
-  type: HTMLInputTypeAttribute;
-  name: string;
-  label?: string;
-  autocomplete?: string;
-  placeholder?: string;
-}
-
-export interface Textarea {
-  label?: string;
-  placeholder?: string;
-  rows?: number;
-}
-
-export interface Disclaimer {
-  label?: string;
-}
-
-// COMPONENTS
-export interface CallToAction extends HTMLAttributes<a> {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'link';
-  text?: string;
-  icon?: string;
+export interface StepsProps extends Headline, Widget { items: Array<Item>; image?: Image; callToAction?: ActionLink; isReversed?: boolean; }
+export interface PricingProps extends Headline, Widget { prices: Array<Price>; }
+export interface TestimonialsProps extends Headline, Widget { testimonials: Array<Testimonial>; callToAction?: ActionLink; }
+export interface FaqsProps extends Headline, Widget { items: Array<Item>; columns?: number; iconUp?: string; iconDown?: string; }
+export interface CallToActionProps extends Headline, Widget {
+  actions?: ActionLink[]; text?: string; href?: string; icon?: string; target?: string; variant?: string; type?: string;
   classes?: Record<string, string>;
 }
-
-export interface ItemGrid {
-  items?: Array<Item>;
-  columns?: number;
-  defaultIcon?: string;
-  classes?: Record<string, string>;
-}
-
-export interface Collapse {
-  iconUp?: string;
-  iconDown?: string;
-  items?: Array<Item>;
-  columns?: number;
-  classes?: Record<string, string>;
-}
-
-export interface Form {
-  inputs?: Array<Input>;
-  textarea?: Textarea;
-  disclaimer?: Disclaimer;
-  button?: string;
-  description?: string;
-}
-
-// WIDGETS
-export interface Hero extends Headline, Widget {
-  content?: string;
-  image?: string | unknown;
-  callToAction1?: CallToAction;
-  callToAction2?: CallToAction;
-  isReversed?: boolean;
-}
-
-export interface Team extends Headline, Widget {
-  team?: Array<TeamMember>;
-}
-
-export interface Stats extends Headline, Widget {
-  stats?: Array<Stat>;
-}
-
-export interface Pricing extends Headline, Widget {
-  prices?: Array<Price>;
-}
-
-export interface Testimonials extends Headline, Widget {
-  testimonials?: Array<Testimonial>;
-  callToAction?: CallToAction;
-}
-
-export interface Brands extends Headline, Widget {
-  icons?: Array<string>;
-  images?: Array<Image>;
-}
-
-export interface Features extends Headline, Widget {
-  image?: string | unknown;
-  video?: Video;
-  items: Array<Item>;
-  columns: number;
-  defaultIcon?: string;
-  callToAction1?: CallToAction;
-  callToAction2?: CallToAction;
-  isReversed?: boolean;
-  isBeforeContent?: boolean;
-  isAfterContent?: boolean;
-}
-
-export interface Faqs extends Headline, Widget {
-  iconUp?: string;
-  iconDown?: string;
-  items?: Array<Item>;
-  columns?: number;
-}
-
-export interface Steps extends Headline, Widget {
-  items: Array<{
-    title: string;
-    description?: string;
-    icon?: string;
-    href?: string;
-    classes?: Record<string, string>;
-  }>;
-  callToAction?: string | CallToAction;
-  image?: string | Image;
-  isReversed?: boolean;
-}
-
-export interface Content extends Headline, Widget {
-  content?: string;
-  image?: string | unknown;
-  items?: Array<Item>;
-  columns?: number;
-  isReversed?: boolean;
-  isAfterContent?: boolean;
-  callToAction?: CallToAction;
-}
-
-export interface Contact extends Headline, Form, Widget {}
+export interface ContactProps extends Headline, Form, Widget { }
+export interface TeamProps extends Headline, Widget { members: Array<TeamMember>; }
+export interface StatsProps extends Headline, Widget { stats: Array<Stat>; }
+export interface BrandsProps extends Headline, Widget { icons?: Array<string>; images?: Array<Image>; }

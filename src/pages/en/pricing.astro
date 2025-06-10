@@ -1,0 +1,135 @@
+---
+// src/pages/en/pricing.astro---
+// src/pages/pricing.astro
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Prices from '~/components/widgets/Pricing.astro'; // Cambiado a 'Prices'
+import FAQs from '~/components/widgets/FAQs.astro';
+import Steps from '~/components/widgets/Steps.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { noindex: true, follow: false },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'es_ES', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
+  }
+};
+
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
+
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
+
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+
+const pricingPlans = t('pricingPage.pricesWidget.plans', {}, {defaultValue: []});
+const pricingFeatures = t('pricingPage.featuresPricing.items', {}, {defaultValue: []});
+const pricingSteps = t('pricingPage.stepsWidget.items', {}, {defaultValue: []});
+const pricingFaqs = t('pricingPage.faqsPricing.items', {}, {defaultValue: []});
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline={t('pricingPage.heroText.tagline')}
+    title={t('pricingPage.heroText.title')}
+    subtitle={t('pricingPage.heroText.subtitle')}
+  />
+
+  <Prices
+    title={t('pricingPage.pricesWidget.title')}
+    subtitle={t('pricingPage.pricesWidget.subtitle')}
+    prices={pricingPlans.map(plan => ({
+      ...plan, // Pasa todas las props del plan desde JSON
+      callToAction: { // Construye callToAction aquí
+        target: '_blank', // Asume blank, o ponlo en JSON
+        text: plan.callToActionText,
+        href: plan.href || '#', // Añade href al JSON de cada plan
+      }
+    }))}
+  />
+
+  <Features3
+    title={t('pricingPage.featuresPricing.title')}
+    subtitle={t('pricingPage.featuresPricing.subtitle')}
+    columns={2}
+    items={pricingFeatures}
+    classes={{ container: 'max-w-5xl' }}
+  />
+
+  <Steps
+    title={t('pricingPage.stepsWidget.title')}
+    tagline={t('pricingPage.stepsWidget.tagline')}
+    isReversed={true}
+    items={pricingSteps}
+    image={{
+      src: 'https://images.unsplash.com/photo-1536816579748-4ecb3f03d72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      alt: t('pricingPage.stepsWidget.imageAlt', {}, {defaultValue: 'Steps image'}) // Añadir imageAlt al JSON
+    }}
+  />
+
+  <FAQs
+    title={t('pricingPage.faqsPricing.title')}
+    subtitle={t('pricingPage.faqsPricing.subtitle')}
+    columns={1}
+    items={pricingFaqs}
+  />
+
+  <CallToAction
+    title={t('pricingPage.callToActionPricing.title')}
+    subtitle={t('pricingPage.callToActionPricing.subtitle')}
+    actions={[{ variant: 'primary', text: t('pricingPage.callToActionPricing.actionText'), href: '/' }]}
+  />
+</Layout>

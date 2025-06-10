@@ -1,0 +1,164 @@
+---
+// src/pages/en/about.astro (o el archivo para tu idioma por defecto, ej. src/pages/about.astro)
+import Layout from '~/layouts/PageLayout.astro';
+
+// Importar componentes
+import Features2 from '~/components/widgets/Features2.astro';
+import Features3 from '~/components/widgets/Features3.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { noindex: true, follow: false },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'de_DE', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
+  }
+};
+
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
+
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
+
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+
+// URLs de imágenes (pueden ir al JSON si varían por idioma)
+const heroImageAbout = 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';
+const features3ImageOtros = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80';
+
+// Obtener datos de los arrays del JSON con fallback
+const statsItems = t('aboutpage.stats.items', {}, { defaultValue: [] });
+const features3EnfoquesItems = t('aboutpage.features3_enfoques.items', {}, { defaultValue: [] });
+const features3OtrosItems = t('aboutpage.features3_otros.items', {}, { defaultValue: [] });
+const steps2ValoresItems = t('aboutpage.steps2_valores.items', {}, { defaultValue: [] });
+const steps2LogrosItems = t('aboutpage.steps2_logros.items', {}, { defaultValue: [] });
+const features2UbicacionesItems = t('aboutpage.features2_ubicaciones.items', {}, { defaultValue: [] });
+const features2SoporteItems = t('aboutpage.features2_soporte.items', {}, { defaultValue: [] });
+
+// Para el título del Hero con placeholder
+const heroTitleAboutHtml = t('aboutpage.hero.title', {
+    '0': '<span class="text-accent dark:text-white highlight">Beautiful Website Templates</span>' // Ajusta este texto si es específico de "Nosotros"
+});
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    tagline={t('aboutpage.hero.tagline')}
+    image={{
+      src: heroImageAbout,
+      alt: t('aboutpage.hero.imageAlt')
+    }}
+  >
+    <Fragment slot="title" set:html={heroTitleAboutHtml} />
+    <Fragment slot="subtitle">
+      {t('aboutpage.hero.subtitle')}
+    </Fragment>
+  </Hero>
+
+  <Stats
+    title={t('aboutpage.stats.title')}
+    stats={statsItems}
+  />
+
+  <Features3
+    title={t('aboutpage.features3_enfoques.title')}
+    subtitle={t('aboutpage.features3_enfoques.subtitle')}
+    columns={3}
+    isBeforeContent={true}
+    items={features3EnfoquesItems}
+  />
+
+  <Features3
+    columns={3}
+    isAfterContent={true}
+    items={features3OtrosItems}
+    image={{
+      src: features3ImageOtros,
+      alt: t('aboutpage.features3_otros.imageAlt')
+    }}
+  />
+
+  <Steps2
+    title={t('aboutpage.steps2_valores.title')}
+    subtitle={t('aboutpage.steps2_valores.subtitle')}
+    items={steps2ValoresItems}
+  />
+
+  <Steps2
+    title={t('aboutpage.steps2_logros.title')}
+    subtitle={t('aboutpage.steps2_logros.subtitle')}
+    isReversed={true}
+    callToAction={{
+      text: t('aboutpage.steps2_logros.callToActionText'),
+      href: '/', // Este href podría ser dinámico o del JSON
+    }}
+    items={steps2LogrosItems}
+  />
+
+  <Features2
+    title={t('aboutpage.features2_ubicaciones.title')}
+    tagline={t('aboutpage.features2_ubicaciones.tagline')}
+    columns={4}
+    items={features2UbicacionesItems}
+  />
+
+  <Features2
+    title={t('aboutpage.features2_soporte.title')}
+    tagline={t('aboutpage.features2_soporte.tagline')}
+    columns={2}
+    items={features2SoporteItems}
+  />
+</Layout>

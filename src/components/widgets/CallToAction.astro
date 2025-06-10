@@ -1,16 +1,8 @@
 ---
 import WidgetWrapper from '../ui/WidgetWrapper.astro';
-import type { CallToAction, Widget } from '~/types';
+import type { CallToActionProps as Props } from '~/types';
 import Headline from '~/components/ui/Headline.astro';
 import Button from "~/components/ui/Button.astro"
-
-interface Props extends Widget {
-  title?: string;
-  subtitle?: string;
-  tagline?: string;
-  callToAction?: CallToAction;
-  actions?: string | CallToAction[];
-}
 
 const {
   title = await Astro.slots.render('title'),

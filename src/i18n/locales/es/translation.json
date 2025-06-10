@@ -1,0 +1,660 @@
+
+{
+  "site": {
+    "title": "Bioenneagram Coach | Eneagrama y Biodescodificación",
+    "description": "Descubre tu esencia y transforma tu vida con Bioenneagram, fusionando Eneagrama y Biodescodificación para un crecimiento personal profundo."
+  },
+  "jsonld": {
+    "organization": {
+      "name": "Bioenneagram Coach" 
+    },
+    "website": {
+      "name": "Sitio Web de Bioenneagram Coach"
+    },
+    "article": {
+      "defaultAuthor": "Alexander Zapata Rendon"
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "blog": "Blog",
+    "blogList": "Lista de Blog",
+    "article": "Artículo",
+    "articleMDX": "Artículo (con MDX)",
+    "categoryPage": "Página de Categoría",
+    "tagPage": "Página de Etiqueta",
+    "aboutUs": "Nosotros",
+    "contactUs": "Contáctanos",
+    "homes": "Demos",
+    "bioenneagramHome": "Bioenneagram",
+    "pages": "Páginas",
+    "featuresAnchor": "Características (Ancla)",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "terms": "Términos",
+    "privacyPolicy": "Política de Privacidad",
+    "landing": "Landing Pages",
+    "leadGeneration": "Generación de Leads",
+    "longFormSales": "Ventas (Formato Largo)",
+    "clickThrough": "Click-Through",
+    "productDetails": "Detalles de Producto (o Servicios)",
+    "comingSoon": "Próximamente o Pre-Lanzamiento",
+    "subscription": "Suscripción",
+    "widgets": "Widgets",
+    "actions": {
+      "book": "Reserva"
+    }
+  },
+  "footer": {
+    "products": {
+      "title": "Productos",
+      "retreat": "Retiro",
+      "individualTherapy": "Terapia individual",
+      "couplesTherapy": "Terapia para parejas",
+      "manifestationWorkshop": "Taller de manifestaciones",
+      "emotionsWorkshop": "Taller de emociones",
+      "brainIntroCourse": "Curso de introducción al cerebro",
+      "enneagramIntroCourse": "Curso de introducción al eneagrama",
+      "enneagramGameCourse": "Curso de eneagrama game",
+      "biodescodificacionIntroCourse": "Curso de introducción a la biodescodificación"
+    },
+    "companies": {
+      "title": "Empresas",
+      "teamWorkshop": "Taller de equipos",
+      "conferences": "Conferencias",
+      "consultationPackage": "Paquete de consultas"
+    },
+    "support": {
+      "title": "Soporte",
+      "contactUs": "Contáctanos",
+      "aboutUs": "Nosotros",
+      "blog": "Blog",
+      "professionalServices": "Servicios Profesionales",
+      "socialImpact": "Impacto Social",
+      "store": "Tienda",
+      "location": "Ubicación"
+    },
+    "secondaryLinks": {
+      "terms": "Términos y Condiciones",
+      "privacy": "Políticas de Privacidad"
+    },
+    "social": {
+      "ariaLabelX": "Perfil de X (Twitter) de Bioenneagram",
+      "ariaLabelInstagram": "Perfil de Instagram de Bioenneagram",
+      "ariaLabelFacebook": "Página de Facebook de Bioenneagram",
+      "ariaLabelWhatsapp": "Contactar por WhatsApp con Bioenneagram",
+      "whatsappMessage": "Hola, me gustaría agendar un espacio contigo",
+      "ariaLabelSpotify": "Podcast de Bioenneagram en Spotify",
+      "ariaLabelRSS": "Feed RSS de Bioenneagram"
+    },
+    "footNote": {
+      "developedBy": "Desarrollado por",
+      "rightsReserved": "Todos los derechos reservados."
+    }
+  },
+  "routes": { 
+    "home": "/", 
+    "about": "nosotros",
+    "contact": "contacto",
+    "terms": "terminos",
+    "privacy": "privacidad",
+    "services": "servicios",
+    "blog": "blog", 
+    "pricing": "precios",
+    "productRetreat": "productos/retiro",
+    "productIndividualTherapy": "productos/terapia-individual",
+    "productCouplesTherapy": "productos/terapia-parejas",
+    "workshopManifestation": "talleres/manifestacion",
+    "workshopEmotions": "talleres/emociones",
+    "courseIntroBrain": "cursos/introduccion-cerebro",
+    "courseIntroEnneagram": "cursos/introduccion-eneagrama",
+    "courseEnneagramGame": "landing/curso-eneagrama-game", 
+    "courseIntroBiodecoding": "cursos/introduccion-biodescodificacion",
+    "servicesTeamWorkshop": "servicios/taller-equipos",
+    "servicesConferences": "servicios/conferencias",
+    "servicesConsultationPackage": "servicios/paquete-consultas",
+    "socialImpact": "impacto-social",
+    "landingLeadGeneration": "landing/generacion-leads",
+    "landingSales": "landing/ventas",
+    "building": "construyendo"
+  },
+  "videoask": {
+    "triggerText": "Hablemos"
+  },
+  "homepage": {
+    "meta": {
+      "title": "Bioenneagram Coach | Eneagrama y Biodescodificación",
+      "description": "Descubre tus fortalezas y mejora tus relaciones con Bioenneagram. Expertos en Eneagrama y Biodescodificación para tu crecimiento personal."
+    },
+    "hero": {
+      "tagline": "Crecimiento Personal",
+      "title": "Listo para descubrir los secretos de <br /> tu personalidad : <0>ENEAGRAMA - BIODESCODIFICACIÓN</0><br />",
+      "heroHighlight": "ENEAGRAMA - BIODESCODIFICACIÓN",
+      "subtitle": "Descubre tus fortalezas, debilidades y cómo mejorar tus relaciones personales con <1>Bioenneagram</1>.",
+      "actionText": "Agendar Ahora", 
+      "imageAlt": "Imagen principal de Bioenneagram" 
+    },
+    "note": {
+      "philosophyTitle": "Filosofía:", 
+      "philosophyValues": "Alegría, Tranquilidad y Esperanza" 
+    },
+    "features": {
+      "title": "¿Por qué escoger Bioenneagram?",
+      "subtitle": "Cada una de las siguientes características es la propuesta de valor de Bioenneagram.",
+      "items": [
+        {
+          "title": "Experimenta un cambio real y duradero en tu vida con nuestros servicios",
+          "description": "Desde terapias individuales hasta retiros de desarrollo personal, cada intervención está diseñada para producir resultados tangibles. Alcanza tus metas de bienestar y crecimiento personal de manera eficiente y significativa.",
+          "icon": "tabler:report-analytics"
+        },
+        {
+          "title": "Confía en un profesional dedicado a tu bienestar",
+          "description": "Altamente capacitado y comprometido con brindar un servicio de calidad. La profesionalidad se refleja en cada interacción, desde sesiones terapéuticas hasta talleres y conferencias, proporcionándote un ambiente de confianza y respeto.",
+          "icon": "tabler:file-certificate"
+        },
+        {
+          "title": "Tu paz mental es prioridad",
+          "description": "Creamos entornos que fomenten la calma y la tranquilidad. Ya sea que estés participando en una terapia individual o en un relajante retiro, nuestro objetivo es que te sientas tranquilo y en armonía. Aquí, encontrarás un espacio seguro para explorar y crecer.",
+          "icon": "tabler:brain"
+        },
+        {
+          "title": "Abraza tu camino hacia el desarrollo personal",
+          "description": "Ofrecemos no solo terapias, sino también retiros, talleres y cursos diseñados para nutrir tu crecimiento. Cada experiencia está diseñada para desbloquear tu potencial y fomentar un desarrollo integral en todas las áreas de tu vida.",
+          "icon": "tabler:rocket"
+        },
+        {
+          "title": "El bienestar no debería ser un lujo inalcanzable",
+          "description": "Nos esforzamos por hacer nuestros servicios accesibles para todos. Asequibilidad no significa comprometer la calidad; significa que todos merecen acceder a recursos que fomenten su bienestar. Descubre cómo el cuidado de tu salud mental puede ser una inversión asequible y valiosa en tu vida.",
+          "icon": "tabler:receipt-2"
+        }
+      ]
+    },
+    "contentSections": [ 
+      {
+        "id": "empresarial", 
+        "mainTitle": "Construye tu Éxito",
+        "mainSubtitle": "Sumérgete en un viaje a tu mundo interior y experimenta un cambio. Explora cómo las soluciones a medida de Bioenneagram son fundamentales para impulsar el éxito en diversos contextos, desde impulsar cambios corporativos hasta reavivar chispas románticas e impulsar el crecimiento individual.",
+        "blockTitle": "Éxito Empresarial: <br /><0>Impulsando la Productividad y el Bienestar Laboral</0>",
+        "items": [
+          {
+            "title": "Descripción:",
+            "description": "¿Es tu empresa la que aspira a una notable transformación? Sé testigo de lo que puede pasar en tu organización al experimentar una transformación integral. Nuestras estrategias personalizadas no solo aumentarán la productividad, sino que también cultivarán un entorno de trabajo más saludable. Desde programas de bienestar emocional hasta cambios culturales, descubre cómo nuestro enfoque optimizó la eficiencia y elevó el bienestar general de los empleados."
+          },
+          {
+            "title": "Beneficios:",
+            "description": "Aumento Sostenible de la Productividad. <br /> Reducción Significativa de la Rotación de Personal. <br /> Mejora Tangible en el Clima Laboral."
+          }
+        ],
+        "imageAlt": "Imagen de éxito empresarial"
+      },
+      {
+        "id": "parejas",
+        "blockTitle": "Relaciones Amorosas: <br /><0>Reconstruyendo la Conexión en Parejas</0>",
+        "items": [
+          {
+            "title": "Descripción:",
+            "description": "Embárcate en un conmovedor viaje con tu pareja para lograr superar desafíos significativos. Nuestra terapia de pareja especializada y el uso estratégico del eneagrama y la bio descodificación les permitirán reconstruir no solo la comunicación, sino también tener una conexión emocional más profunda. Descubre cómo la autoconciencia y la comprensión mutua pueden transformar su relación."
+          },
+          {
+            "title": "Beneficios:",
+            "description": "Fortalecimiento de la Comunicación y la Conexión. <br /> Herramientas para Comprender y Apreciar las Diferencias. <br /> Renovación de la Relación en Niveles Profundos."
+          }
+        ],
+        "imageAlt": "Imagen de relaciones amorosas"
+      },
+      {
+        "id": "individual",
+        "blockTitle": "Terapia Individual: <br /><0>Desbloqueando el Potencial Personal</0>",
+        "items": [
+          {
+            "title": "Descripción:",
+            "description": "Únete a un viaje transformador y experimenta un crecimiento personal significativo a través de la terapia individual. Desde la gestión del estrés hasta superar patrones de comportamiento limitantes, descubre cómo la combinación de biodescodificación y eneagrama desbloquea tu potencial oculto. La honestidad con uno mismo y la autoconciencia serán claves para una vida más plena y satisfactoria."
+          },
+          {
+            "title": "Beneficios:",
+            "description": "Gestión Efectiva del Estrés y las Tensiones Personales. <br /> Superación de Patrones de Comportamiento Limitantes. <br /> Logro de un Mayor Sentido de Satisfacción Personal."
+          }
+        ],
+        "imageAlt": "Imagen de terapia individual"
+      }
+    ],
+    "pricing": {
+      "title": "Precios asequibles",
+      "items": [
+        {
+          "title": "Conferencias Inspiradoras",
+          "subtitle": "Ve y asiste a conferencias impactantes que desafían tu perspectiva y estimulan el crecimiento personal",
+          "price": "0",
+          "period": "cop",
+          "callToActionText": "Eleva tu Consciencia",
+          "ribbonTitle": "gratis"
+        },
+        {
+          "title": "Terapia Individual",
+          "subtitle": "Descubre una experiencia terapéutica personalizada que se adapta a tus necesidades y metas",
+          "price": "100",
+          "period": "EUR",
+          "callToActionText": "Gestiona tus Emociones"
+        },
+        {
+          "title": "Terapia para Parejas",
+          "subtitle": "Espacio seguro para abordar desafíos y mejorar la comunicación en pareja",
+          "price": "180",
+          "period": "EUR",
+          "callToActionText": "Crece en Pareja",
+          "ribbonTitle": "popular"
+        },
+        {
+          "title": "Curso de introducción al eneagrama",
+          "subtitle": "Explora las complejidades de tu personalidad",
+          "price": "350",
+          "period": "EUR",
+          "callToActionText": "Desbloquea tu Poder"
+        }
+      ]
+    },
+    "testimonials": {
+      "title": "Quienes Confiaron",
+      "subtitle": "Descubre lo que nuestros clientes tienen para decir sobre sus experiencias trabajando con nosotros.",
+      "items": [
+        {
+          "testimonial": "Mi experiencia con BioEnneagram ha sido realmente transformadora. El coach tiene una habilidad única para combinar el eneagrama y la biodescodificación de una manera que te guía hacia una profunda comprensión de ti mismo. En solo unas sesiones, he experimentado un cambio significativo en mi perspectiva y en la forma en que manejo los desafíos de la vida. Recomiendo encarecidamente esta terapia a cualquiera que busque un cambio positivo y duradero.",
+          "name": "Alejandra",
+          "job": "Empleada en Huspost",
+          "imageAlt": "Testimonio de Alejandra"
+        },
+        {
+          "testimonial": "No tengo palabras para expresar lo agradecido que estoy por haber descubierto BioEnneagram. El eneagrama y la biodescodificación han sido herramientas clave para comprender mis patrones de comportamiento y superar obstáculos emocionales. El coach tiene una manera de abordar los problemas con empatía y sabiduría. Mi vida ha dado un giro positivo, y no puedo agradecer lo suficiente por esta experiencia transformadora.",
+          "name": "Juan David Cardona",
+          "job": "Fundador de Raices",
+          "imageAlt": "Testimonio de Juan David Cardona"
+        },
+        {
+          "testimonial": "Después de participar en las sesiones de BioEnneagram, siento que finalmente estoy conectando con mi verdadero yo. El eneagrama y la biodescodificación me han brindado una visión profunda de mis bloqueos emocionales y cómo superarlos. El coach ha sido un guía excepcional en este viaje de autodescubrimiento. Mi perspectiva de la vida ha cambiado, y estoy experimentando una paz interior que nunca pensé posible.",
+          "name": "Sara",
+          "job": "Violinista Profesional",
+          "imageAlt": "Testimonio de Sara"
+        }
+      ]
+    },
+    "callToActionWidget": { 
+      "title": "Vamos a crear juntos",
+      "subtitle": "¿Listo para lograr un cambio significativo en tu vida?",
+      "actionText": "Conversemos"
+    },
+    "faqs": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "title": "¿Qué es Bioenneagram y cómo se diferencia de la biodescodificación y el eneagrama por separado?",
+          "description": "Bioeneagram es una integración única de biodescodificación y eneagrama. Combina el poder de la biodescodificación para entender las conexiones emocionales con el eneagrama para explorar los patrones de personalidad. Esta sinergia proporciona una visión más completa de cómo nuestras experiencias pasadas impactan nuestra personalidad y comportamiento actual.",
+          "icon": "tabler:chevrons-right"
+        },
+        {
+          "title": "¿En qué consiste la biodescodificación y cómo puede beneficiarme?",
+          "description": "La biodescodificación es un enfoque terapéutico que busca comprender la conexión entre las emociones y la salud. Trabaja desentrañando el significado emocional de los síntomas físicos o emocionales. Experimentar la biodescodificación puede ayudarte a comprender y liberar patrones emocionales que pueden estar afectando tu bienestar.",
+          "icon": "tabler:chevrons-right"
+        },
+        {
+          "title": "¿Es necesario tener experiencia previa en biodescodificación o eneagrama para participar en sesiones de Bioenneagram?",
+          "description": "No se requiere experiencia previa. Las sesiones de Bioenneagram están diseñadas para adaptarse a todos los niveles de familiaridad con la biodescodificación y el eneagrama. Nuestros profesionales te guiarán a través del proceso, asegurándose de que te sientas cómodo y comprendas cada etapa.",
+          "icon": "tabler:chevrons-right"
+        },
+        {
+          "title": "¿Cómo se utiliza el eneagrama en sus servicios?",
+          "description": "El eneagrama es una poderosa herramienta de autoconocimiento que utilizamos para entender los patrones de personalidad y motivaciones. Ofrecemos sesiones y talleres específicos de eneagrama para ayudarte a descubrir tu tipo y aplicar este conocimiento en tu vida cotidiana.",
+          "icon": "tabler:chevrons-right"
+        },
+        {
+          "title": "¿Ofrecen servicios en línea?",
+          "description": "Sí, algunos de nuestros servicios están disponibles en línea. Esto proporciona flexibilidad para aquellos que prefieren participar desde la comodidad de su hogar. Comunícate con nosotros para obtener más detalles sobre la disponibilidad en línea.",
+          "icon": "tabler:chevrons-right"
+        }
+      ]
+    },
+    "steps2": {
+      "title": "Ponte en contacto con nosotros",
+      "subtitle": "¿Tienes alguna pregunta? Ponte en contacto con nosotros a través del siguiente formulario. ¡Estamos aquí para ayudarte!",
+      "callToActionText": "Coméntanos",
+      "items": [
+        {
+          "title": "Escríbenos",
+          "description": "bioenneagramcoach@gmail.com",
+          "icon": "tabler:mail"
+        },
+        {
+          "title": "Contáctanos",
+          "description": "+57 (300) 448-1819",
+          "icon": "tabler:headset"
+        },
+        {
+          "title": "Síguenos",
+          "description": "@bioenneagramcoach",
+          "icon": "tabler:brand-instagram"
+        }
+      ]
+    },
+    "blogLatestPosts": {
+      "title": "Manténgase informado con el blog de Bioenneagram",
+      "information": "Explore our collection of articles, guides, and tutorials on web development, design trends, and using bioenneagram effectively for your projects."
+    },
+    "mailtoSubject": "Alexander Zapata: Bioenneagram Coach"
+  },
+  "aboutpage": { 
+    "meta": {
+      "title": "Nosotros - Bioenneagram",
+      "description": "Conoce más sobre Bioenneagram, nuestros enfoques, valores y logros en el camino del autoconocimiento."
+    },
+    "hero": {
+      "tagline": "Nosotros",
+      "title": "Eleva tu presencia online con nuestras <br /><0>Hermosas Plantillas Web</0>", 
+      "subtitle": "Donec efficitur, ipsum quis congue luctus, mauris magna convallis mauris, eu auctor nisi lectus non augue. Donec quis lorem non massa vulputate efficitur ac at turpis. Sed tincidunt ex a nunc convallis, et lobortis nisi tempus. Suspendisse vitae nisi eget tortor luctus maximus sed non lectus.",
+      "imageAlt": "Imagen representativa de Bioenneagram"
+    },
+    "stats": {
+      "title": "Datos de Nosotros",
+      "items": [
+        { "title": "Pacientes", "amount": "413" },
+        { "title": "Empresas", "amount": "6" }
+      ]
+    },
+    "features3_enfoques": {
+      "title": "Nuestros Enfoques",
+      "subtitle": "Etiam scelerisque, enim eget vestibulum luctus, nibh mauris blandit nulla, nec vestibulum risus justo ut enim. Praesent lacinia diam et ante imperdiet euismod.",
+      "items": [
+        {
+          "title": "Individual",
+          "description": "Morbi faucibus luctus quam, sit amet aliquet felis tempor id. Cras augue massa, ornare quis dignissim a, molestie vel nulla.",
+          "icon": "tabler:template" 
+        },
+        {
+          "title": "Relaciones de Pareja",
+          "description": "Vivamus porttitor, tortor convallis aliquam pretium, turpis enim consectetur elit, vitae egestas purus erat ac nunc nulla.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Empresas",
+          "description": "Duis sed lectus in nisl vehicula porttitor eget quis odio. Aliquam erat volutpat. Nulla eleifend nulla id sem fermentum.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "features3_otros": { 
+      "imageAlt": "Imagen colorida representativa",
+      "items": [
+        {
+          "title": "Educación",
+          "description": "Rutrum non odio at vehicula. Proin ipsum justo, dignissim in vehicula sit amet, dignissim id quam. Sed ac tincidunt sapien.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Enfermedades Mentales",
+          "description": "Nullam efficitur volutpat sem sed fringilla. Suspendisse et enim eu orci volutpat laoreet ac vitae libero.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Enfermedades Físicas",
+          "description": "Morbi et elit finibus, facilisis justo ut, pharetra ipsum. Donec efficitur, ipsum quis congue luctus, mauris magna.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Branding",
+          "description": "Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Médico",
+          "description": "Vestibulum malesuada lacus id nibh posuere feugiat. Nam volutpat nulla a felis ultrices, id suscipit mauris congue. In hac habitasse platea dictumst.",
+          "icon": "tabler:template"
+        },
+        {
+          "title": "Diseño de Moda",
+          "description": "Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus.",
+          "icon": "tabler:template"
+        }
+      ]
+    },
+    "steps2_valores": {
+      "title": "Nuestros Valores",
+      "subtitle": "Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus. Nulla facilisi. Vestibulum malesuada lacus.",
+      "items": [
+        {
+          "title": "Enfoque centrado en el cliente",
+          "description": "Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum."
+        },
+        {
+          "title": "Mejora Constante",
+          "description": "Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo."
+        },
+        {
+          "title": "Prácticas Éticas",
+          "description": "Vestibulum imperdiet libero et lectus molestie, et maximus augue porta. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
+        }
+      ]
+    },
+    "steps2_logros": {
+      "title": "Logros",
+      "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis, quam nec venenatis lobortis, mi risus tempus nulla, sed porttitor est nibh at nulla.",
+      "callToActionText": "Ver más",
+      "items": [
+        {
+          "title": "Alcance Global",
+          "description": "Nam malesuada urna in enim imperdiet tincidunt. Phasellus non tincidunt nisi, at elementum mi.",
+          "icon": "tabler:globe"
+        },
+        {
+          "title": "Comentarios y reseñas positivas de clientes",
+          "description": "Cras semper nulla leo, eget laoreet erat cursus sed. Praesent faucibus massa in purus iaculis dictum.",
+          "icon": "tabler:message-star"
+        },
+        {
+          "title": "Premios y reconocimientos como expertos de la industria",
+          "description": "Phasellus lacinia cursus velit, eu malesuada magna pretium eu. Etiam aliquet tellus purus, blandit lobortis ex rhoncus vitae.",
+          "icon": "tabler:award"
+        }
+      ]
+    },
+    "features2_ubicaciones": {
+      "title": "Nuestras Ubicaciones",
+      "tagline": "Encuéntranos",
+      "items": [
+        { "title": "EE.UU", "description": "1234 Lorem Ipsum St, 12345, Miami" },
+        { "title": "España", "description": "5678 Lorem Ipsum St, 56789, Madrid" },
+        { "title": "Australia", "description": "9012 Lorem Ipsum St, 90123, Sídney" },
+        { "title": "Brasil", "description": "3456 Lorem Ipsum St, 34567, São Paulo" }
+      ]
+    },
+    "features2_soporte": {
+      "title": "Soporte Técnico",
+      "tagline": "Contáctanos",
+      "items": [
+        {
+          "title": "Chatea con nosotros",
+          "description": "Integer luctus laoreet libero, auctor varius purus rutrum sit amet. Ut nec molestie nisi, quis eleifend mi.",
+          "icon": "tabler:messages"
+        },
+        {
+          "title": "Llámanos",
+          "description": "Mauris faucibus finibus orci, in posuere elit viverra non. In hac habitasse platea dictumst. Cras lobortis metus a hendrerit congue.",
+          "icon": "tabler:headset"
+        }
+      ]
+    }
+  },
+  "courseEnneagramGamePage": {
+    "meta": {
+      "title": "Curso de Eneagrama Game",
+      "description": "Aprende a usar la herramienta de gamificación Eneagrama Game para el autodescubrimiento."
+    },
+    "hero": {
+      "tagline": "Cursos",
+      "title": "Curso de Eneagrama Game: Una herramienta de autodescubrimiento",
+      "subtitle": "Apúntate a mi curso en VIVO y aprende sobre la herramienta de gamificación para descubrir tu personalidad, la misma que utilizo con mis pacientes en consultas.",
+      "actionText": "Inscríbete Ahora",
+      "imageAlt": "Imagen del Curso de Eneagrama Game por Bioenneagram Coach"
+    },
+    "callToAction": {
+      "title": "Información",
+      "subtitle": "Abajo encontrarás un PDF con la información detallada del curso, léelo para saber si este curso es para ti. (Los precios pueden variar)",
+      "actionText": "Descargar PDF"
+    }
+  },
+
+  "error404Page": {
+    "meta": {
+      "title": "Error 404 - Página no encontrada"
+    },
+    "title": "Error 404",
+    "mainText": "404",
+    "sorryText": "Lo sentimos, no hemos podido encontrar esta página.",
+    "infoText": "Pero no te preocupes, puedes encontrar muchas otras cosas en nuestra página principal.",
+    "buttonText": "Regresar al Inicio"
+  },
+
+  "buildingPage": {
+    "meta": {
+      "title": "Página en Construcción"
+    },
+    "title": "Construyendo",
+    "statusText": "En Desarrollo",
+    "mainText": "Construyendo",
+    "sorryText": "Lo sentimos, esta página está en construcción.",
+    "infoText": "Pero no te preocupes, puedes encontrar muchas otras cosas en nuestra página principal.",
+    "buttonText": "Regresar al Inicio"
+  },
+
+  "contactPage": {
+    "meta": {
+      "title": "Contacto - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Contacto",
+      "title": "¡Conectemos!"
+    },
+    "contactForm": {
+      "title": "¡Envíanos un mensaje hoy mismo!",
+      "subtitle": "Para respuestas más rápidas, explora nuestra sección de Preguntas Frecuentes. ¡Quizás encuentres la solución que buscas allí mismo! Si no, nuestro equipo de soporte estará encantado de ayudarte.",
+      "inputs": [
+        { "name": "name", "label": "Nombre" },
+        { "name": "email", "label": "Correo Electrónico" }
+      ],
+      "textareaLabel": "Mensaje",
+      "disclaimerLabel": "Al enviar este formulario de contacto, reconoces y aceptas la recopilación de tu información personal.",
+      "description": "Nuestro equipo de soporte suele responder en 24 horas hábiles."
+    },
+    "featuresSupport": {
+      "title": "¡Estamos aquí para ayudar!",
+      "items": [
+        {
+          "title": "Soporte general",
+          "description": "Chatea con nosotros para consultas relacionadas con la gestión de cuentas, navegación del sitio web, problemas de pago, acceso a plantillas compradas o preguntas generales sobre la funcionalidad del sitio web."
+        },
+        {
+          "title": "Contactar a ventas",
+          "description": "Chatea con nosotros para preguntas sobre compras, opciones de personalización, licencias para uso comercial, consultas sobre plantillas específicas, etc."
+        },
+        {
+          "title": "Soporte técnico",
+          "description": "Chatea con nosotros si enfrentas problemas como la instalación de plantillas, dificultades de edición, problemas de compatibilidad con software o errores de descarga, u otros desafíos técnicos relacionados con el uso de las plantillas."
+        },
+        { "title": "Teléfono", "description": "+1 (234) 567-890", "icon": "tabler:headset" },
+        { "title": "Correo Electrónico", "description": "contact@support.com", "icon": "tabler:mail" },
+        { "title": "Ubicación", "description": "1234 Lorem Ipsum St, 12345, Miami, EEUU", "icon": "tabler:map-pin" }
+      ]
+    }
+  },
+
+  "pricingPage": {
+    "meta": {
+      "title": "Precios - Bioenneagram"
+    },
+    "heroText": {
+      "tagline": "Precios",
+      "title": "Precios Estelares para Cada Viaje",
+      "subtitle": "Elige el plan perfecto que se alinee con tus metas cósmicas."
+    },
+    "pricesWidget": {
+      "title": "Nuestros precios",
+      "subtitle": "Paga solo por lo que necesitas",
+      "plans": [
+        {
+          "title": "básico",
+          "subtitle": "Opción óptima para uso personal",
+          "price": 29,
+          "period": "por mes",
+          "items": [
+            { "description": "Etiam in libero, et volutpat" },
+            { "description": "Aenean ac nunc dolor tristique" },
+            { "description": "Cras scelerisque accumsan lib" },
+            { "description": "In hac habitasse" }
+          ],
+          "callToActionText": "Comenzar"
+        }
+      ]
+    },
+    "featuresPricing": {
+      "title": "Características relacionadas con el precio",
+      "subtitle": "Descubre las ventajas de elegir nuestros planes",
+      "items": [
+      ]
+    },
+    "stepsWidget": {
+      "title": "Un viaje guiado de los planes a la creatividad",
+      "tagline": "proceso simplificado",
+      "items": [
+      ]
+    },
+    "faqsPricing": {
+      "title": "Preguntas Frecuentes sobre Precios",
+      "subtitle": "Elegir el plan correcto es importante, y estamos aquí para responder tus preguntas. Si tienes consultas sobre nuestras opciones de precios, estás en el lugar correcto.",
+      "items": [
+      ]
+    },
+    "callToActionPricing": {
+      "title": "¿Listo para impulsar tus proyectos?",
+      "subtitle": "Únete a nuestra comunidad de clientes satisfechos que han transformado su trabajo con nuestras plantillas.",
+      "actionText": "Comienza ahora"
+    }
+  },
+
+  "servicesPage": {
+    "meta": {
+      "title": "Servicios - Bioenneagram"
+    },
+    "hero": {
+      "tagline": "Servicios",
+      "title": "Eleva tus proyectos con nuestras impresionantes plantillas",
+      "subtitle": "Explora nuestras plantillas meticulosamente elaboradas y adaptadas a diversas industrias y propósitos. Desde presentaciones cautivadoras hasta diseños funcionales de sitios web, ofrecemos las herramientas que necesitas para tener éxito.",
+      "actionText": "Comienza a explorar",
+      "imageAlt": "Imagen de Servicios de Bioenneagram"
+    },
+    "featuresTemplates": {
+      "title": "Explora nuestras diversas plantillas",
+      "subtitle": "Descubre nuestra selección a continuación para optimizar y elevar tus proyectos.",
+      "items": [
+      ]
+    },
+    "contentMainFeatures": {
+      "blockTitle": "Características Principales",
+      "items": [
+      ]
+    },
+    "contentBenefits": {
+      "blockTitle": "Beneficios",
+      "items": [
+      ]
+    },
+    "testimonialsServices": {
+      "title": "Palabras de clientes reales",
+      "items": [
+      ],
+      "callToActionText": "Más testimonios..."
+    },
+    "callToActionServices": {
+      "title": "Sumérgete en nuestra colección de plantillas",
+      "subtitle": "Ya sea que estés en negocios, diseño o educación, nuestras plantillas están aquí para elevar tus proyectos.",
+      "actionText": "Comienza a explorar"
+    }
+  }
+}

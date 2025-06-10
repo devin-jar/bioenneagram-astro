@@ -1,0 +1,158 @@
+---
+// src/pages/en/services.astro
+import Layout from '~/layouts/PageLayout.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { noindex: true, follow: false },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'en_US', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
+  }
+};
+
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
+
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
+
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+
+// URLs de imágenes, etc.
+const heroImageServices = 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80';
+const contentMainFeaturesImage = 'https://images.unsplash.com/photo-1525909002-1b05e0c869d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
+const contentBenefitsImage = 'https://images.unsplash.com/photo-1552664688-cf412ec27db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80';
+const testimonialImagesServices = [ // Necesitarás URLs para estos o una lógica para obtenerlos
+    'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
+    'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+    'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=824&q=80',
+];
+
+
+const featuresTemplatesItems = t('servicesPage.featuresTemplates.items', {}, {defaultValue: []});
+const contentMainFeaturesItems = t('servicesPage.contentMainFeatures.items', {}, {defaultValue: []});
+const contentBenefitsItems = t('servicesPage.contentBenefits.items', {}, {defaultValue: []});
+const testimonialsServicesItems = t('servicesPage.testimonialsServices.items', {}, {defaultValue: []});
+
+// HREF para el call to action de testimonios
+const testimonialsCallToActionHref = t('servicesPage.testimonialsServices.callToActionHref', {}, {defaultValue: 'https://github.com/onwidget/astrowind'});
+
+---
+<Layout metadata={metadata}>
+  <Hero
+    tagline={t('servicesPage.hero.tagline')}
+    title={t('servicesPage.hero.title')}
+    subtitle={t('servicesPage.hero.subtitle')}
+    actions={[{ variant:"primary", target: '_blank', text: t('servicesPage.hero.actionText'), href: '/' }]}
+    image={{ src: heroImageServices, alt: t('servicesPage.hero.imageAlt') }}
+  />
+
+  <Features2
+    title={t('servicesPage.featuresTemplates.title')}
+    subtitle={t('servicesPage.featuresTemplates.subtitle')}
+    columns={3}
+    items={featuresTemplatesItems}
+  />
+
+  <Content
+    isReversed
+    items={contentMainFeaturesItems}
+    image={{ src: contentMainFeaturesImage, alt: t('servicesPage.contentMainFeatures.imageAlt', {}, {defaultValue: 'Features Image'}) }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        {t('servicesPage.contentMainFeatures.blockTitle')}
+      </h3>
+    </Fragment>
+  </Content>
+
+  <Content
+    isAfterContent
+    items={contentBenefitsItems}
+    image={{ src: contentBenefitsImage, alt: t('servicesPage.contentBenefits.imageAlt', {}, {defaultValue: 'Benefits Image'}) }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        {t('servicesPage.contentBenefits.blockTitle')}
+      </h3>
+    </Fragment>
+  </Content>
+
+  <Testimonials
+    title={t('servicesPage.testimonialsServices.title')}
+    testimonials={testimonialsServicesItems.map((item, index) => ({
+        ...item, // Pasa name, job, testimonial, imageAlt
+        image: {
+            src: testimonialImagesServices[index] || 'URL_POR_DEFECTO_SI_FALTA', // Asegura tener suficientes imágenes
+            alt: item.imageAlt || `${item.name} Image`
+        }
+    }))}
+    callToAction={{
+      target: '_blank',
+      text: t('servicesPage.testimonialsServices.callToActionText'),
+      href: testimonialsCallToActionHref,
+      icon: 'tabler:chevron-right',
+    }}
+  />
+
+  <CallToAction
+    actions={[{ variant: "primary", text: t('servicesPage.callToActionServices.actionText'), href: '/' }]}
+    title={t('servicesPage.callToActionServices.title')}
+    subtitle={t('servicesPage.callToActionServices.subtitle')}
+  />
+</Layout>

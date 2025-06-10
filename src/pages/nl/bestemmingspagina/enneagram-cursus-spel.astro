@@ -1,0 +1,83 @@
+---
+// src/pages/nl/landing/course-enneagram-game.astro
+import Layout from '~/layouts/LandingLayout.astro'; // O el layout que corresponda
+
+import Hero from '~/components/widgets/Hero.astro';
+import CallToActionWidget from '~/components/widgets/CallToAction.astro'; // Renombrado para evitar conflicto con tipo
+import ImgCourse from '~/assets/images/eneagrama-game.jpg'; // Importación de imagen de Astro
+
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n';
+import { getPageKeyForPath, getAlternateLinksForPage } from '~/utils/hreflang-mapping'; // Renombrado para claridad
+import type { MetaData, HeroProps, CallToActionProps } from '~/types'; // Importar tipos necesarios
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+const currentLocale = Astro.currentLocale || defaultLang;
+
+// Carga de Traducciones (usando import.meta.glob)
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`;
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.warn(`[Page: ${Astro.url.pathname}] Translation file for locale "${currentLocale}" not found. Falling back to default locale "${defaultLang}".`);
+  const defaultModulePath = `/src/i18n/locales/${defaultLang}/translation.json`;
+  const defaultModuleCandidate = translationModules[defaultModulePath];
+  if (defaultModuleCandidate) {
+    pageTranslations = defaultModuleCandidate.default || defaultModuleCandidate;
+  } else {
+    pageTranslations = {}; // Fallback crítico
+  }
+}
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// Construcción de Metadata
+const metadata: MetaData = {
+  title: t('courseEnneagramGamePage.meta.title'),
+  description: t('courseEnneagramGamePage.meta.description'),
+  robots: { index: true, follow: true },
+  canonical: Astro.url.href, // La URL canónica es la URL actual de esta página traducida
+  type: 'website', // O 'article' si es más apropiado para una landing de curso
+  ogImage: { url: ImgCourse.src, alt: t('courseEnneagramGamePage.hero.imageAlt') }, // Usando la imagen del curso para OG
+  openGraph: { // Información más detallada para Open Graph
+    title: t('courseEnneagramGamePage.meta.title'),
+    description: t('courseEnneagramGamePage.meta.description'),
+    images: [{ url: new URL(ImgCourse.src, Astro.site).href, alt: t('courseEnneagramGamePage.hero.imageAlt') }], // URL absoluta para OG
+    type: 'website', // o 'article'
+    locale: currentLocale, // ej. 'es_ES', 'en_US' - podrías tener un mapeo para esto
+  },
+  twitter: { // Información para Twitter Cards
+    cardType: 'summary_large_image',
+    title: t('courseEnneagramGamePage.meta.title'),
+    description: t('courseEnneagramGamePage.meta.description'),
+    image: new URL(ImgCourse.src, Astro.site).href, // URL absoluta
+    imageAlt: t('courseEnneagramGamePage.hero.imageAlt'),
+  }
+};
+
+// Datos para los Widgets (URLs se mantienen, textos se traducen)
+const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf';
+const courseBookingLink = 'https://events.bioenneagram.com/cursos/curso-eneagrama-game';
+
+const heroData: HeroProps = {
+  tagline: t('courseEnneagramGamePage.hero.tagline'),
+  title: t('courseEnneagramGamePage.hero.title'),
+  subtitle: t('courseEnneagramGamePage.hero.subtitle'),
+  actions: [{ variant: 'primary', target: '_blank', text: t('courseEnneagramGamePage.hero.actionText'), href: courseBookingLink, icon: 'tabler:square-rounded-arrow-right' }],
+  image: { src: ImgCourse.src, alt: t('courseEnneagramGamePage.hero.imageAlt') },
+};
+
+const callToActionData: CallToActionProps = {
+  title: t('courseEnneagramGamePage.callToAction.title'),
+  subtitle: t('courseEnneagramGamePage.callToAction.subtitle'),
+  actions: [{ variant: 'primary', text: t('courseEnneagramGamePage.callToAction.actionText'), href: coursePdfLink, icon: 'tabler:download', target: '_blank'}]
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero {...heroData} />
+  <CallToActionWidget {...callToActionData} />
+</Layout>

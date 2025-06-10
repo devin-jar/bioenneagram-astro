@@ -6,8 +6,8 @@ import ToggleMenu from "~/components/common/ToggleMenu.astro";
 import Button from "~/components/ui/Button.astro"
 
 import { getHomePermalink } from "~/utils/permalinks";
-import { trimSlash, getAsset } from "~/utils/permalinks";
-import type { CallToAction } from "~/types";
+import { trimSlash, getAsset, ensureLeadingSlash, ensureTrailingSlash } from "~/utils/permalinks"; 
+import type { CallToActionProps } from "~/types";
 
 interface Link {
   text?: string;
@@ -16,7 +16,7 @@ interface Link {
   icon?: string;
 }
 
-interface ActionLink extends CallToAction {}
+interface ActionLink extends CallToActionProps {}
 
 interface MenuLink extends Link {
   links?: Array<MenuLink>;
@@ -24,15 +24,17 @@ interface MenuLink extends Link {
 
 export interface Props {
   id?: string;
-  links?: Array<MenuLink>;
-  actions?: Array<ActionLink>;
+  links?: Array<MenuLink>; // MenuLink es tu interfaz definida
+  actions?: Array<ActionLink>; // ActionLink es tu interfaz definida
   isSticky?: boolean;
   isDark?: boolean;
   isFullWidth?: boolean;
   showToggleTheme?: boolean;
   showRssFeed?: boolean;
   position?: string;
+  currentLocale?: string; 
 }
+
 
 const {
   id = "header",
@@ -44,9 +46,15 @@ const {
   showToggleTheme = false,
   showRssFeed = false,
   position = "center",
+  currentLocale = 'es',
 } = Astro.props;
 
-const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`
+// currentPath debe considerar el idioma para la comparación activa.
+// Astro.url.pathname ya incluye el prefijo de idioma (ej. /en/about)
+// Los href de los links también lo incluirán gracias a getPermalink.
+// Normalizar ambos para una comparación robusta (con o sin trailing slash).
+const currentPath = ensureTrailingSlash(Astro.url.pathname);
+const homePermalinkForLang = getHomePermalink(currentLocale);
 ---
 
 <header
@@ -131,7 +139,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`
       <div class="items-center flex justify-between w-full md:w-auto">
         <div class="flex">
           {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
-          {
+          <!-- {
             showRssFeed && (
               <a
                 class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
@@ -141,7 +149,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`
                 <Icon name="tabler:rss" class="w-5 h-5" />
               </a>
             )
-          }
+          } -->
         </div>
         {
           actions?.length ? (

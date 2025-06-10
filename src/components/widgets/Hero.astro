@@ -1,24 +1,13 @@
 ---
 import Image from '~/components/common/Image.astro';
 import Button from '~/components/ui/Button.astro';
-import type { CallToAction } from '~/types';
-
-export interface Props {
-  id?: string;
-  title?: string;
-  subtitle?: string;
-  tagline?: string;
-  content?: string;
-  actions?: string | CallToAction[];
-  image?: string | any; // TODO: find HTMLElementProps
-}
+import type { HeroProps as Props } from '~/types'; 
 
 const {
   id,
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline,
-  content = await Astro.slots.render('content'),
   actions = await Astro.slots.render('actions'),
   image = await Astro.slots.render('image'),
 } = Astro.props;
@@ -64,7 +53,7 @@ const {
             )
           }
         </div>
-        {content && <Fragment set:html={content} />}
+        <!-- {content && <Fragment set:html={content} />} -->
       </div>
       <div>
         {

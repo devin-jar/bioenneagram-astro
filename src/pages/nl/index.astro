@@ -1,0 +1,246 @@
+---
+// src/pages/nl/index.astro (Página de inicio en NEDERLANDS - Idioma por defecto)
+import Layout from '~/layouts/PageLayout.astro'; // Usar PageLayout para páginas principales
+
+// Importar componentes
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Steps2 from '~/components/widgets/Steps2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import CallToActionWidget from '~/components/widgets/CallToAction.astro'; // Renombrado para claridad
+// import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+import { getTranslator, defaultLang, supportedLangs } from '~/i18n'; // defaultLang será 'es'
+import { getPageKeyForPath, getAlternateLinksForPage as getAlternateLinks } from '~/utils/hreflang-mapping';
+import type { MetaData, HeroProps, CallToActionProps, NoteProps, FeaturesProps, ContentProps, PricingProps, TestimonialsProps, FaqsProps, StepsProps } from '~/types';
+
+interface JsonModule { default?: Record<string, any>; [key: string]: any; }
+
+// Para la página de inicio en el idioma por defecto ('es'), Astro.currentLocale será 'es'
+// o undefined si la URL es solo '/'. Usamos defaultLang ('es') como base.
+const currentLocale = Astro.currentLocale && supportedLangs.includes(Astro.currentLocale)
+  ? Astro.currentLocale
+  : defaultLang; // 'es'
+
+// Carga de Traducciones
+const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
+let pageTranslations: Record<string, any> | undefined;
+const expectedModulePath = `/src/i18n/locales/${currentLocale}/translation.json`; // Será /src/i18n/locales/es/translation.json
+const moduleCandidate = translationModules[expectedModulePath];
+
+if (moduleCandidate) {
+  pageTranslations = moduleCandidate.default || moduleCandidate;
+} else {
+  console.error(`[Page: ${Astro.url.pathname}] CRITICAL: Translation file for locale "${currentLocale}" not found at ${expectedModulePath}. Using empty object.`);
+  pageTranslations = {};
+}
+
+const t = getTranslator(pageTranslations || {}, currentLocale);
+
+// --- METADATA ---
+// Imágenes específicas para OG/Twitter de esta página (si las tienes)
+// const ogImageHomeEs = '/images/og-image-home-es.jpg'; // Ejemplo
+
+const baseMetadata: MetaData = {
+  title: t('homepage.meta.title'),
+  description: t('homepage.meta.description'),
+  robots: { index: true, follow: true },
+  canonical: Astro.url.href, // URL actual de esta página
+  type: 'website',
+  // ogImage: { url: ogImageHomeEs, alt: t('homepage.hero.imageAlt') }, // Si tienes una específica
+  openGraph: {
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // images: [{ url: new URL(ogImageHomeEs, Astro.site).href, alt: t('homepage.hero.imageAlt') }],
+    type: 'website',
+    locale: 'nl_NL', // Específico para la página en español
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: t('homepage.meta.title'),
+    description: t('homepage.meta.description'),
+    // image: new URL(ogImageHomeEs, Astro.site).href,
+    imageAlt: t('homepage.hero.imageAlt'), // Usar el alt del hero o uno más específico
+  }
+};
+
+const pageKey = getPageKeyForPath(Astro.url.pathname, currentLocale);
+const alternateLinksArray = pageKey ? getAlternateLinks(pageKey, currentLocale) : []; // Usar la función correcta
+
+console.log(`[${Astro.url.pathname}] Page Key:`, pageKey);
+console.log(`[${Astro.url.pathname}] Alternate Links Array:`, JSON.stringify(alternateLinksArray, null, 2));
+
+const metadata: MetaData = {
+  ...baseMetadata,
+  ...(alternateLinksArray && alternateLinksArray.length > 0 ? { alternateLinks: alternateLinksArray } : {}),
+};
+
+// --- DATOS PARA WIDGETS ---
+// URLs de imágenes (se mantienen, a menos que varíen por idioma y estén en el JSON)
+const heroImageSrc = 'https://images.unsplash.com/photo-1502325966718-85a90488dc29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageEmpresarial = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageParejas = 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const contentImageIndividual = 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=1790&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+const testimonialImagesSrcs = [
+  'https://i.postimg.cc/V6fSq5R2/img-photo-profile-aleja.jpg',
+  'https://i.postimg.cc/zfSbHTnn/img-photo-profile-juanda.jpg',
+  'https://i.postimg.cc/XJsbTvbM/img-photo-profile-sara.jpg',
+];
+
+// HREFs (se mantienen, o se pueden mover al JSON si son muy específicos del idioma)
+const bookingLink = 'https://booking.bioenneagram.com/book';
+const youtubeLink = 'https://www.youtube.com/@bioenneagram';
+const whatsappBaseLink = 'https://api.whatsapp.com/send/?phone=573004481819&type=phone_number&app_absent=0';
+const whatsappLink = `${whatsappBaseLink}&text=${encodeURIComponent(t('footer.social.whatsappMessage'))}`; // Mensaje traducido
+const formsLink = 'https://forms.gle/H1dRuGBHvAGP9hy3A';
+const mailtoBase = 'mailto:bioenneagramcoach@gmail.com';
+const mailtoLink = `${mailtoBase}?Subject=${encodeURIComponent(t('homepage.mailtoSubject'))}`; // Asunto traducido
+const telLink = 'tel:+573004481819';
+const instagramLink = 'https://www.instagram.com/bioenneagramcoach/';
+
+// Preparar datos para los widgets usando 't'
+const heroData: HeroProps = {
+  tagline: t('homepage.hero.tagline'),
+  title: t('homepage.hero.title', {'0': `<span class="text-accent dark:text-white highlight">${t('homepage.hero.heroHighlight')}</span>`}),
+  subtitle: t('homepage.hero.subtitle', {'1': `<span class="font-semibold">Bioenneagram</span>`}),
+  actions: [{ variant: 'primary', target: '_blank', text: t('homepage.hero.actionText'), href: bookingLink }],
+  image: { src: heroImageSrc, alt: t('homepage.hero.imageAlt') },
+};
+
+const noteData: NoteProps = {
+  title: t('homepage.note.philosophyTitle'), // Asegúrate que estas claves existan en tu JSON
+  values: t('homepage.note.philosophyValues'), // Esto espera un array de strings
+  iconName: t('homepage.note.iconName', {}, { defaultValue: "tabler:clover-2"}), // Ícono del JSON o fallback
+};
+
+const featuresData: FeaturesProps = {
+  id: "features",
+  title: t('homepage.features.title'),
+  subtitle: t('homepage.features.subtitle'),
+  columns: 2,
+  items: t('homepage.features.items') || [],
+};
+
+const contentSectionsData: ContentProps[] = (t('homepage.contentSections') || []).map((sectionData, index) => {
+  const rawTitle = t(sectionData.blockTitle);
+
+  // --- LÓGICA DE RENDERIZADO MEJORADA ---
+
+  // 1. Limpiamos TODOS los corchetes de la cadena original primero.
+  const titleWithoutBrackets = rawTitle.replace(/[\[\]]/g, '');
+  // Ahora tenemos, por ejemplo: "Terapia Individual: <br /><0>Desbloqueando...</0>"
+
+  // 2. Dividimos la cadena limpia por la etiqueta <0>
+  const parts = titleWithoutBrackets.split(/<0>|<\/0>/);
+  // parts[0] => "Terapia Individual: <br /> "
+  // parts[1] => "Desbloqueando el Potencial Personal"
+  
+  const beforeHighlight = parts[0] || '';
+  const highlightText = parts[1] || '';
+
+  // 3. Construimos el HTML final
+  const preRenderedTitle = `${beforeHighlight}<span class="text-2xl">${highlightText}</span>`;
+
+  return {
+    preRenderedContentTitle: preRenderedTitle, 
+    title: index === 0 ? t(sectionData.mainTitle).replace(/[\[\]]/g, '') : undefined,
+    subtitle: index === 0 ? t(sectionData.mainSubtitle).replace(/[\[\]]/g, '') : undefined,
+    isReversed: index === 0 || index === 2,
+    isAfterContent: index > 0,
+    items: (sectionData.items || []).map(item => {
+      const cleanTitle = t(item.title).replace(/[\[\]]/g, '');
+      const cleanDescription = t(item.description).replace(/[\[\]]/g, '');
+      return {
+        title: cleanTitle,
+        description: cleanDescription.replace(/<br \/>/g, '<br />'),
+      };
+    }),
+    image: {
+      src: index === 0 ? contentImageEmpresarial : index === 1 ? contentImageParejas : contentImageIndividual,
+      alt: t(sectionData.imageAlt)
+    },
+  };
+});
+
+const pricingData: PricingProps = {
+  title: t('homepage.pricing.title'),
+  prices: (t('homepage.pricing.items') || []).map((item, idx) => ({
+    ...item, // Mantiene price, period, ribbonTitle (si están en JSON)
+    callToAction: {
+      target: '_blank',
+      text: item.callToActionText, // Ya viene del JSON
+      href: idx === 0 ? youtubeLink : whatsappLink, // Lógica para href
+    },
+    hasRibbon: !!item.ribbonTitle,
+  })),
+};
+
+const testimonialsData: TestimonialsProps = {
+  title: t('homepage.testimonials.title'),
+  subtitle: t('homepage.testimonials.subtitle'),
+  testimonials: (t('homepage.testimonials.items') || []).map((item, index) => ({
+    ...item, // Mantiene testimonial, name, job (del JSON)
+    image: {
+      src: testimonialImagesSrcs[index % testimonialImagesSrcs.length],
+      alt: item.imageAlt || `${item.name} Image`
+    },
+  })),
+};
+
+const callToActionWidgetData: CallToActionProps = {
+  title: t('homepage.callToActionWidget.title'),
+  subtitle: t('homepage.callToActionWidget.subtitle'),
+  actions: [{ variant: 'primary', text: t('homepage.callToActionWidget.actionText'), href: whatsappLink }],
+};
+
+const faqsData: FaqsProps = {
+  title: t('homepage.faqs.title'),
+  items: t('homepage.faqs.items') || [], // Los items ya vienen con title, description, icon del JSON
+};
+
+const steps2Data: StepsProps = {
+  title: t('homepage.steps2.title'),
+  subtitle: t('homepage.steps2.subtitle'),
+  callToAction: { text: t('homepage.steps2.callToActionText'), target: '_blank', href: formsLink },
+  items: (t('homepage.steps2.items') || []).map((item, index) => ({
+    ...item, // Mantiene title, description, icon (del JSON)
+    href: index === 0 ? mailtoLink : index === 1 ? telLink : instagramLink, // Lógica para href
+  })),
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero {...heroData} />
+  <Note {...noteData} />
+  <Features {...featuresData} />
+
+  {contentSectionsData.map((sectionProps) => (
+    <Content
+      {...sectionProps}
+    >
+      <Fragment slot="content">
+        <h3 
+          class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2"
+          set:html={sectionProps.preRenderedContentTitle}
+        />
+      </Fragment>
+      <!-- ... -->
+    </Content>
+  ))}
+  
+  <Pricing {...pricingData} />
+  <Testimonials {...testimonialsData} />
+  <CallToActionWidget {...callToActionWidgetData} />
+  <FAQs {...faqsData}>
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </FAQs>
+  <Steps2 {...steps2Data} />
+
+  {/* ... BlogLatestPosts ... */}
+</Layout>
