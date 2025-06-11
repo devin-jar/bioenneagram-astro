@@ -33,10 +33,14 @@ const specificHeaderLinks =
 
 // Define las acciones para este layout específico.
 // El texto 'Reserva' debería venir de tus traducciones.
+
+  const whatsappBaseLink = 'https://api.whatsapp.com/send/?phone=573004481819&type=phone_number&app_absent=0';
+  const whatsappLink = `${whatsappBaseLink}&text=${encodeURIComponent(t('footer.social.whatsappMessage'))}`;
+
 const landingHeaderActions = [
   {
     text: t('nav.actions.book'), // Usar la clave de traducción
-    href: 'https://booking.bioenneagram.com/book',
+    href: `${whatsappLink}`,
     target: '_blank' // Buena práctica para enlaces externos
   },
 ];
