@@ -2,6 +2,11 @@
 import { getPermalink, getBlogPermalink, getAsset, getHomePermalink } from '~/utils/permalinks'; // Asegúrate que es .ts o .js según tu archivo
 
 export const getHeaderData = (t, lang) => {
+
+
+  const whatsappBaseLink = 'https://api.whatsapp.com/send/?phone=573004481819&type=phone_number&app_absent=0';
+  const whatsappLink = `${whatsappBaseLink}&text=${encodeURIComponent(t('footer.social.whatsappMessage'))}`;
+
   return {
     links: [
       {
@@ -42,7 +47,7 @@ export const getHeaderData = (t, lang) => {
     actions: [
       {
         text: t('nav.actions.book'),
-        href: 'https://booking.bioenneagram.com/book', // Enlace externo
+        href: `${whatsappLink}`, // Enlace externo
         target: '_blank',
       },
     ],
@@ -80,12 +85,12 @@ export const getFooterData = (t, lang) => {
       {
         title: t('footer.support.title'),
         links: [
-          { text: t('footer.support.aboutUs'), href: getPermalink(t('routes.about', {}, { defaultValue: 'about' }), 'page', lang) },
+          // { text: t('footer.support.aboutUs'), href: getPermalink(t('routes.about', {}, { defaultValue: 'about' }), 'page', lang) },
           // { text: t('footer.support.blog'), href: getBlogPermalink(t, lang) }, // Pasando 't'
           // { text: t('footer.support.professionalServices'), href: getPermalink(t('routes.services', {}, { defaultValue: 'services' }), 'page', lang) },
-          { text: t('footer.support.socialImpact'), href: getPermalink(t('routes.socialImpact', {}, { defaultValue: 'social-impact' }), 'page', lang) },
-          { text: t('footer.support.store'), href: 'https://shop.bioenneagram.com/', target: '_blank' },
-          { text: t('footer.support.location'), target: '_blank', href: 'https://goo.gl/maps/Zw139zUs4rSwnGUQ7' },
+          // { text: t('footer.support.socialImpact'), href: getPermalink(t('routes.socialImpact', {}, { defaultValue: 'social-impact' }), 'page', lang) },
+          // { text: t('footer.support.store'), href: 'https://shop.bioenneagram.com/', target: '_blank' },
+          { text: t('footer.support.location'), target: '_blank', href: 'https://maps.app.goo.gl/3gU7PHsuNg8UM3Lj6' },
         ],
       },
     ],
