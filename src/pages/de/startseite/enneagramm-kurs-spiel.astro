@@ -61,19 +61,21 @@ const metadata: MetaData = {
 // Datos para los Widgets (URLs se mantienen, textos se traducen)
 const coursePdfLink = '/pdf/brochure-eneagrama-game.pdf';
 const courseBookingLink = 'https://events.bioenneagram.com/cursos/curso-eneagrama-game';
+const whatsappBaseLink = 'https://api.whatsapp.com/send/?phone=573004481819&type=phone_number&app_absent=0';
+const whatsappLink = `${whatsappBaseLink}&text=${encodeURIComponent(t('footer.social.whatsappMessage'))}`; // Mensaje traducido
 
 const heroData: HeroProps = {
   tagline: t('courseEnneagramGamePage.hero.tagline'),
   title: t('courseEnneagramGamePage.hero.title'),
   subtitle: t('courseEnneagramGamePage.hero.subtitle'),
-  actions: [{ variant: 'primary', target: '_blank', text: t('courseEnneagramGamePage.hero.actionText'), href: courseBookingLink, icon: 'tabler:square-rounded-arrow-right' }],
+  actions: [{ variant: 'primary', target: '_blank', text: t('courseEnneagramGamePage.hero.actionText'), href: whatsappLink, icon: 'tabler:square-rounded-arrow-right' }],
   image: { src: ImgCourse.src, alt: t('courseEnneagramGamePage.hero.imageAlt') },
 };
 
 const callToActionData: CallToActionProps = {
   title: t('courseEnneagramGamePage.callToAction.title'),
   subtitle: t('courseEnneagramGamePage.callToAction.subtitle'),
-  actions: [{ variant: 'primary', text: t('courseEnneagramGamePage.callToAction.actionText'), href: coursePdfLink, icon: 'tabler:download', target: '_blank'}]
+  actions: [{ variant: 'primary', text: t('courseEnneagramGamePage.callToAction.actionText'), href: whatsappLink, icon: 'tabler:download', target: '_blank'}]
 };
 ---
 
