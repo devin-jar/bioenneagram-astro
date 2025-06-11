@@ -107,7 +107,7 @@ const heroData: HeroProps = {
   tagline: t('homepage.hero.tagline'),
   title: t('homepage.hero.title', {'0': `<span class="text-accent dark:text-white highlight">${t('homepage.hero.heroHighlight')}</span>`}),
   subtitle: t('homepage.hero.subtitle', {'1': `<span class="font-semibold">Bioenneagram</span>`}),
-  actions: [{ variant: 'primary', target: '_blank', text: t('homepage.hero.actionText'), href: bookingLink }],
+  actions: [{ variant: 'primary', target: '_blank', text: t('homepage.callToActionWidget.actionText'), href: whatsappLink }],
   image: { src: heroImageSrc, alt: t('homepage.hero.imageAlt') },
 };
 
@@ -205,7 +205,7 @@ const faqsData: FaqsProps = {
 const steps2Data: StepsProps = {
   title: t('homepage.steps2.title'),
   subtitle: t('homepage.steps2.subtitle'),
-  callToAction: { text: t('homepage.steps2.callToActionText'), target: '_blank', href: formsLink },
+  callToAction: { text: t('homepage.steps2.callToActionText'), target: '_blank', href: whatsappLink },
   items: (t('homepage.steps2.items') || []).map((item, index) => ({
     ...item, // Mantiene title, description, icon (del JSON)
     href: index === 0 ? mailtoLink : index === 1 ? telLink : instagramLink, // Lógica para href
