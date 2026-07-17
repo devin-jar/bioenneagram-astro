@@ -1,8 +1,9 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { defineConfig, squooshImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 
+import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
@@ -35,6 +36,14 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+    // Añade esto para dar soporte a módulos de Node como 'fs'
+    nodeCompat: true,
+  }),
 
   integrations: [
     tailwind({

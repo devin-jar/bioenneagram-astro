@@ -1,8 +1,10 @@
 // src/utils/config.ts
 
-import fs from 'fs';
 import yaml from 'js-yaml';
 import merge from 'lodash.merge';
+
+// 👈 1. IMPORTA EL ARCHIVO DE CONFIGURACIÓN DIRECTAMENTE USANDO VITE (QUITAMOS FS)
+import rawYamlConfig from '../config.yaml?raw';
 
 // FIX: Importar los tipos detallados desde types.d.ts
 import type { MetaData, GlobalMetaDataConfig as MetaDataConfig } from '~/types';
@@ -71,7 +73,7 @@ export interface AnalyticsConfig {
   };
 }
 
-const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
+const config = yaml.load(rawYamlConfig) as {
   site?: SiteConfig;
   metadata?: MetaDataConfig;
   i18n?: I18NConfig;

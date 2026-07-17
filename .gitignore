@@ -19,6 +19,10 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# cloudflare
+.wrangler/
+
+
 package-lock.json
 pnpm-lock.yaml
 
