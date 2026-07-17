@@ -13,7 +13,6 @@ import type { MetaData, HeroProps, CallToActionProps } from '~/types'; // Import
 interface JsonModule { default?: Record<string, any>; [key: string]: any; }
 
 const currentLocale = Astro.currentLocale || defaultLang;
-const siteBaseUrl = Astro.site ? Astro.site.href : Astro.url.origin;
 
 // Carga de Traducciones (usando import.meta.glob)
 const translationModules = import.meta.glob('~/i18n/locales/**/translation.json', { eager: true }) as Record<string, JsonModule | undefined>;
@@ -46,7 +45,7 @@ const baseMetadata: MetaData = {
   openGraph: { // Información más detallada para Open Graph
     title: t('courseEnneagramGamePage.meta.title'),
     description: t('courseEnneagramGamePage.meta.description'),
-    images: [{ url: new URL(ImgCourse.src, siteBaseUrl).href, alt: t('courseEnneagramGamePage.hero.imageAlt') }], // URL absoluta para OG
+    images: [{ url: new URL(ImgCourse.src, Astro.site).href, alt: t('courseEnneagramGamePage.hero.imageAlt') }], // URL absoluta para OG
     type: 'website', // o 'article'
     locale: currentLocale, // ej. 'es_ES', 'en_US' - podrías tener un mapeo para esto
   },
@@ -54,7 +53,7 @@ const baseMetadata: MetaData = {
     cardType: 'summary_large_image',
     title: t('courseEnneagramGamePage.meta.title'),
     description: t('courseEnneagramGamePage.meta.description'),
-    image: new URL(ImgCourse.src, siteBaseUrl).href, // URL absoluta
+    image: new URL(ImgCourse.src, Astro.site).href, // URL absoluta
     imageAlt: t('courseEnneagramGamePage.hero.imageAlt'),
   }
 };
